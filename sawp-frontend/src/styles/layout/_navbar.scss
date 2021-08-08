@@ -1,0 +1,23 @@
+.navbar {
+  @include set-background($primary-color);
+  a {
+    font-weight: bold;
+    color: $white-color;
+  }
+
+  a:hover {
+    // transform: scale(0.98);
+    color: $secondary-color;
+  }
+
+  .dropdown-menu {
+    a {
+      color: #212529;
+    }
+    // background: lighten($primary-color, 10%);
+    // min-width: 0;
+    // .dropdown-item {
+    //   white-space: normal;
+    // }
+  }
+}

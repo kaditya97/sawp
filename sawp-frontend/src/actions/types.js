@@ -1,0 +1,20 @@
+//AUTHENTICATE and USER
+export const USER_LOADING = "USER_LOADING";
+export const USER_LOADED = "USER_LOADED";
+export const AUTH_ERROR = "AUTH_ERROR";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_ERROR = "LOGIN_ERROR";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+
+//ERROR and MESSAGE
+export const GET_ERRORS = "GET_ERRORS";
+export const CREATE_MESSAGE = "CREATE_MESSAGE";
+
+//AHP
+export const CALCULATE_AHP = "CALCULATE_AHP";
+
+//PROJECT
+export const ADD_PROJECT = "ADD_PROJECT";
+export const GET_PROJECT = "GET_PROJECT";

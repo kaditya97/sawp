@@ -1,0 +1,47 @@
+.heading {
+  color: $secondary-color;
+}
+
+.react-loader {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.modal-90w {
+  max-width: 90% !important;
+}
+
+.required label:after {
+  color: #e32;
+  content: " *";
+  display: inline;
+}
+
+.btn-center {
+  text-align: center;
+}
+
+.mb-6 {
+  margin-bottom: 150px;
+}
+
+@import url("https://unpkg.com/leaflet@1.7.1/dist/leaflet.css");
+
+.leaflet-container{
+    height: 100%;
+    width: 100%;
+}
+
+.leaflet-control-attribution{
+  display: none!important;
+}
+
+.custom-scrollbars > div:last-child {
+  opacity: 0;
+  transition: opacity 200ms ease;
+  }
+  
+.custom-scrollbars:hover > div:last-child {
+opacity: 1;
+}
