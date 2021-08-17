@@ -18,3 +18,23 @@ export const CALCULATE_AHP = "CALCULATE_AHP";
 //PROJECT
 export const ADD_PROJECT = "ADD_PROJECT";
 export const GET_PROJECT = "GET_PROJECT";
+export const UPDATE_PROJECT = "UPDATE_PROJECT";
+export const DELETE_PROJECT = "DELETE_PROJECT";
+
+//VECTOR
+export const ADD_VECTOR = "ADD_VECTOR";
+export const GET_VECTOR = "GET_VECTOR";
+export const UPATE_VECTOR = "UPATE_VECTOR";
+export const DELETE_VECTOR = "DELETE_VECTOR";
+
+//RASTER
+export const ADD_RASTER = "ADD_RASTER";
+export const GET_RASTER = "GET_RASTER";
+export const UPDATE_RASTER = "UPDATE_RASTER";
+export const DELETE_RASTER = "DELETE_RASTER";
+
+//BOUNDARY
+export const ADD_BOUNDARY = "ADD_BOUNDARY";
+export const GET_BOUNDARY = "GET_BOUNDARY";
+export const UPDATE_BOUNDARY = "UPDATE_BOUNDARY";
+export const DELETE_BOUNDARY = "DELETE_BOUNDARY";

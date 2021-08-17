@@ -1,4 +1,4 @@
-import namor from 'namor'
+// import namor from 'namor'
 
 const range = len => {
   const arr = []
@@ -11,11 +11,11 @@ const range = len => {
 const newPerson = () => {
   const statusChance = Math.random()
   return {
-    firstName: namor.generate({ words: 1, numbers: 0 }),
-    lastName: namor.generate({ words: 1, numbers: 0 }),
-    age: Math.floor(Math.random() * 30),
-    visits: Math.floor(Math.random() * 100),
-    progress: Math.floor(Math.random() * 100),
+    school: Math.floor(Math.random() * 10),
+    petrolStation: Math.floor(Math.random() * 10),
+    hospital: Math.floor(Math.random() * 10),
+    busPark: Math.floor(Math.random() * 10),
+    parking: Math.floor(Math.random() * 10),
     status:
       statusChance > 0.66
         ? 'relationship'

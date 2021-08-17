@@ -4,7 +4,7 @@ import FormLabel from "../common/FormLabel";
 import FormInput from "../common/FormInput";
 import TextArea from "../common/TextArea";
 import Submit from "../common/btn/Submit";
-import { getProject, addProject } from "../../actions/project";
+import { getProject, addProject, deleteProject } from "../../actions/project";
 
 function Project() {
     const [name, setName] = useState('')
@@ -64,8 +64,36 @@ function Project() {
                             </div>
                         </div>
                         <Submit name="Submit" onClick={OnSubmit} />
-                        <h6>{projects.map(e => <>{e.name} <p>{e.description}</p></>)}</h6>
                     </form>
+                </div>
+            </div>
+            <div className="row mt-5 mx-2">
+                <div className="col-lg-8">
+                    <h3>Project List</h3>
+                    <table className="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {projects.map((project) => {
+                                return (
+                                    <tr key={project.id}>
+                                        <td>{project.name}</td>
+                                        <td>{project.description}</td>
+                                        <td>
+                                            <a href="." onClick={() => {
+                                                dispatch(deleteProject(project.id))
+                                            }}>Delete</a>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

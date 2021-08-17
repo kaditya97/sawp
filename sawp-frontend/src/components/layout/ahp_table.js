@@ -133,34 +133,30 @@ function Ahp() {
   const columns = React.useMemo(
     () => [
           {
-            Header: 'First Name',
-            accessor: 'firstName',
+            Header: 'School',
+            accessor: 'school',
           },
           {
-            Header: 'Last Name',
-            accessor: 'lastName',
+            Header: 'Petrol Station',
+            accessor: 'petrolStation',
           },
           {
-            Header: 'Age',
-            accessor: 'age',
+            Header: 'Hospital',
+            accessor: 'hospital',
           },
           {
-            Header: 'Visits',
-            accessor: 'visits',
+            Header: 'Bus Park',
+            accessor: 'busPark',
           },
           {
-            Header: 'Status',
-            accessor: 'status',
-          },
-          {
-            Header: 'Profile Progress',
-            accessor: 'progress',
+            Header: 'Parking',
+            accessor: 'parking',
           },
     ],
     []
   )
 
-  const [data, setData] = React.useState(() => makeData(10))
+  const [data, setData] = React.useState(() => makeData(5))
   const [originalData] = React.useState(data)
   const [skipPageReset, setSkipPageReset] = React.useState(false)
   const updateMyData = (rowIndex, columnId, value) => {

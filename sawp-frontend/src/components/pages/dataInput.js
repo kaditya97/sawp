@@ -1,64 +1,9 @@
 import React from 'react'
-import FormLabel from "../common/FormLabel";
-import FormInput from "../common/FormInput";
-import FormFile from "../common/FormFile";
-import TextArea from "../common/TextArea";
-import Cancel from "../common/btn/Cancel";
-import Submit from "../common/btn/Submit";
+import Vector from '../layout/vector';
+import Raster from '../layout/raster';
+import Boundary from '../layout/boundary';
 
 class DataInput extends React.Component {
-  state = {
-    name: "",
-    description: "",
-    file: null,
-    file_name: "",
-  };
-
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleFileChange = (e) => {
-    this.setState({ file: e.target.files[0] });
-    this.setState({ file_name: e.target.files[0]?.name });
-  };
-
-  onSubmit = (e) => {
-    e.preventDefault();
-
-    const {
-      name,
-      description,
-      file,
-      file_name,
-    } = this.state;
-
-    let form_data = new FormData();
-
-    form_data.append("file", file, file.name);
-    form_data.append("name", name);
-    form_data.append("description", description);
-    form_data.append("file_name", file_name);
-    form_data.append("project", localStorage.getItem("projectId"));
-
-    this.setState({
-      name: "",
-      file: null,
-      description: "",
-      file_name: "",
-    });
-  };
-
-  onCancel = (e) => {
-    e.preventDefault();
-    this.setState({
-      name: "",
-      file: null,
-      description: "",
-      file_name: "",
-    });
-  };
-
   render() {
     return (
       <div className="container-fluid mt-5">
@@ -74,12 +19,25 @@ class DataInput extends React.Component {
                 <li className="nav-item">
                   <a
                     className="nav-link active"
+                    id="vector-file-upload"
+                    data-toggle="tab"
+                    href="#vector"
+                    role="tab"
+                    aria-controls="vector"
+                    aria-selected="true"
+                  >
+                    Vector file upload
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
                     id="raster-file-upload"
                     data-toggle="tab"
                     href="#raster"
                     role="tab"
-                    aria-controls="home"
-                    aria-selected="true"
+                    aria-controls="raster"
+                    aria-selected="false"
                   >
                     Raster file upload
                   </a>
@@ -87,91 +45,41 @@ class DataInput extends React.Component {
                 <li className="nav-item">
                   <a
                     className="nav-link"
-                    id="vector-file-upload"
+                    id="boundary-file-upload"
                     data-toggle="tab"
-                    href="#vector"
+                    href="#boundary"
                     role="tab"
-                    aria-controls="profile"
+                    aria-controls="boundary"
                     aria-selected="false"
                   >
-                    Vector file upload
+                    Boundary file upload
                   </a>
                 </li>
               </ul>
               <div className="tab-content" id="myTabContent">
                 <div
                   className="tab-pane fade show active"
-                  id="raster"
-                  role="tabpanel"
-                  aria-labelledby="home-tab"
-                >
-                  <div className="row">
-                    <div className="col-lg-6 required">
-                      <FormLabel name="Name" />
-                      <FormInput
-                        name={"Suitability"}
-                        value={"name"}
-                        onChange={this.onChange}
-                        placeholder="Enter name of raster..."
-                        required="required"
-                      />
-                    </div>
-
-                    <div className="col-lg-6 ">
-                      <FormLabel name="Description" />
-                      <TextArea
-                        name="description"
-                        // value={description}
-                        rows="1"
-                        onChange={this.onChange}
-                        placeholder="Add description of the raster..."
-                      />
-                    </div>
-                  </div>
-                  <FormFile
-                    onChange={this.handleFileChange}
-                    accept=".tif,.tiff,.geotiff"
-                    placeholder="Upload raster file"
-                  />
-                  <Submit name="Submit"/>
-                  <Cancel onClick={this.onCancel} />
-                </div>
-                <div
-                  className="tab-pane fade"
                   id="vector"
                   role="tabpanel"
                   aria-labelledby="vector-tab"
                 >
-                  <div className="row">
-                    <div className="col-lg-6 required">
-                      <FormLabel name="Name" />
-                      <FormInput
-                        name={"Suitability"}
-                        value={"name"}
-                        onChange={this.onChange}
-                        placeholder="Enter name of vector..."
-                        required="required"
-                      />
-                    </div>
-
-                    <div className="col-lg-6 ">
-                      <FormLabel name="Description" />
-                      <TextArea
-                        name="description"
-                        // value={description}
-                        rows="1"
-                        onChange={this.onChange}
-                        placeholder="Add description of the vector..."
-                      />
-                    </div>
-                  </div>
-                  <FormFile
-                    onChange={this.handleFileChange}
-                    accept=".zip,.shp"
-                    placeholder="Upload vector file"
-                  />
-                  <Submit name="Submit"/>
-                  <Cancel onClick={this.onCancel} />
+                  <Vector />
+                </div>
+                <div
+                  className="tab-pane fade"
+                  id="raster"
+                  role="tabpanel"
+                  aria-labelledby="raster-tab"
+                >
+                  <Raster />
+                </div>
+                <div
+                  className="tab-pane fade"
+                  id="boundary"
+                  role="tabpanel"
+                  aria-labelledby="boundary-tab"
+                >
+                  <Boundary />
                 </div>
               </div>
             </form>

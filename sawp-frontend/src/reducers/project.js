@@ -1,6 +1,7 @@
 import {
     GET_PROJECT,
-    ADD_PROJECT
+    ADD_PROJECT,
+    DELETE_PROJECT
   } from "../actions/types";
   
   const initialState = {
@@ -15,6 +16,11 @@ import {
           project: action.payload,
         };
       case ADD_PROJECT:
+        return {
+          ...state,
+          project: action.payload,
+        };
+      case DELETE_PROJECT:
         return {
           ...state,
           project: action.payload,

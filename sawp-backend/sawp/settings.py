@@ -148,8 +148,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+#media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+#static
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Geoserver setup
+GEOSERVER_URL = config('GEOSERVER_URL')
+GEOSERVER_USER = config('GEOSERVER_USER')
+GEOSERVER_PASSWORD = config('GEOSERVER_PASSWORD')

@@ -1,45 +1,44 @@
 import axios from "axios";
 import {
-    GET_PROJECT,
-    ADD_PROJECT,
-    // UPDATE_PROJECT,
-    DELETE_PROJECT
+    GET_RASTER,
+    ADD_RASTER,
+    DELETE_RASTER,
 } from "./types";
 
-// GET Project
-export const getProject = () => (dispatch, getState) => {
+// GET Raster
+export const getRaster = () => (dispatch, getState) => {
     axios
-        .get("/api/suitability/project/", tokenConfig(getState))
+        .get("/api/suitability/raster/", tokenConfig(getState))
         .then((res) => {
             dispatch({
-                type: GET_PROJECT,
+                type: GET_RASTER,
                 payload: res.data,
             });
         });
 };
 
-// Add Project
-export const addProject = (name, description) => (dispatch, getState) => {
+// Add Raster
+export const addRaster = (name, description) => (dispatch, getState) => {
     //Request body
     const body = JSON.stringify({ "name":name, "description":description });
 
     axios
-        .post("/api/suitability/project/", body, tokenConfig(getState))
+        .post("/api/suitability/raster/", body, tokenConfig(getState))
         .then((res) => {
             dispatch({
-                type: ADD_PROJECT,
+                type: ADD_RASTER,
                 payload: res.data,
             });
         });
 };
 
-// Delete Project
-export const deleteProject = (id) => (dispatch, getState) => {
+// Delete Raster
+export const deleteRaster = (id) => (dispatch, getState) => {
     axios
-        .delete(`/api/suitability/project/${id}`, tokenConfig(getState))
+        .delete(`/api/suitability/raster/${id}`, tokenConfig(getState))
         .then((res) => {
             dispatch({
-                type: DELETE_PROJECT,
+                type: DELETE_RASTER,
                 payload: res.data,
             });
         });

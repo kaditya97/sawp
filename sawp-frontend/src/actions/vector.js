@@ -1,45 +1,45 @@
 import axios from "axios";
 import {
-    GET_PROJECT,
-    ADD_PROJECT,
-    // UPDATE_PROJECT,
-    DELETE_PROJECT
+    GET_VECTOR,
+    ADD_VECTOR,
+    // UPDATE_VECTOR,
+    DELETE_VECTOR,
 } from "./types";
 
-// GET Project
-export const getProject = () => (dispatch, getState) => {
+// GET Vector
+export const getVector = () => (dispatch, getState) => {
     axios
-        .get("/api/suitability/project/", tokenConfig(getState))
+        .get("/api/suitability/vector/", tokenConfig(getState))
         .then((res) => {
             dispatch({
-                type: GET_PROJECT,
+                type: GET_VECTOR,
                 payload: res.data,
             });
         });
 };
 
-// Add Project
-export const addProject = (name, description) => (dispatch, getState) => {
+// Add Vector
+export const addVector = (name, description) => (dispatch, getState) => {
     //Request body
     const body = JSON.stringify({ "name":name, "description":description });
 
     axios
-        .post("/api/suitability/project/", body, tokenConfig(getState))
+        .post("/api/suitability/vector/", body, tokenConfig(getState))
         .then((res) => {
             dispatch({
-                type: ADD_PROJECT,
+                type: ADD_VECTOR,
                 payload: res.data,
             });
         });
 };
 
-// Delete Project
-export const deleteProject = (id) => (dispatch, getState) => {
+// Delete Vector
+export const deleteVector = (id) => (dispatch, getState) => {
     axios
-        .delete(`/api/suitability/project/${id}`, tokenConfig(getState))
+        .delete(`/api/suitability/vector/${id}`, tokenConfig(getState))
         .then((res) => {
             dispatch({
-                type: DELETE_PROJECT,
+                type: DELETE_VECTOR,
                 payload: res.data,
             });
         });
