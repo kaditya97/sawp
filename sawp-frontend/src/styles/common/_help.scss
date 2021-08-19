@@ -1,0 +1,15 @@
+.help {
+    // position: absolute;
+    // top: 50%;
+    // transform: translateY(-50%);
+    text-align: justify;
+    // max-width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: $primary-color-4;
+    // margin-left: 20px;
+    // color: #ffffff;
+    border-radius: 5px;
+    padding: 10px;
+    padding-right: 0px!important; 
+}

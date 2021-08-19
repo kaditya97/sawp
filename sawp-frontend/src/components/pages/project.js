@@ -4,7 +4,7 @@ import FormLabel from "../common/FormLabel";
 import FormInput from "../common/FormInput";
 import TextArea from "../common/TextArea";
 import Submit from "../common/btn/Submit";
-import { getProject, addProject, deleteProject } from "../../actions/project";
+import { getProject, addProject, updateProject, deleteProject } from "../../actions/project";
 
 function Project() {
     const [name, setName] = useState('')
@@ -16,7 +16,7 @@ function Project() {
     const onNameChange = (e) => {
         setName(e.target.value);
     };
-    
+
     const onDescriptionChange = (e) => {
         setDescription(e.target.value);
     };
@@ -67,15 +67,16 @@ function Project() {
                     </form>
                 </div>
             </div>
-            <div className="row mt-5 mx-2">
-                <div className="col-lg-8">
+            <div className="row mt-5 mx-5">
+                <div className="col-lg-9">
                     <h3>Project List</h3>
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Description</th>
-                                <th>Action</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,9 +86,16 @@ function Project() {
                                         <td>{project.name}</td>
                                         <td>{project.description}</td>
                                         <td>
-                                            <a href="." onClick={() => {
-                                                dispatch(deleteProject(project.id))
-                                            }}>Delete</a>
+                                            <i className="fas fa-edit" onClick={() => {
+                                                dispatch(updateProject(project.id, "Aditya", "I like you"))
+                                            }}></i>
+                                        </td>
+                                        <td>
+                                            <i className="fas fa-trash-alt"
+                                                onClick={() => {
+                                                    dispatch(deleteProject(project.id))
+                                                }}
+                                            ></i>
                                         </td>
                                     </tr>
                                 );

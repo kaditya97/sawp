@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import FormLabel from "../common/FormLabel";
-import FormInput from "../common/FormInput";
-import FormFile from "../common/FormFile";
-import TextArea from "../common/TextArea";
-import Cancel from "../common/btn/Cancel";
-import Submit from "../common/btn/Submit";
-import { getVector, addVector, deleteVector } from "../../actions/vector";
+import FormLabel from "../../common/FormLabel";
+import FormInput from "../../common/FormInput";
+import FormFile from "../../common/FormFile";
+import TextArea from "../../common/TextArea";
+import Cancel from "../../common/btn/Cancel";
+import Submit from "../../common/btn/Submit";
+import { getVector, addVector, deleteVector } from "../../../actions/vector";
+import VectorEdit from './vectorEdit';
+import VectorView from './vectorView';
+import VectorDelete from './vectorDelete';
 
 export default function Vector() {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [file_name, setFileName] = useState("")
     const [file, setFile] = useState(null)
+    const [dataId, setDataId] = useState(null)
+    const [editModal, setEditModal] = useState(false)
+    const [viewModal, setViewModal] = useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
     const dispatch = useDispatch();
 
     const vectors = useSelector((state) => state.vector.vector);
@@ -39,7 +46,6 @@ export default function Vector() {
         form_data.append("description", description);
         form_data.append("file_name", file_name);
         // form_data.append("project", localStorage.getItem("projectId"));
-        console.log(form_data.file);
         dispatch(addVector(form_data));
     
         setName("");
@@ -55,12 +61,19 @@ export default function Vector() {
         setFile(null);
         setFileName("");
       };
+    
+      const onDelete = (id) => {
+        dispatch(deleteVector(id))
+      }
 
     useEffect(() => {
         dispatch(getVector())
     }, [dispatch])
     return (
         <div>
+            <VectorView cond={viewModal} setCond={setViewModal}/>
+            <VectorEdit cond={editModal} setCond={setEditModal}/>
+            <VectorDelete cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete}/>
             <div className="row">
                 <div className="col-lg-6 required">
                     <FormLabel name="Name" />
@@ -97,7 +110,7 @@ export default function Vector() {
                 <Cancel onClick={onCancel} />
             </div>
             <div className="row mt-5">
-                <div className="col-lg-12">
+                <div className="col-lg-12 mt-5">
                     <h3>Vector List</h3>
                     <table className="table table-striped table-hover">
                         <thead>
@@ -105,7 +118,9 @@ export default function Vector() {
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>File</th>
-                                <th>Action</th>
+                                <th>View</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,9 +131,13 @@ export default function Vector() {
                                         <td>{vector.description}</td>
                                         <td>{vector.file_name}</td>
                                         <td>
-                                            <a href="." onClick={() => {
-                                                dispatch(deleteVector(vector.id))
-                                            }}>Delete</a>
+                                            <i className="fas fa-eye" onClick={() => setViewModal(true)}></i>
+                                        </td>
+                                        <td>
+                                            <i className="fas fa-edit" onClick={() => setEditModal(true)}></i>
+                                        </td>
+                                        <td>
+                                            <i className="fas fa-trash-alt" onClick={() => {setDataId(vector.id);setDeleteModal(true)}}></i>
                                         </td>
                                     </tr>
                                 );

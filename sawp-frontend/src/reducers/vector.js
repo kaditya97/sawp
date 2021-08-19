@@ -1,6 +1,7 @@
 import {
     GET_VECTOR,
     ADD_VECTOR,
+    UPDATE_VECTOR,
     DELETE_VECTOR
   } from "../actions/types";
   
@@ -16,6 +17,11 @@ import {
           vector: action.payload,
         };
       case ADD_VECTOR:
+        return {
+          ...state,
+          vector: action.payload,
+        };
+      case UPDATE_VECTOR:
         return {
           ...state,
           vector: action.payload,

@@ -18,12 +18,9 @@ export const getRaster = () => (dispatch, getState) => {
 };
 
 // Add Raster
-export const addRaster = (name, description) => (dispatch, getState) => {
-    //Request body
-    const body = JSON.stringify({ "name":name, "description":description });
-
+export const addRaster = (form_data) => (dispatch, getState) => {
     axios
-        .post("/api/suitability/raster/", body, tokenConfig(getState))
+        .post("/api/suitability/raster/", form_data, tokenConfigFile(getState))
         .then((res) => {
             dispatch({
                 type: ADD_RASTER,
@@ -50,6 +47,20 @@ export const tokenConfig = (getState) => {
     const config = {
         headers: {
             "content-type": "application/json",
+        },
+    };
+    if (token) {
+        config.headers["Authorization"] = `Token ${token}`;
+    }
+    return config;
+};
+
+//Setup config with token - helper function
+export const tokenConfigFile = (getState) => {
+    const token = getState().auth.token;
+    const config = {
+        headers: {
+            "content-type": "multipart/form-data",
         },
     };
     if (token) {

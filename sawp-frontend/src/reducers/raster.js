@@ -1,6 +1,8 @@
 import {
     GET_RASTER,
-    ADD_RASTER
+    ADD_RASTER,
+    UPDATE_RASTER,
+    DELETE_RASTER,
   } from "../actions/types";
   
   const initialState = {
@@ -15,6 +17,16 @@ import {
           raster: action.payload,
         };
       case ADD_RASTER:
+        return {
+          ...state,
+          raster: action.payload,
+        };
+      case UPDATE_RASTER:
+        return {
+          ...state,
+          raster: action.payload,
+        };
+      case DELETE_RASTER:
         return {
           ...state,
           raster: action.payload,

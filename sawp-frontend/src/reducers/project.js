@@ -1,6 +1,7 @@
 import {
     GET_PROJECT,
     ADD_PROJECT,
+    UPDATE_PROJECT,
     DELETE_PROJECT
   } from "../actions/types";
   
@@ -16,6 +17,11 @@ import {
           project: action.payload,
         };
       case ADD_PROJECT:
+        return {
+          ...state,
+          project: action.payload,
+        };
+      case UPDATE_PROJECT:
         return {
           ...state,
           project: action.payload,

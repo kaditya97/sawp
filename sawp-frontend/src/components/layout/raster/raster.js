@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import FormLabel from "../common/FormLabel";
-import FormInput from "../common/FormInput";
-import FormFile from "../common/FormFile";
-import TextArea from "../common/TextArea";
-import Cancel from "../common/btn/Cancel";
-import Submit from "../common/btn/Submit";
-import { getBoundary, addBoundary, deleteBoundary } from "../../actions/boundary";
+import FormLabel from "../../common/FormLabel";
+import FormInput from "../../common/FormInput";
+import FormFile from "../../common/FormFile";
+import TextArea from "../../common/TextArea";
+import Cancel from "../../common/btn/Cancel";
+import Submit from "../../common/btn/Submit";
+import { getRaster, addRaster, deleteRaster } from "../../../actions/raster";
+import RasterDelete from './rasterDelete';
+import RasterView from './rasterView';
+import RasterEdit from './rasterEdit';
 
-export default function Boundary() {
+export default function Raster() {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [file_name, setFileName] = useState("")
     const [file, setFile] = useState(null)
+    const [dataId, setDataId] = useState(null)
+    const [raster, setRaster] = useState("")
+    const [editModal, setEditModal] = useState(false)
+    const [viewModal, setViewModal] = useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
     const dispatch = useDispatch();
 
-    const boundarys = useSelector((state) => state.boundary.boundary);
+    const rasters = useSelector((state) => state.raster.raster);
     
       const onNameChange = (e) => {
         setName(e.target.value);
@@ -39,8 +47,7 @@ export default function Boundary() {
         form_data.append("description", description);
         form_data.append("file_name", file_name);
         // form_data.append("project", localStorage.getItem("projectId"));
-        console.log(form_data.file);
-        dispatch(addBoundary(form_data));
+        dispatch(addRaster(form_data));
     
         setName("");
         setDescription("");
@@ -56,18 +63,25 @@ export default function Boundary() {
         setFileName("");
       };
 
+      const onDelete = (id) => {
+        dispatch(deleteRaster(id))
+      }
+
       useEffect(() => {
-        dispatch(getBoundary())
+        dispatch(getRaster())
     }, [dispatch])
     return (
         <div>
+            <RasterView cond={viewModal} setCond={setViewModal} name={raster}/>
+            <RasterEdit cond={editModal} setCond={setEditModal}/>
+            <RasterDelete cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete}/>
             <div className="row">
                 <div className="col-lg-6 required">
                     <FormLabel name="Name" />
                     <FormInput
                         name={"Suitability"}
                         onChange={onNameChange}
-                        placeholder="Enter name of boundary..."
+                        placeholder="Enter name of raster..."
                         required="required"
                         value={name}
                     />
@@ -80,15 +94,15 @@ export default function Boundary() {
                         value={description}
                         rows="1"
                         onChange={onDescriptionChange}
-                        placeholder="Add description of the boundary..."
+                        placeholder="Add description of the raster..."
                     />
                 </div>
             </div>
             <div className="row col-lg-6">
                 <FormFile
                     onChange={handleFileChange}
-                    accept=".zip,.shp"
-                    placeholder="Upload boundary file"
+                    accept=".tif,.tiff,.geotiff"
+                    placeholder="Upload raster file"
                     value={file}
                 />
             </div>
@@ -97,28 +111,34 @@ export default function Boundary() {
                 <Cancel onClick={onCancel} />
             </div>
             <div className="row mt-5">
-                <div className="col-lg-12">
-                    <h3>Boundary List</h3>
+                <div className="col-lg-12 mt-5">
+                    <h3>Raster List</h3>
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>File</th>
-                                <th>Action</th>
+                                <th>View</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {boundarys.map((boundary) => {
+                            {rasters.map((raster) => {
                                 return (
-                                    <tr key={boundary.id}>
-                                        <td>{boundary.name}</td>
-                                        <td>{boundary.description}</td>
-                                        <td>{boundary.file_name}</td>
+                                    <tr key={raster.id}>
+                                        <td>{raster.name}</td>
+                                        <td>{raster.description}</td>
+                                        <td>{raster.file_name}</td>
                                         <td>
-                                            <a href="." onClick={() => {
-                                                dispatch(deleteBoundary(boundary.id))
-                                            }}>Delete</a>
+                                            <i className="fas fa-eye" onClick={() => {setRaster(raster.name) ; setViewModal(true)}}></i>
+                                        </td>
+                                        <td>
+                                            <i className="fas fa-edit" onClick={() => setEditModal(true)}></i>
+                                        </td>
+                                        <td>
+                                            <i className="fas fa-trash-alt" onClick={() => {setDataId(raster.id);setDeleteModal(true)}}></i>
                                         </td>
                                     </tr>
                                 );

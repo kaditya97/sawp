@@ -45,3 +45,27 @@
 .custom-scrollbars:hover > div:last-child {
 opacity: 1;
 }
+
+.fa-trash-alt {
+  cursor: pointer;
+  color: #e32;
+}
+
+.fa-edit {
+  cursor: pointer;
+  color: #0278ae;
+}
+
+.fa-eye {
+  cursor: pointer;
+  color: #ff7e67;
+}
+
+.layer-title {
+  color: $secondary-color;
+}
+
+.mapview{
+  height: 70vh;
+  width: 100%;
+}

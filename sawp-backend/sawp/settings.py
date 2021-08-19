@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_filters',
     'authentication',
     'suitability.apps.SuitabilityConfig',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 REST_FRAMEWORK = {

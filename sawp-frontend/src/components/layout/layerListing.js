@@ -1,11 +1,15 @@
 import React, {useState} from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
-export default function LayerListing() {
+export default function LayerListing(props) {
     const [layerListingToggle, setLayerListingToogle] = useState(true)
     const onLayerListingTogglerClick = (e) => {
         setLayerListingToogle(!layerListingToggle);
       };
+
+    const handleClick = (e) => {
+      e.target.checked ? props.setView(1.0) : props.setView(0.0);
+    };
 
     const layers = [
         {
@@ -74,7 +78,7 @@ export default function LayerListing() {
                     // defaultChecked={activeLayers.some(
                     //   (l) => l.id === layer.id
                     // )}
-                    // onChange={this.onChange.bind(this, layer)}
+                    onChange={handleClick}
                   />
                   <label htmlFor={layer.id}>{layer.name}</label>
                   {/* <i

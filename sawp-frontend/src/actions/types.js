@@ -15,6 +15,9 @@ export const CREATE_MESSAGE = "CREATE_MESSAGE";
 //AHP
 export const CALCULATE_AHP = "CALCULATE_AHP";
 
+// BBOX
+export const ADD_BBOX = "ADD_BBOX";
+
 //PROJECT
 export const ADD_PROJECT = "ADD_PROJECT";
 export const GET_PROJECT = "GET_PROJECT";
@@ -24,7 +27,7 @@ export const DELETE_PROJECT = "DELETE_PROJECT";
 //VECTOR
 export const ADD_VECTOR = "ADD_VECTOR";
 export const GET_VECTOR = "GET_VECTOR";
-export const UPATE_VECTOR = "UPATE_VECTOR";
+export const UPDATE_VECTOR = "UPATE_VECTOR";
 export const DELETE_VECTOR = "DELETE_VECTOR";
 
 //RASTER

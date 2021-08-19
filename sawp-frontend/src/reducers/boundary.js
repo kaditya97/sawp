@@ -1,6 +1,8 @@
 import {
     GET_BOUNDARY,
-    ADD_BOUNDARY
+    ADD_BOUNDARY,
+    UPDATE_BOUNDARY,
+    DELETE_BOUNDARY,
   } from "../actions/types";
   
   const initialState = {
@@ -15,6 +17,16 @@ import {
           boundary: action.payload,
         };
       case ADD_BOUNDARY:
+        return {
+          ...state,
+          boundary: action.payload,
+        };
+      case UPDATE_BOUNDARY:
+        return {
+          ...state,
+          boundary: action.payload,
+        };
+      case DELETE_BOUNDARY:
         return {
           ...state,
           boundary: action.payload,

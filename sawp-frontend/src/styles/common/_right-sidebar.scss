@@ -1,0 +1,43 @@
+.right-sidebar{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 500px;
+    height: 100%;
+    background-color: #ffffff;
+    transition: right .5s;
+}
+
+.scroll-y {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.right-sidebar-toggler{
+    position: absolute;
+    width: 38px;
+    height: 70px;
+    top: 50%;
+    left: -38px;
+    z-index: 900;
+    background-color: #ffffff;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.right-sidebar-close{
+    right: -500px;
+}
+
+.fa-caret-left {
+    position: absolute;
+    color: $secondary-color;
+    top: 50%;
+    right: 5px;
+    font-size: 1.5rem; 
+    transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    cursor: pointer;
+    padding: 8px;
+}

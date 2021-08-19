@@ -20,3 +20,8 @@ class BoundarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Boundary
         fields = '__all__'
+
+class SuitabilitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Suitability
+        fields = '__all__'
