@@ -17,6 +17,7 @@ export default function Vector() {
     const [file_name, setFileName] = useState("")
     const [file, setFile] = useState(null)
     const [dataId, setDataId] = useState(null)
+    const [vector, setVector] = useState(null)
     const [editModal, setEditModal] = useState(false)
     const [viewModal, setViewModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
@@ -71,7 +72,7 @@ export default function Vector() {
     }, [dispatch])
     return (
         <div>
-            <VectorView cond={viewModal} setCond={setViewModal}/>
+            <VectorView cond={viewModal} setCond={setViewModal} name={vector}/>
             <VectorEdit cond={editModal} setCond={setEditModal}/>
             <VectorDelete cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete}/>
             <div className="row">
@@ -100,7 +101,7 @@ export default function Vector() {
             <div className="row col-lg-6">
                 <FormFile
                     onChange={handleFileChange}
-                    accept=".zip,.shp"
+                    accept=".zip"
                     placeholder="Upload vector file"
                     value={file}
                 />
@@ -131,7 +132,7 @@ export default function Vector() {
                                         <td>{vector.description}</td>
                                         <td>{vector.file_name}</td>
                                         <td>
-                                            <i className="fas fa-eye" onClick={() => setViewModal(true)}></i>
+                                            <i className="fas fa-eye" onClick={() => {setVector(vector.file_name.split(".")[0]);setViewModal(true)}}></i>
                                         </td>
                                         <td>
                                             <i className="fas fa-edit" onClick={() => setEditModal(true)}></i>

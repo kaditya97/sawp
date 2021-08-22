@@ -24,7 +24,7 @@ export default function VectorEdit(props) {
     return (
         <>
             <Modal show={modal} onHide={handleClose} size="xl">
-                <Modal.Header closeButton>
+                <Modal.Header closeButton className="p-2">
                     <Modal.Title>Edit Vector Data</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

@@ -6,6 +6,8 @@ import project from "./project";
 import raster from "./raster";
 import vector from "./vector";
 import boundary from "./boundary";
+import suitability from "./suitability";
+import geoserver from "./geoserver";
 
 const rootReducer = combineReducers({
     auth,
@@ -14,7 +16,9 @@ const rootReducer = combineReducers({
     project,
     raster,
     vector,
-    boundary
+    boundary,
+    suitability,
+    geoserver,
 }); 
 
 export default rootReducer;

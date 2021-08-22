@@ -5,26 +5,26 @@ import {Modal} from 'react-bootstrap'
 import { Map, TileLayer, WMSTileLayer } from 'react-leaflet'
 import StyleChanger from '../styleChanger';
 
-export default function VectorView(props) {
+export default function BoundaryView(props) {
     const [modal, setModal] = useState(false)
     const handleClose = () => setModal(false)
     const [map, setMap] = useState(null)
-    const [style, setStyle] = useState("point")
+    const [style, setStyle] = useState("polygon")
     const dispatch = useDispatch();
 
     const styles = useSelector((state) => state.geoserver.styles);
     useEffect(() => {
-        dispatch(getVectorStyles());
+        dispatch(getVectorStyles())
         if(props.cond === true){
           setModal(true);
           props.setCond(false)
         }
-      }, [props.cond, props, dispatch]);
+      }, [props.cond, props, dispatch])
     return (
         <>
             <Modal show={modal} onHide={handleClose} size="lg" onEntered={() => map.invalidateSize()}>
                 <Modal.Header closeButton className="p-2 bg-warning text-sucess">
-                    <Modal.Title>View Vector Data</Modal.Title>
+                    <Modal.Title>View Boundary Data</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="p-0">
                     <div className="mapview">

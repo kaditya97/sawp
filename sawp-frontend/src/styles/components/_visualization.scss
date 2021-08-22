@@ -28,7 +28,7 @@ br {
 .legend-abs {
   position: absolute;
   width: 200px;
-  height: 50vh;
+  height: 40vh;
   bottom: 0;
   right: 0;
 }
@@ -100,13 +100,12 @@ br {
   padding: 10px;
   overflow-y: auto;
   height: 50vh;
-  width: 360px;
-  overflow-y: auto;
+  width: 300px;
 }
 
 %layer {
   position: absolute;
-  width: 360px;
+  width: 300px;
   padding: 0;
   box-shadow: 5px 5px 5px 0px rgba(69, 67, 69, 63);
 
@@ -124,7 +123,7 @@ br {
     .fa-eye-slash,
     .fa-edit {
       font-size: 1rem;
-      color: #ffffff;
+      color: $primary-color;
     }
 
     .fa-filter {
@@ -134,7 +133,7 @@ br {
   }
 
   .layers:hover {
-    background-color: $bg-color;
+    background-color: $primary-color-2;
     color: #ffffff;
   }
 
@@ -169,7 +168,7 @@ br {
 }
 
 .left-sidebar {
-  max-width: 360px;
+  max-width: 300px;
 
   .fas {
     font-size: 1.1rem;
@@ -192,7 +191,7 @@ br {
 }
 
 .layerListing-hide {
-  left: -360px;
+  left: -300px;
   position: absolute;
   top: 0;
 }
@@ -221,7 +220,7 @@ br {
 }
 
 .activeLayersList-hide {
-  left: -360px;
+  left: -300px;
   position: absolute;
   bottom: 0;
 }
@@ -264,6 +263,8 @@ br {
   overflow-x: hidden;
   overflow-y: hidden;
   box-shadow: -5px -5px 5px 0px rgba(69, 67, 69, 63);
+  height: 40vh;
+  background-color: white;
 }
 
 .vis-legend {

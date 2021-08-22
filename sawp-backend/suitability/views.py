@@ -13,7 +13,7 @@ import json
 import ahpy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-geo = Geoserver('http://127.0.0.1:8080/geoserver', username='admin', password='geoserver')
+geo = Geoserver('http://localhost:8080/geoserver', username='admin', password='geoserver')
 
 # class AHPViewSet(viewsets.ModelViewSet):
 @api_view(['GET', 'POST'])
@@ -72,7 +72,7 @@ class RasterViewSet(viewsets.ModelViewSet):
         name = request.data.get('name')
         file_name = request.data.get('file_name')
         file_path = f"D:/project/sawp/sawp-backend/media/raster/{file_name}"
-        geo.create_coveragestore(layer_name=name, path=file_path, workspace='swap')
+        geo.create_coveragestore(layer_name=name, path=file_path, workspace='sawp')
         raster = Raster.objects.all()
         serializers = RasterSerializer(raster, many=True)
         return Response(serializers.data)
@@ -80,7 +80,9 @@ class RasterViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         instance = Raster.objects.get(pk=pk)
+        name = instance.name
         self.perform_destroy(instance)
+        geo.delete_coveragestore(coveragestore_name=name, workspace='sawp')
         raster = Raster.objects.all()
         serializers = RasterSerializer(raster, many=True)
         return Response(serializers.data)
@@ -97,6 +99,10 @@ class VectorViewSet(viewsets.ModelViewSet):
         Serializer = self.get_serializer(data=request.data)
         Serializer.is_valid(raise_exception=True)
         self.perform_create(Serializer)
+        name = request.data.get('name')
+        file_name = request.data.get('file_name')
+        file_path = f"D:/project/sawp/sawp-backend/media/vector/{file_name}"
+        geo.create_shp_datastore(path=file_path, store_name=name, workspace='sawp')
         vector = Vector.objects.all()
         serializers = VectorSerializer(vector, many=True)
         return Response(serializers.data)
@@ -105,6 +111,7 @@ class VectorViewSet(viewsets.ModelViewSet):
         pk = self.kwargs.get('pk')
         instance = Vector.objects.get(pk=pk)
         self.perform_destroy(instance)
+        geo.delete_featurestore(featurestore_name=instance.name, workspace='sawp')
         vector = Vector.objects.all()
         serializers = VectorSerializer(vector, many=True)
         return Response(serializers.data)
@@ -121,6 +128,10 @@ class BoundaryViewSet(viewsets.ModelViewSet):
         Serializer = self.get_serializer(data=request.data)
         Serializer.is_valid(raise_exception=True)
         self.perform_create(Serializer)
+        name = request.data.get('name')
+        file_name = request.data.get('file_name')
+        file_path = f"D:/project/sawp/sawp-backend/media/boundary/{file_name}"
+        geo.create_shp_datastore(path=file_path, store_name=name, workspace='sawp')
         boundary = Boundary.objects.all()
         serializers = BoundarySerializer(boundary, many=True)
         return Response(serializers.data)
@@ -129,13 +140,25 @@ class BoundaryViewSet(viewsets.ModelViewSet):
         pk = self.kwargs.get('pk')
         instance = Boundary.objects.get(pk=pk)
         self.perform_destroy(instance)
+        geo.delete_featurestore(featurestore_name=instance.name, workspace='sawp')
         boundary = Boundary.objects.all()
         serializers = BoundarySerializer(boundary, many=True)
         return Response(serializers.data)
 
+# Suitability Viewset
 class SuitabilityViewSet(viewsets.ModelViewSet):
     queryset = Suitability.objects.all()
     serializer_class = SuitabilitySerializer
     parsers = (MultiPartParser, FormParser)
     def get_queryset(self):
+        css = geo.get_coveragestores()
+        print(css)
         return Suitability.objects.all()
+    
+    def create(self, request):
+        Serializer = self.get_serializer(data=request.data)
+        Serializer.is_valid(raise_exception=True)
+        self.perform_create(Serializer)
+        suitability = Suitability.objects.all()
+        serializers = SuitabilitySerializer(suitability, many=True)
+        return Response(serializers.data)

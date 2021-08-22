@@ -7,6 +7,9 @@ import TextArea from "../../common/TextArea";
 import Cancel from "../../common/btn/Cancel";
 import Submit from "../../common/btn/Submit";
 import { getBoundary, addBoundary, deleteBoundary } from "../../../actions/boundary";
+import BoundaryDelete from './boundaryDelete';
+import BoundaryView from './boundaryView';
+import BoundaryEdit from './boundaryEdit';
 
 export default function Boundary() {
     const [name, setName] = useState("")
@@ -14,6 +17,7 @@ export default function Boundary() {
     const [file_name, setFileName] = useState("")
     const [file, setFile] = useState(null)
     const [dataId, setDataId] = useState(null)
+    const [boundary, setBoundary] = useState(null)
     const [editModal, setEditModal] = useState(false)
     const [viewModal, setViewModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
@@ -43,7 +47,6 @@ export default function Boundary() {
         form_data.append("description", description);
         form_data.append("file_name", file_name);
         // form_data.append("project", localStorage.getItem("projectId"));
-        console.log(form_data.file);
         dispatch(addBoundary(form_data));
     
         setName("");
@@ -69,6 +72,9 @@ export default function Boundary() {
     }, [dispatch])
     return (
         <div>
+            <BoundaryView cond={viewModal} setCond={setViewModal} name={boundary}/>
+            <BoundaryEdit cond={editModal} setCond={setEditModal}/>
+            <BoundaryDelete cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete}/>
             <div className="row">
                 <div className="col-lg-6 required">
                     <FormLabel name="Name" />
@@ -95,7 +101,7 @@ export default function Boundary() {
             <div className="row col-lg-6">
                 <FormFile
                     onChange={handleFileChange}
-                    accept=".zip,.shp"
+                    accept=".zip"
                     placeholder="Upload boundary file"
                     value={file}
                 />
@@ -126,7 +132,7 @@ export default function Boundary() {
                                         <td>{boundary.description}</td>
                                         <td>{boundary.file_name}</td>
                                         <td>
-                                            <i className="fas fa-eye" onClick={() => setViewModal(true)}></i>
+                                            <i className="fas fa-eye" onClick={() => {setBoundary(boundary.file_name.split(".")[0]); setViewModal(true)}}></i>
                                         </td>
                                         <td>
                                             <i className="fas fa-edit" onClick={() => setEditModal(true)}></i>

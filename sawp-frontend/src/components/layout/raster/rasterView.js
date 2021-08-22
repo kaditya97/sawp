@@ -1,21 +1,29 @@
-import {useState, useEffect} from 'react'
+import React,{useState, useEffect} from 'react'
+import { useSelector, useDispatch } from "react-redux";
+import { getRasterStyles } from "../../../actions/geoserver"
 import {Modal} from 'react-bootstrap'
 import { Map, TileLayer, WMSTileLayer } from 'react-leaflet'
+import StyleChanger from '../styleChanger';
 
 export default function RasterView(props) {
     const [modal, setModal] = useState(false)
     const handleClose = () => setModal(false)
     const [map, setMap] = useState(null)
+    const [style, setStyle] = useState("raster_bw")
+    const dispatch = useDispatch();
+
+    const styles = useSelector((state) => state.geoserver.styles);
     useEffect(() => {
+        dispatch(getRasterStyles());
         if(props.cond === true){
           setModal(true);
           props.setCond(false)
         }
-      }, [props.cond, props])
+      }, [props.cond, props, dispatch]);
     return (
         <>
             <Modal show={modal} onHide={handleClose} size="lg" onEntered={() => map.invalidateSize()}>
-                <Modal.Header closeButton className="p-2">
+                <Modal.Header closeButton className="p-2 bg-warning text-sucess">
                     <Modal.Title>View Raster Data</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="p-0">
@@ -25,11 +33,13 @@ export default function RasterView(props) {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
                             <WMSTileLayer
-                                layers={`swap:${props.name}`}
+                                layers={`sawp:${props.name}`}
                                 url={`http://127.0.0.1:8080/geoserver/wms`}
+                                styles={[`sawp:${style}`]}
                                 transparent={true}
                                 format={'image/png'} 
                             />
+                            <StyleChanger styles={styles} setStyle={setStyle}/>
                         </Map>
                     </div>
                 </Modal.Body>

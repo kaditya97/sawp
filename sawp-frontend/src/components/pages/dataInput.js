@@ -6,15 +6,15 @@ import Boundary from '../layout/boundary/boundary';
 import Info from '../layout/info';
 
 function DataInput() {
-  const [helpInfo, setHelpInfo] = useState("Vector")
+  const [helpInfo, setHelpInfo] = useState("Zip shapefile before upload.")
   const vectorInfo = () => {
-    setHelpInfo("Vector")
+    setHelpInfo("Zip shapefile before upload.")
   }
   const rasterInfo = () => {
     setHelpInfo("Raster")
   }
   const boundaryInfo = () => {
-    setHelpInfo("Boundary")
+    setHelpInfo("Zip shapefile before upload. Upload only Polygon file, Multipolygon not supported.")
   }
     return (
       <div className="home">
