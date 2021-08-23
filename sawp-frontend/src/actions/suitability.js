@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-    GET_Suitability,
+    GET_SUITABILITY,
     ADD_SUITABILITY,
     DELETE_SUITABILITY,
 } from "./types";
@@ -11,7 +11,7 @@ export const getSuitability = () => (dispatch, getState) => {
         .get("/api/suitability/suitability/", tokenConfig(getState))
         .then((res) => {
             dispatch({
-                type: GET_Suitability,
+                type: GET_SUITABILITY,
                 payload: res.data,
             });
         });

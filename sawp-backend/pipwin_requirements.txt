@@ -1,1 +1,5 @@
 gdal
+fiona
+geopandas
+rasterio
+rioxarray

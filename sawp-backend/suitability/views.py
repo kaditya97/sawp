@@ -7,7 +7,9 @@ from rest_framework import viewsets
 from rest_framework import status
 from .models import *
 from .serializer import *
-import os
+from .suitability_calculation import *
+import tempfile
+import shutil
 from pathlib import Path
 import json
 import ahpy
@@ -152,13 +154,25 @@ class SuitabilityViewSet(viewsets.ModelViewSet):
     parsers = (MultiPartParser, FormParser)
     def get_queryset(self):
         css = geo.get_coveragestores()
-        print(css)
         return Suitability.objects.all()
     
     def create(self, request):
-        Serializer = self.get_serializer(data=request.data)
-        Serializer.is_valid(raise_exception=True)
-        self.perform_create(Serializer)
+        overlay = Suitability_calculation()
+        file_name = request.data.get('name') + '.tif'
+        file_path = f"D:/project/sawp/sawp-backend/media/suitability/{file_name}"
+        overlay.rio.to_raster(file_path)
+        Suitability.objects.create(name=request.data.get('name'), description=request.data.get('description'), file_name=file_name, file="suitability/" + file_name)
+        geo.create_coveragestore(layer_name=request.data.get('name'), path=file_path, workspace='sawp')
+        suitability = Suitability.objects.all()
+        serializers = SuitabilitySerializer(suitability, many=True)
+        return Response(serializers.data)
+
+    def destroy(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        instance = Suitability.objects.get(pk=pk)
+        name = instance.name
+        self.perform_destroy(instance)
+        geo.delete_coveragestore(coveragestore_name=name, workspace='sawp')
         suitability = Suitability.objects.all()
         serializers = SuitabilitySerializer(suitability, many=True)
         return Response(serializers.data)

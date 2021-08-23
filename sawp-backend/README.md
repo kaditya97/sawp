@@ -22,7 +22,7 @@ pip install pipwin
 pipwin refresh
 ```
 ```
-pip install -r pipwin_requirements.txt
+pipwin install -r pipwin_requirements.txt
 ```
 ### navigate to 
 venv/Lib/site-packages/django/contrib/gis/gdal/libgdal.py

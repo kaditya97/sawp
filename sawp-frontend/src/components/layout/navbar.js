@@ -90,7 +90,7 @@ class Navbar extends React.Component {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <Link to="/dataInput" className="nav-link">
-                  Data Input
+                  Data Management
                 </Link>
               </li>
               <li className="nav-item">

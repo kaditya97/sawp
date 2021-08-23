@@ -9,6 +9,7 @@ export default function RasterView(props) {
     const [modal, setModal] = useState(false)
     const handleClose = () => setModal(false)
     const [map, setMap] = useState(null)
+    const [opacity, setOpacity] = useState(1.0)
     const [style, setStyle] = useState("raster_bw")
     const dispatch = useDispatch();
 
@@ -36,10 +37,11 @@ export default function RasterView(props) {
                                 layers={`sawp:${props.name}`}
                                 url={`http://127.0.0.1:8080/geoserver/wms`}
                                 styles={[`sawp:${style}`]}
+                                opacity={opacity}
                                 transparent={true}
                                 format={'image/png'} 
                             />
-                            <StyleChanger styles={styles} setStyle={setStyle}/>
+                            <StyleChanger styles={styles} setStyle={setStyle} opacity={opacity} setOpacity={setOpacity}/>
                         </Map>
                     </div>
                 </Modal.Body>

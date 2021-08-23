@@ -4,14 +4,14 @@ import {
     GET_STYLES,
 } from "./types";
 
-var user = "admin";
-var pass = "geoserver";
-var authorizationBasic = window.btoa(user + ':' + pass);
-var config = {
-    "headers": {
-        "Authorization": "Basic " + authorizationBasic
-    }
-};
+// var user = "admin";
+// var pass = "geoserver";
+// var authorizationBasic = window.btoa(user + ':' + pass);
+// var config = {
+//     "headers": {
+//         "Authorization": "Basic " + authorizationBasic
+//     }
+// };
 // Get Layers
 export const getLayers = () => (dispatch) => {
     axios({
