@@ -7,9 +7,9 @@ import TextArea from "../../common/TextArea";
 import Cancel from "../../common/btn/Cancel";
 import Submit from "../../common/btn/Submit";
 import { getRaster, addRaster, deleteRaster } from "../../../actions/raster";
-import RasterDelete from './rasterDelete';
-import RasterView from './rasterView';
 import RasterEdit from './rasterEdit';
+import DeleteModal from '../deleteModal';
+import MapView from '../mapView';
 
 export default function Raster() {
     const [name, setName] = useState("")
@@ -72,9 +72,9 @@ export default function Raster() {
     }, [dispatch])
     return (
         <div>
-            <RasterView cond={viewModal} setCond={setViewModal} name={raster}/>
+            <MapView cond={viewModal} setCond={setViewModal} name={raster} type={"Raster"}/>
             <RasterEdit cond={editModal} setCond={setEditModal}/>
-            <RasterDelete cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete}/>
+            <DeleteModal cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete} type={"Raster"}/>
             <div className="row">
                 <div className="col-lg-6 required">
                     <FormLabel name="Name" />
