@@ -26,7 +26,6 @@ export default function LayerListing(props) {
         }`}
     >
       <div className="layerlisting-sidebar-overflow">
-        {/* layer listing toggler button  */}
         <div
           className="leaflet-control layerlisting-sidebar-btn"
           onClick={onLayerListingTogglerClick}
@@ -50,18 +49,13 @@ export default function LayerListing(props) {
                   name="layer"
                   id={layer.id}
                   defaultChecked={true}
-                  // defaultChecked={activeLayers.some(
-                  //   (l) => l.id === layer.id
-                  // )}
                   onChange={handleClick}
                 />
                 <label htmlFor={layer.id}>{layer.name}</label>
                 <i
                   className="fas fa-edit float-right position-relative mr-4 optionToggler"
-                  onClick={() => { }}
-                >
-
-                </i>
+                  onClick={() => {props.setStyleWindow(!props.styleWindow)}}
+                ></i>
               </div>
             ))}
           </Scrollbars>

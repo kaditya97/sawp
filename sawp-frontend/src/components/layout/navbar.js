@@ -26,11 +26,15 @@ class Navbar extends React.Component {
             </a>
             <div className="dropdown-menu dropdown-menu-right">
               <Link to="/user" className="dropdown-item">
-                User profile
+                <i className="fa fa-user"></i>  User profile
               </Link>
               <hr />
               <Link to="/project" className="dropdown-item">
-                Project
+                <i className="fa fa-database"></i>  Project
+              </Link>
+              <hr />
+              <Link to="/setting" className="dropdown-item">
+                <i className="fa fa-cogs"></i>  Settings
               </Link>
 
               <hr />
@@ -41,7 +45,7 @@ class Navbar extends React.Component {
                 className="dropdown-item"
                 style={{ cursor: "pointer" }}
                 >
-                Logout
+                <i className="fa fa-sign-out-alt"></i>  Logout
               </a>
             </div>
           </li>

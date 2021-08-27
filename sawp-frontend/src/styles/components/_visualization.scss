@@ -278,7 +278,7 @@ br {
   @extend %layer;
   right: 0;
   top: 0;
-  height: 100vh;
+  height: 89vh;
   z-index: 1000;
 }
 
@@ -290,7 +290,7 @@ br {
 
 .styleContainer-sidebar-overflow {
   @extend %vis;
-  height: calc(100vh - #{$nav-height});
+  height: 89vh;
   padding: 25px;
   box-shadow: -5px 0 5px 0px rgba(69, 67, 69, 63);
 }

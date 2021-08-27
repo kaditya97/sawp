@@ -13,6 +13,7 @@ import Login from "./components/auth/Login";
 import User from './components/pages/user';
 import Navbar from './components/layout/navbar';
 import Project from './components/pages/project';
+import Setting from './components/pages/setting';
 
 function Routes() {
     useEffect(() => {store.dispatch(loadUser());}, [])
@@ -27,6 +28,7 @@ function Routes() {
                 <PrivateRoute path='/visualization' exact component={Visualization} />
                 <PrivateRoute path='/user' exact component={User} />
                 <PrivateRoute path='/project' exact component={Project} />
+                <PrivateRoute path='/setting' exact component={Setting} />
                 <Route path='/signup' exact component={Signup} />
                 <Route path='/login' exact component={Login} />
             </Switch>

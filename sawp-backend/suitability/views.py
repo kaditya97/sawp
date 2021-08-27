@@ -158,6 +158,7 @@ class SuitabilityViewSet(viewsets.ModelViewSet):
     
     def create(self, request):
         overlay = Suitability_calculation()
+        print(overlay)
         file_name = request.data.get('name') + '.tif'
         file_path = f"D:/project/sawp/sawp-backend/media/suitability/{file_name}"
         overlay.rio.to_raster(file_path)
