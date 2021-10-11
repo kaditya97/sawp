@@ -11,17 +11,12 @@ const range = len => {
 const newPerson = () => {
   const statusChance = Math.random()
   return {
-    school: Math.floor(Math.random() * 10),
-    petrolStation: Math.floor(Math.random() * 10),
-    hospital: Math.floor(Math.random() * 10),
-    busPark: Math.floor(Math.random() * 10),
-    parking: Math.floor(Math.random() * 10),
-    status:
-      statusChance > 0.66
-        ? 'relationship'
-        : statusChance > 0.33
-        ? 'complicated'
-        : 'single',
+    Datas: Math.ceil(Math.random() * 30),
+    school: Math.ceil(Math.random() * 10),
+    petrolStation: Math.ceil(Math.random() * 10),
+    hospital: Math.ceil(Math.random() * 10),
+    busPark: Math.ceil(Math.random() * 10),
+    parking: Math.ceil(Math.random() * 10),
   }
 }
 

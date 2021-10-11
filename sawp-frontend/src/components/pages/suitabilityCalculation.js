@@ -8,6 +8,7 @@ import { deleteSuitability, getSuitability } from "../../actions/suitability"
 import MapView from '../layout/mapView';
 import DeleteModal from '../layout/deleteModal';
 import SuitabilityEdit from '../layout/suitability/suitabilityEdit';
+import Select from 'react-select'
 // import Ahp from '../layout/ahp_table'
 
 export default function SuitabilityCalculation() {
@@ -24,6 +25,10 @@ export default function SuitabilityCalculation() {
     const suitabilities = useSelector((state) => state.suitability.suitability);
     const [activeLayers, setActiveLayers] = useState([]);
     const [activeLayer, setActiveLayer] = useState(false);
+
+    const vectorOptions = vectors?.map((d) => ({value: d.id,label: d.name,}));
+    const rasterOptions = rasters?.map((d) => ({value: d.id,label: d.name,}));
+    const boundaryOptions = boundaries?.map((d) => ({value: d.id,label: d.name,}));
 
     const AllLayers = (props) => {
         return (
@@ -49,19 +54,6 @@ export default function SuitabilityCalculation() {
         dispatch(getSuitability())
     }, [dispatch])
 
-    const handleClick = (e) => {
-        if (e.target.checked) {
-            const layer = e.target.id;
-            activeLayers.push(layer);
-            setActiveLayers(activeLayers);
-        } else {
-            const index = activeLayers.indexOf(e.target.id);
-            if (index > -1) {
-                activeLayers.splice(index, 1);
-            }
-        }
-    }
-
     const onDelete = (id) => {
         dispatch(deleteSuitability(id))
     }
@@ -81,42 +73,32 @@ export default function SuitabilityCalculation() {
                         <div className="row mx-5">
                             <div className="col-md-3">
                                 <h2 className={"layer-title"}>Vector Layers</h2>
-                                {vectors.map((vector, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <div className="row">
-                                                <input type="checkbox" id={vector.name} onClick={handleClick} />&nbsp;&nbsp;
-                                                <label>{vector.name}</label>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
+                                <Select
+                                    isMulti
+                                    name="vector"
+                                    options={vectorOptions}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                />
                             </div>
                             <div className="col-md-3">
                                 <h2 className={"layer-title"}>Raster Layers</h2>
-                                {rasters.map((raster, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <div className="row">
-                                                <input type="checkbox" id={raster.name} onClick={handleClick} />&nbsp;&nbsp;
-                                                <label>{raster.name}</label>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
+                                <Select
+                                    isMulti
+                                    name="raster"
+                                    options={rasterOptions}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                />
                             </div>
                             <div className="col-md-3">
                                 <h2 className={"layer-title"}>Boundary Layers</h2>
-                                {boundaries.map((boundary, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <div className="row">
-                                                <input type="checkbox" id={boundary.name} onClick={handleClick} />&nbsp;&nbsp;
-                                                <label>{boundary.name}</label>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
+                                <Select
+                                    name="boundary"
+                                    options={boundaryOptions}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                />
                             </div>
                         </div>
                         <div className="row mx-5 d-flex justify-content-center mt-5">

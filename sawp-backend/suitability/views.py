@@ -20,10 +20,18 @@ geo = Geoserver('http://localhost:8080/geoserver', username='admin', password='g
 # class AHPViewSet(viewsets.ModelViewSet):
 @api_view(['GET', 'POST'])
 def calculate_ahp(request):
-        suitability_comparisons = {('school','fuel'): 1/3, ('school','hospital'): 1/2, ('fuel','hospital'): 3}
-        suitability = ahpy.Compare(name='Suitability', comparisons=suitability_comparisons, precision=3, random_index='saaty')
-        data = {'weights': suitability.target_weights, 'consistency_ratio': suitability.consistency_ratio}
-        return HttpResponse( json.dumps( data ) )
+    # suitability_comparisons = {('school','fuel'): 1/3, ('school','hospital'): 1/2, ('fuel','hospital'): 3}
+    arr = request.data
+    ahp = {}
+    for data in arr:
+        mainkey = next(iter(data.values()))
+        for key, value in data.items():
+            if mainkey != value:
+                ahp[(mainkey, key)] = value
+    print(ahp)
+    suitability = ahpy.Compare(name='Suitability', comparisons=ahp, precision=3, random_index='saaty')
+    data = {'weights': suitability.target_weights, 'consistency_ratio': suitability.consistency_ratio}
+    return HttpResponse( json.dumps( data ) )
 
 # Project ViewSet
 class ProjectViewSet(viewsets.ModelViewSet):
