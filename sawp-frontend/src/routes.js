@@ -14,6 +14,7 @@ import User from './components/pages/user';
 import Navbar from './components/layout/navbar';
 import Project from './components/pages/project';
 import Setting from './components/pages/setting';
+import Ahp from './components/layout/ahp_table';
 
 function Routes() {
     useEffect(() => {store.dispatch(loadUser());}, [])
@@ -23,14 +24,15 @@ function Routes() {
             <Navbar />
             <Switch>
                 <Route path='/' exact component={Home} />
+                <Route path='/signup' exact component={Signup} />
+                <Route path='/login' exact component={Login} />
+                <Route path='/ahp' exact component={Ahp} />
                 <PrivateRoute path='/dataInput' exact component={DataInput} />
                 <PrivateRoute path='/suitabilityCalculation' exact component={SuitabilityCalculation} />
                 <PrivateRoute path='/visualization' exact component={Visualization} />
                 <PrivateRoute path='/user' exact component={User} />
                 <PrivateRoute path='/project' exact component={Project} />
                 <PrivateRoute path='/setting' exact component={Setting} />
-                <Route path='/signup' exact component={Signup} />
-                <Route path='/login' exact component={Login} />
             </Switch>
         </HashRouter>
         </Provider>

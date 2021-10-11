@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useTable, usePagination } from 'react-table'
 import { calcAhp } from '../../actions/ahp'
 
-import makeData from './makeData'
-
 const Styles = styled.div`
   padding: 1rem;
 
@@ -127,11 +125,17 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
   )
 }
 
+const row_cols = ["School", "Petrol Station", "Hospital", "Bus park", "Parking"]
+
 function Ahp() {
   const ahp = useSelector(state => state.ahp.ahp)
   const dispatch = useDispatch()
   const columns = React.useMemo(
     () => [
+          {
+            Header: 'Datas',
+            accessor: 'datas',
+          },
           {
             Header: 'School',
             accessor: 'school',
@@ -156,7 +160,51 @@ function Ahp() {
     []
   )
 
-  const [data, setData] = React.useState(() => makeData(5))
+  const preData = [
+    {
+        "datas": "school",
+        "school": 1,
+        "petrolStation": 1,
+        "hospital": 5,
+        "busPark": 2,
+        "parking": 6
+    },
+    {
+        "datas": "petrolStation",
+        "school": 5,
+        "petrolStation": 1,
+        "hospital": 5,
+        "busPark": 7,
+        "parking": 5
+    },
+    {
+        "datas": "hospital",
+        "school": 4,
+        "petrolStation": 1,
+        "hospital": 1,
+        "busPark": 7,
+        "parking": 5
+    },
+    {
+        "datas": "busPark",
+        "school": 3,
+        "petrolStation": 5,
+        "hospital": 1,
+        "busPark": 1,
+        "parking": 9
+    },
+    {
+        "datas": "parking",
+        "school": 9,
+        "petrolStation": 1,
+        "hospital": 9,
+        "busPark": 3,
+        "parking": 1
+    }
+]
+
+  const [data, setData] = React.useState(preData)
+  const [finalData, setFinalData] = React.useState(null)
   const [originalData] = React.useState(data)
   const [skipPageReset, setSkipPageReset] = React.useState(false)
   const updateMyData = (rowIndex, columnId, value) => {
@@ -181,7 +229,9 @@ function Ahp() {
 
   const resetData = () => setData(originalData)
 
-  const calculateAHP = () => { dispatch(calcAhp()) }
+  const showData = () => setFinalData(data)
+
+  const calculateAHP = () => dispatch(calcAhp(data))
 
   return (
     <Styles>
@@ -192,8 +242,10 @@ function Ahp() {
         skipPageReset={skipPageReset}
       />
       <button onClick={resetData}>Reset Data</button>
+      <button onClick={showData}>Show Data</button>
       <button onClick={calculateAHP}>Calculate AHP</button>
-      <h5>{ahp.consistency_ratio}</h5>
+      <h5>{JSON.stringify(finalData)}</h5>
+      <h5>{JSON.stringify(ahp)}</h5>
     </Styles>
   )
 }
