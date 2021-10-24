@@ -1,6 +1,7 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import intro from '../../static/img/intro.svg';
+import banner from '../../static/img/banner.png';
 
 export default function Home() {
     return (
@@ -9,6 +10,15 @@ export default function Home() {
                 autoHeight
                 autoHeightMax={"89vh"}
                 className="custom-scrollbars">
+                {/* <section className="container-fluid col-12" style={{background: "#000022",minHeight: '581.006px'}}>
+                    <div className="row">
+                        <div className="col-8 m-auto">
+                            <div className="intro">
+                                Hi how are you
+                            </div>
+                        </div>
+                    </div>
+                </section> */}
                 <section class="view intro-2 rgba-gradient">
                     <div class="mask">
                         <div class="container h-100 d-flex justify-content-center align-items-center">

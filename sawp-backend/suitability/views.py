@@ -25,10 +25,12 @@ def calculate_ahp(request):
     ahp = {}
     for data in arr:
         mainkey = next(iter(data.values()))
-        for key, value in data.items():
-            if mainkey != value:
-                ahp[(mainkey, key)] = value
-    print(ahp)
+        for key, value in sorted(data.items()):
+            if mainkey != value and mainkey != key:
+                keyv = (mainkey, key)
+                ahpkey = tuple(sorted(keyv))
+                if ahpkey not in ahp:
+                    ahp[ahpkey] = value
     suitability = ahpy.Compare(name='Suitability', comparisons=ahp, precision=3, random_index='saaty')
     data = {'weights': suitability.target_weights, 'consistency_ratio': suitability.consistency_ratio}
     return HttpResponse( json.dumps( data ) )

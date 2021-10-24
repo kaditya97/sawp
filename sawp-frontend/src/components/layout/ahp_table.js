@@ -7,11 +7,35 @@ import { calcAhp } from '../../actions/ahp'
 const Styles = styled.div`
   padding: 1rem;
 
+  .disabled {
+    pointer-events: none;
+    background-color: #e6e6e6!important;
+    input{
+      background-color: #e6e6e6;
+    }
+  }
+
   table {
     border-spacing: 0;
     border: 1px solid black;
 
+    :first-child {
+    th{
+      :first-child{
+        color: white;
+      }
+    }
     tr {
+        td {
+          text-align: center;
+          :first-child {
+            input {
+              color: #000;
+              font-weight: bold;
+              pointer-events: none; // disable pointer events on inputs to prevent blue highlight on hover
+            }
+          }
+        }
       :last-child {
         td {
           border-bottom: 0;
@@ -31,6 +55,7 @@ const Styles = styled.div`
       }
 
       input {
+        max-width: 100%;
         font-size: 1rem;
         padding: 0;
         margin: 0;
@@ -103,7 +128,11 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <th {...column.getHeaderProps([
+                  {
+                    style: {maxWidth: '50px'},
+                  }
+                ])}>{column.render('Header')}</th>
               ))}
             </tr>
           ))}
@@ -113,8 +142,14 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
             prepareRow(row)
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                {row.cells.map((cell, j) => {
+                  if(j === 0){
+                    return <td {...cell.getCellProps({style: {maxWidth: 150}})}>{cell.render('Cell')}</td>
+                  }else if(j < i+2){
+                    return <td {...cell.getCellProps({style: {maxWidth: 150}})} className="disabled">{cell.render('Cell')}</td>
+                  }else{
+                    return <td {...cell.getCellProps({style: {maxWidth: 150}})}>{cell.render('Cell')}</td>
+                  }
                 })}
               </tr>
             )
@@ -125,85 +160,41 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
   )
 }
 
-const row_cols = ["School", "Petrol Station", "Hospital", "Bus park", "Parking"]
+const row_cols = ["school", "petrol Station", "hospital", "busPark", "parking","Highway","Hotel"]
+row_cols.sort()
+
+const dataset = () => {return row_cols.map((row) => {return {Header: row, accessor: row}})}
 
 function Ahp() {
   const ahp = useSelector(state => state.ahp.ahp)
   const dispatch = useDispatch()
+  const initial = [{Header: '',accessor: 'datas'}]
+  const finalArray = initial.concat(dataset())
   const columns = React.useMemo(
-    () => [
-          {
-            Header: 'Datas',
-            accessor: 'datas',
-          },
-          {
-            Header: 'School',
-            accessor: 'school',
-          },
-          {
-            Header: 'Petrol Station',
-            accessor: 'petrolStation',
-          },
-          {
-            Header: 'Hospital',
-            accessor: 'hospital',
-          },
-          {
-            Header: 'Bus Park',
-            accessor: 'busPark',
-          },
-          {
-            Header: 'Parking',
-            accessor: 'parking',
-          },
-    ],
-    []
+    () => finalArray,
+    [finalArray]
   )
 
-  const preData = [
-    {
-        "datas": "school",
-        "school": 1,
-        "petrolStation": 1,
-        "hospital": 5,
-        "busPark": 2,
-        "parking": 6
-    },
-    {
-        "datas": "petrolStation",
-        "school": 5,
-        "petrolStation": 1,
-        "hospital": 5,
-        "busPark": 7,
-        "parking": 5
-    },
-    {
-        "datas": "hospital",
-        "school": 4,
-        "petrolStation": 1,
-        "hospital": 1,
-        "busPark": 7,
-        "parking": 5
-    },
-    {
-        "datas": "busPark",
-        "school": 3,
-        "petrolStation": 5,
-        "hospital": 1,
-        "busPark": 1,
-        "parking": 9
-    },
-    {
-        "datas": "parking",
-        "school": 9,
-        "petrolStation": 1,
-        "hospital": 9,
-        "busPark": 3,
-        "parking": 1
-    }
-]
+  const pre = () => {
+    const arr = []
+    row_cols.forEach((row, i) => {
+      const obj = {}
+      obj["datas"]=row
+      for(let j=0; j<row_cols.length; j++){
+        if(row === row_cols[j]){
+          obj[row_cols[j]] = 1
+        }else if(i < j){
+          obj[row_cols[j]] = 1
+        }else{
+          obj[row_cols[j]] = ""
+        }
+      }
+      arr.push(obj)
+    })
+    return arr
+  }
 
-  const [data, setData] = React.useState(preData)
+  const [data, setData] = React.useState(pre())
   const [finalData, setFinalData] = React.useState(null)
   const [originalData] = React.useState(data)
   const [skipPageReset, setSkipPageReset] = React.useState(false)
