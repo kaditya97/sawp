@@ -20,7 +20,6 @@ geo = Geoserver('http://localhost:8080/geoserver', username='admin', password='g
 # class AHPViewSet(viewsets.ModelViewSet):
 @api_view(['GET', 'POST'])
 def calculate_ahp(request):
-    # suitability_comparisons = {('school','fuel'): 1/3, ('school','hospital'): 1/2, ('fuel','hospital'): 3}
     arr = request.data
     ahp = {}
     for data in arr:

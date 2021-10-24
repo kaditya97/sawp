@@ -3,7 +3,7 @@ import {
   } from "../actions/types";
   
   const initialState = {
-    ahp: []
+    ahp: null
   };
   
   export default function ahp(state = initialState, action) {

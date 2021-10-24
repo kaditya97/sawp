@@ -160,12 +160,11 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
   )
 }
 
-const row_cols = ["school", "petrol Station", "hospital", "busPark", "parking","Highway","Hotel"]
-row_cols.sort()
 
-const dataset = () => {return row_cols.map((row) => {return {Header: row, accessor: row}})}
-
-function Ahp() {
+function Ahp(props) {
+  const row_cols = props.array
+  row_cols.sort()
+  const dataset = () => {return row_cols.map((row) => {return {Header: row, accessor: row}})}
   const ahp = useSelector(state => state.ahp.ahp)
   const dispatch = useDispatch()
   const initial = [{Header: '',accessor: 'datas'}]
@@ -195,7 +194,6 @@ function Ahp() {
   }
 
   const [data, setData] = React.useState(pre())
-  const [finalData, setFinalData] = React.useState(null)
   const [originalData] = React.useState(data)
   const [skipPageReset, setSkipPageReset] = React.useState(false)
   const updateMyData = (rowIndex, columnId, value) => {
@@ -220,8 +218,6 @@ function Ahp() {
 
   const resetData = () => setData(originalData)
 
-  const showData = () => setFinalData(data)
-
   const calculateAHP = () => dispatch(calcAhp(data))
 
   return (
@@ -233,10 +229,8 @@ function Ahp() {
         skipPageReset={skipPageReset}
       />
       <button onClick={resetData}>Reset Data</button>
-      <button onClick={showData}>Show Data</button>
       <button onClick={calculateAHP}>Calculate AHP</button>
-      <h5>{JSON.stringify(finalData)}</h5>
-      <h5>{JSON.stringify(ahp)}</h5>
+      <h5>{ahp?JSON.stringify(ahp):null}</h5>
     </Styles>
   )
 }
