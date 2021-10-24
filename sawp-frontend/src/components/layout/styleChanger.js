@@ -16,7 +16,7 @@ export default function StyleChanger(props) {
             </div>
             <select class="form-select p-1 bg-info text-light" aria-label="style changer" onChange={handleChange}>
                 <option selected value="raster_bw">Choose Style</option>
-                {props.styles.styles.style.map((style, index) => {
+                {props.styles?.styles?.style.map((style, index) => {
                     return (
                         <option key={index} value={style.name}>{style.name}</option>
                     )
