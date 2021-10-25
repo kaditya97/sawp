@@ -4,7 +4,7 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import { getVector } from "../../actions/vector"
 import { getRaster } from "../../actions/raster"
 import { getBoundary } from "../../actions/boundary"
-import { deleteSuitability, getSuitability } from "../../actions/suitability"
+import { addSuitability, deleteSuitability, getSuitability } from "../../actions/suitability"
 import MapView from '../layout/mapView';
 import DeleteModal from '../layout/deleteModal';
 import SuitabilityEdit from '../layout/suitability/suitabilityEdit';
@@ -156,7 +156,7 @@ export default function SuitabilityCalculation() {
                                         </div>
                                         <div className="row mx-5 d-flex justify-content-center mt-2">
                                             {activeLayer && <div className="row mx-5 d-flex justify-content-center mt-2 mb-5">
-                                                <button onClick={() => window.alert("Suitability Calculated")}>Calculate Suitability</button>
+                                                <button onClick={() => dispatch(addSuitability())}>Calculate Suitability</button>
                                             </div>}
                                         </div>
                                     </div>

@@ -11,7 +11,7 @@ function Legend(props) {
             id: "1",
             name: "Final Overlay",
             workspace: "sawp",
-            layer_name: "final_overlay_geo",
+            layer_name: "final_suitability",
         }
     ];
 

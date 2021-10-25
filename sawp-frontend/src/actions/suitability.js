@@ -18,9 +18,10 @@ export const getSuitability = () => (dispatch, getState) => {
 };
 
 // Add Suitability
-export const addSuitability = (form_data) => (dispatch, getState) => {
+export const addSuitability = () => (dispatch, getState) => {
+    const form_data = JSON.stringify({"name": "suitable","description":"Testing","economic":0.55,"education":0.24,"fuel":0.21});
     axios
-        .post("/api/suitability/suitablility/", form_data, tokenConfigFile(getState))
+        .post("/api/suitability/suitability/", form_data, tokenConfig(getState))
         .then((res) => {
             dispatch({
                 type: ADD_SUITABILITY,

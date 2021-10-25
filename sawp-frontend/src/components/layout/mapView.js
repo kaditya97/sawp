@@ -10,7 +10,7 @@ export default function MapView(props) {
     const handleClose = () => setModal(false)
     const [map, setMap] = useState(null)
     const [opacity, setOpacity] = useState(1.0)
-    const [style, setStyle] = useState("raster_bw")
+    const [style, setStyle] = useState("general")
     const dispatch = useDispatch();
 
     const styles = useSelector((state) => state.geoserver.styles);

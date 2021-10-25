@@ -16,7 +16,7 @@ export default function Visualization() {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <WMSTileLayer
-                        layers={`sawp:final_overlay_geo`}
+                        layers={`sawp:final_suitability`}
                         url={`http://127.0.0.1:8080/geoserver/wms`}
                         transparent={true}
                         opacity={opacity}

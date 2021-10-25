@@ -28,10 +28,16 @@ export const getLayers = () => (dispatch) => {
 
 // Get Styles
 export const getRasterStyles = () => (dispatch) => {
+    var username = "admin";
+    var password = "geoserver";
+    const token = Buffer.from(`${username}:${password}`, 'utf8').toString('base64')
     axios({
         method: "get",
         url: `/rest/workspaces/sawp/styles.json`,
         baseURL: process.env.REACT_APP_GEOSERVER_URL,
+        headers: {
+            'Authorization': `Basic ${token}`
+        },
     }).then((res) => {
         dispatch({
             type: GET_STYLES,
