@@ -1,6 +1,7 @@
 import axios from "axios";
 import WMSCapabilities from "wms-capabilities";
 import {
+    VECTOR_LOADING,
     GET_VECTOR,
     ADD_VECTOR,
     UPDATE_VECTOR,
@@ -22,6 +23,7 @@ export const getVector = () => (dispatch, getState) => {
 
 // Add Vector
 export const addVector = (form_data) => (dispatch, getState) => {
+    dispatch({type: VECTOR_LOADING})
     axios
         .post("/api/suitability/vector/", form_data, tokenConfigFile(getState))
         .then((res) => {
@@ -34,6 +36,7 @@ export const addVector = (form_data) => (dispatch, getState) => {
 
 // Update Vector
 export const updateVector = (form_data) => (dispatch, getState) => {
+    dispatch({type: VECTOR_LOADING})
     axios
         .put("/api/suitability/vector/", form_data, tokenConfigFile(getState))
         .then((res) => {
@@ -46,6 +49,7 @@ export const updateVector = (form_data) => (dispatch, getState) => {
 
 // Delete Vector
 export const deleteVector = (id) => (dispatch, getState) => {
+    dispatch({type: VECTOR_LOADING})
     axios
         .delete(`/api/suitability/vector/${id}`, tokenConfig(getState))
         .then((res) => {

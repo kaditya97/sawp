@@ -32,6 +32,8 @@ export const loadUser = () => (dispatch, getState) => {
 
 // Login
 export const login = (username, password) => (dispatch) => {
+  //user loading
+  dispatch({ type: USER_LOADING });
   //Headers
   const config = {
     headers: {

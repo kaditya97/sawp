@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Routes from './routes';
 import reportWebVitals from './reportWebVitals';
+import { ToastContainer } from 'react-toastify';
 import './styles/style.scss';
+  import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
     
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
@@ -10,6 +12,7 @@ axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 ReactDOM.render(
   <React.StrictMode>
     <Routes />
+    <ToastContainer />
   </React.StrictMode>,
   document.getElementById('root')
 );

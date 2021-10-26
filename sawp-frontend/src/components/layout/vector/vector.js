@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import ReactLoading from 'react-loading';
 import FormLabel from "../../common/FormLabel";
 import FormInput from "../../common/FormInput";
 import FormFile from "../../common/FormFile";
@@ -12,6 +13,7 @@ import VectorView from './vectorView';
 import VectorDelete from './vectorDelete';
 
 export default function Vector() {
+    const [isLoading, setIsLoading] = useState(false);
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [file_name, setFileName] = useState("")
@@ -24,6 +26,7 @@ export default function Vector() {
     const dispatch = useDispatch();
 
     const vectors = useSelector((state) => state.vector.vector);
+    const loading = useSelector((state) => state.vector.loading);
     
       const onNameChange = (e) => {
         setName(e.target.value);
@@ -68,10 +71,14 @@ export default function Vector() {
       }
 
     useEffect(() => {
+        setIsLoading(loading)
         dispatch(getVector())
-    }, [dispatch])
+    }, [dispatch, loading])
     return (
         <div>
+            {isLoading ? 
+            <ReactLoading type={"spokes"} color={"#116f85"} height={100} width={100} /> :
+            <div>
             <VectorView cond={viewModal} setCond={setViewModal} name={vector}/>
             <VectorEdit cond={editModal} setCond={setEditModal}/>
             <VectorDelete cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete}/>
@@ -147,6 +154,7 @@ export default function Vector() {
                     </table>
                 </div>
             </div>
+        </div>}
         </div>
     )
 }

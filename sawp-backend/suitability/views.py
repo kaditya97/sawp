@@ -15,6 +15,7 @@ import json
 import ahpy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+base = str(BASE_DIR).replace('\\', '/')
 geo = Geoserver('http://localhost:8080/geoserver', username='admin', password='geoserver')
 
 # class AHPViewSet(viewsets.ModelViewSet):
@@ -82,7 +83,7 @@ class RasterViewSet(viewsets.ModelViewSet):
         self.perform_create(Serializer)
         name = request.data.get('name')
         file_name = request.data.get('file_name')
-        file_path = f"D:/project/sawp/sawp-backend/media/raster/{file_name}"
+        file_path = f"{base}/media/raster/{file_name}"
         geo.create_coveragestore(layer_name=name, path=file_path, workspace='sawp')
         raster = Raster.objects.all()
         serializers = RasterSerializer(raster, many=True)
@@ -112,7 +113,7 @@ class VectorViewSet(viewsets.ModelViewSet):
         self.perform_create(Serializer)
         name = request.data.get('name')
         file_name = request.data.get('file_name')
-        file_path = f"D:/project/sawp/sawp-backend/media/vector/{file_name}"
+        file_path = f"{base}/media/vector/{file_name}"
         geo.create_shp_datastore(path=file_path, store_name=name, workspace='sawp')
         vector = Vector.objects.all()
         serializers = VectorSerializer(vector, many=True)
@@ -141,7 +142,7 @@ class BoundaryViewSet(viewsets.ModelViewSet):
         self.perform_create(Serializer)
         name = request.data.get('name')
         file_name = request.data.get('file_name')
-        file_path = f"D:/project/sawp/sawp-backend/media/boundary/{file_name}"
+        file_path = f"{base}/media/boundary/{file_name}"
         geo.create_shp_datastore(path=file_path, store_name=name, workspace='sawp')
         boundary = Boundary.objects.all()
         serializers = BoundarySerializer(boundary, many=True)
@@ -166,14 +167,12 @@ class SuitabilityViewSet(viewsets.ModelViewSet):
         return Suitability.objects.all()
     
     def create(self, request):
-        print(request.data)
-        overlay = Suitability_calculation()
-        # print(overlay)
-        file_name = request.data.get('name') + '.tif'
-        file_path = f"D:/project/sawp/sawp-backend/media/suitability/{file_name}"
+        overlay = Suitability_calculation(request.data.get('weights'))
+        file_name = request.data.get('sname') + '.tif'
+        file_path = f"{base}/media/suitability/{file_name}"
         overlay.rio.to_raster(file_path)
-        Suitability.objects.create(name=request.data.get('name'), description=request.data.get('description'), file_name=file_name, file="suitability/" + file_name)
-        geo.create_coveragestore(layer_name=request.data.get('name'), path=file_path, workspace='sawp')
+        Suitability.objects.create(name=request.data.get('sname'), description=request.data.get('description'), file_name=file_name, file="suitability/" + file_name)
+        geo.create_coveragestore(layer_name=request.data.get('sname'), path=file_path, workspace='sawp')
         suitability = Suitability.objects.all()
         serializers = SuitabilitySerializer(suitability, many=True)
         return Response(serializers.data)

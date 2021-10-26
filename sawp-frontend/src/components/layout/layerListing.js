@@ -8,18 +8,9 @@ export default function LayerListing(props) {
   };
 
   const handleClick = (e) => {
-    e.target.checked ? props.setView(1.0) : props.setView(0.0);
+    e.target.checked ? props.setLayer('suitable') : props.setLayer(null);
     e.target.checked ? props.setLegendWindow(true) : props.setLegendWindow(false);
   };
-
-  const layers = [
-    {
-      id: "1",
-      name: "Final Overlay",
-      workspace: "swap",
-      layer_name: "final_overlay_geo",
-    }
-  ]
   return (
     <div
       className={`leaflet-control ${layerListingToggle ? "layerListing" : "layerListing-hide"
@@ -41,14 +32,14 @@ export default function LayerListing(props) {
             autoHeightMax={270}
             className="custom-scrollbars">
 
-            {layers.map((layer) => (
+            {props.layers?.map((layer) => (
               <div key={layer.id} className="layers" style={{ verticalAlign: "middle" }}>
                 <input
                   type="checkbox"
                   className="mr-2"
                   name="layer"
                   id={layer.id}
-                  defaultChecked={true}
+                  defaultChecked={false}
                   onChange={handleClick}
                 />
                 <label htmlFor={layer.id}>{layer.name}</label>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import intro from '../../static/img/intro.svg';
-import banner from '../../static/img/banner.png';
+// import banner from '../../static/img/banner.png';
 
 export default function Home() {
     return (

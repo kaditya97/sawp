@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTable, usePagination } from 'react-table'
 import { calcAhp } from '../../actions/ahp'
+import { addSuitability } from "../../actions/suitability"
+
 
 const Styles = styled.div`
   padding: 1rem;
@@ -130,7 +132,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
               {headerGroup.headers.map(column => (
                 <th {...column.getHeaderProps([
                   {
-                    style: {maxWidth: '50px'},
+                    style: { maxWidth: '50px' },
                   }
                 ])}>{column.render('Header')}</th>
               ))}
@@ -143,12 +145,12 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell, j) => {
-                  if(j === 0){
-                    return <td {...cell.getCellProps({style: {maxWidth: 150}})}>{cell.render('Cell')}</td>
-                  }else if(j < i+2){
-                    return <td {...cell.getCellProps({style: {maxWidth: 150}})} className="disabled">{cell.render('Cell')}</td>
-                  }else{
-                    return <td {...cell.getCellProps({style: {maxWidth: 150}})}>{cell.render('Cell')}</td>
+                  if (j === 0) {
+                    return <td {...cell.getCellProps({ style: { maxWidth: 150 } })}>{cell.render('Cell')}</td>
+                  } else if (j < i + 2) {
+                    return <td {...cell.getCellProps({ style: { maxWidth: 150 } })} className="disabled">{cell.render('Cell')}</td>
+                  } else {
+                    return <td {...cell.getCellProps({ style: { maxWidth: 150 } })}>{cell.render('Cell')}</td>
                   }
                 })}
               </tr>
@@ -164,10 +166,10 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
 function Ahp(props) {
   const row_cols = props.array
   row_cols.sort()
-  const dataset = () => {return row_cols.map((row) => {return {Header: row, accessor: row}})}
+  const dataset = () => { return row_cols.map((row) => { return { Header: row, accessor: row } }) }
   const ahp = useSelector(state => state.ahp.ahp)
   const dispatch = useDispatch()
-  const initial = [{Header: '',accessor: 'datas'}]
+  const initial = [{ Header: '', accessor: 'datas' }]
   const finalArray = initial.concat(dataset())
   const columns = React.useMemo(
     () => finalArray,
@@ -178,13 +180,13 @@ function Ahp(props) {
     const arr = []
     row_cols.forEach((row, i) => {
       const obj = {}
-      obj["datas"]=row
-      for(let j=0; j<row_cols.length; j++){
-        if(row === row_cols[j]){
+      obj["datas"] = row
+      for (let j = 0; j < row_cols.length; j++) {
+        if (row === row_cols[j]) {
           obj[row_cols[j]] = 1
-        }else if(i < j){
+        } else if (i < j) {
           obj[row_cols[j]] = 1
-        }else{
+        } else {
           obj[row_cols[j]] = ""
         }
       }
@@ -220,6 +222,8 @@ function Ahp(props) {
 
   const calculateAHP = () => dispatch(calcAhp(data))
 
+  const submitSuitability = () => dispatch(addSuitability(props.sname, props.description, ahp?.weights))
+
   return (
     <Styles>
       <Table
@@ -228,9 +232,16 @@ function Ahp(props) {
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
       />
-      <button onClick={resetData}>Reset Data</button>
-      <button onClick={calculateAHP}>Calculate AHP</button>
-      <h5>{ahp?JSON.stringify(ahp):null}</h5>
+      <div className="row mt-2 d-flex justify-content-center">
+        <button className="btn btn-warning ml-3" onClick={resetData}>Reset Data</button>
+        <button className="btn btn-primary ml-2" onClick={calculateAHP}>Calculate AHP</button>
+      </div>
+      <h5>{ahp ? JSON.stringify(ahp) : null}</h5>
+      {ahp ? <div className="row mx-5 d-flex justify-content-center mt-2">
+        <div className="row mx-5 d-flex justify-content-center mt-2 mb-5">
+          <button className="btn btn-success" onClick={() => submitSuitability()}>Calculate Suitability</button>
+        </div>
+      </div> : null}
     </Styles>
   )
 }

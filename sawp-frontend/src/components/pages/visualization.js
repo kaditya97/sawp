@@ -1,34 +1,66 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from "react-redux";
 import { Map, TileLayer, WMSTileLayer } from 'react-leaflet'
+import ReactLoading from 'react-loading';
+import { toast } from 'react-toastify';
+import { getSuitability } from "../../actions/suitability"
 import LayerListing from '../layout/layerListing'
 import Legend from '../layout/legend';
 import Style from '../layout/style';
 
 export default function Visualization() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [layer, setLayer] = useState('final_suitability');
+    const [style, setStyle] = useState('raster_web');
     const [opacity, setOpacity] = useState(1.0)
     const [legendWindow, setLegendWindow] = useState(true)
     const [styleWindow, setStyleWindow] = useState(false)
+    const dispatch = useDispatch()
+
+    const suitabilities = useSelector((state) => state.suitability.suitability);
+    const loading = useSelector((state) => state.suitability.loading);
+
+    useEffect(() => {
+        toast.dismiss()
+        toast("Loading Suitability Map...")
+        setIsLoading(loading);
+        dispatch(getSuitability())
+    }, [dispatch, loading])
     return (
         <div className="visualization">
-            <div style={{ height: "89vh", width: "100%" }}>
-                <Map center={[28.20, 84.0]} zoom={12} zoomControl={false}>
-                    <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <WMSTileLayer
-                        layers={`sawp:final_suitability`}
-                        url={`http://127.0.0.1:8080/geoserver/wms`}
-                        transparent={true}
-                        opacity={opacity}
-                        format={'image/png'}
-                    />
-                </Map>
-                <div className="left-sidebar">
-                    <LayerListing view={opacity} setView={setOpacity} setLegendWindow={setLegendWindow} styleWindow={styleWindow} setStyleWindow={setStyleWindow}/>
+            {isLoading ?
+                <div className="d-flex justify-content-center align-items-center" style={{ height: "89vh", width: "100%" }}>
+                    <ReactLoading type={"spokes"} color={"#116f85"} height={100} width={100} />
+                </div> :
+                <div style={{ height: "89vh", width: "100%" }}>
+                    <Map center={[28.20, 84.0]} zoom={12} zoomControl={false}>
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <WMSTileLayer
+                            layers={`sawp:${layer}`}
+                            url={`http://127.0.0.1:8080/geoserver/wms`}
+                            styles={[`sawp:${style}`]}
+                            transparent={true}
+                            opacity={opacity}
+                            format={'image/png'}
+                        />
+                    </Map>
+                    <div className="left-sidebar">
+                        <LayerListing
+                            layers={suitabilities}
+                            layer={layer}
+                            setLayer={setLayer}
+                            view={opacity}
+                            setView={setOpacity}
+                            setLegendWindow={setLegendWindow}
+                            styleWindow={styleWindow}
+                            setStyleWindow={setStyleWindow} />
+                    </div>
+                    {styleWindow && <Style styleWindow={styleWindow} setStyleWindow={setStyleWindow} />}
+                    {opacity !== 0.0 ? <Legend legendWindow={legendWindow} setLegendWindow={setLegendWindow} /> : null}
                 </div>
-                {styleWindow && <Style styleWindow={styleWindow} setStyleWindow={setStyleWindow}/>}
-                {opacity !== 0.0 ? <Legend legendWindow={legendWindow} setLegendWindow={setLegendWindow}/> : null}
-            </div>
+            }
         </div>
     )
 }

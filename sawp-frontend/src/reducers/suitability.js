@@ -6,7 +6,8 @@ import {
   } from "../actions/types";
   
   const initialState = {
-    suitability: []
+    suitability: null,
+    loading: true
   };
   
   export default function suitability(state = initialState, action) {
@@ -15,21 +16,25 @@ import {
         return {
           ...state,
           suitability: action.payload,
+          loading: false
         };
       case ADD_SUITABILITY:
         return {
           ...state,
           suitability: action.payload,
+          loading: false
         };
       case UPDATE_SUITABILITY:
         return {
           ...state,
           suitability: action.payload,
+          loading: false
         };
       case DELETE_SUITABILITY:
         return {
           ...state,
           suitability: action.payload,
+          loading: false
         };
       default:
         return state;

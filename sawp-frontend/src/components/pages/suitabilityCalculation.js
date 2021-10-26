@@ -4,11 +4,15 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import { getVector } from "../../actions/vector"
 import { getRaster } from "../../actions/raster"
 import { getBoundary } from "../../actions/boundary"
-import { addSuitability, deleteSuitability, getSuitability } from "../../actions/suitability"
+import { deleteSuitability, getSuitability } from "../../actions/suitability"
 import MapView from '../layout/mapView';
 import DeleteModal from '../layout/deleteModal';
 import SuitabilityEdit from '../layout/suitability/suitabilityEdit';
 import Select from 'react-select'
+import FormLabel from "../common/FormLabel";
+import FormInput from "../common/FormInput";
+import TextArea from "../common/TextArea";
+import Info from '../layout/info';
 import Ahp from '../layout/ahp_table'
 
 export default function SuitabilityCalculation() {
@@ -17,13 +21,15 @@ export default function SuitabilityCalculation() {
     const [editModal, setEditModal] = useState(false)
     const [viewModal, setViewModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
+    const [sname, setSname] = React.useState('')
+    const [description, setDescription] = React.useState('')
     const dispatch = useDispatch();
 
     const vectors = useSelector((state) => state.vector.vector);
     const rasters = useSelector((state) => state.raster.raster);
     const boundaries = useSelector((state) => state.boundary.boundary);
     const suitabilities = useSelector((state) => state.suitability.suitability);
-    const [activeLayers, setActiveLayers] = useState([]);
+    const [activeLayers, setActiveLayers] = useState(null);
     const [vectorLayers, setVectorLayers] = useState([]);
     const [rasterLayers, setRasterLayers] = useState([]);
     const [activeLayer, setActiveLayer] = useState(false);
@@ -37,6 +43,7 @@ export default function SuitabilityCalculation() {
         let array = [];
         selectedOption.map((item) => {
             array.push(item.label);
+            return null
         });
         setVectorLayers(array);
         setActiveLayers(array.concat(rasterLayers));
@@ -47,9 +54,22 @@ export default function SuitabilityCalculation() {
         let array = [];
         selectedOption.map((item) => {
             array.push(item.label);
+            return null
         });
         setRasterLayers(array);
         setActiveLayers(vectorLayers.concat(array));
+    };
+
+    const onDelete = (id) => {
+        dispatch(deleteSuitability(id))
+    }
+
+    const onNameChange = (e) => {
+        setSname(e.target.value);
+    };
+
+    const onDescriptionChange = (e) => {
+        setDescription(e.target.value);
     };
 
     useEffect(() => {
@@ -58,11 +78,6 @@ export default function SuitabilityCalculation() {
         dispatch(getBoundary())
         dispatch(getSuitability())
     }, [dispatch])
-
-    const onDelete = (id) => {
-        dispatch(deleteSuitability(id))
-    }
-
     return (
         <>
             <MapView cond={viewModal} setCond={setViewModal} name={suitability} type={"Suitability"} />
@@ -107,57 +122,80 @@ export default function SuitabilityCalculation() {
                                         </a>
                                     </li>
                                 </ul>
-                                <div className="tab-content" id="myTabContent" style={{minHeight: "60vh"}}>
+                                <div className="tab-content" id="myTabContent" style={{ minHeight: "60vh" }}>
                                     <div
                                         className="tab-pane fade show active"
                                         id="calculation"
                                         role="tabpanel"
                                         aria-labelledby="calculation-tab"
                                     >
-                                        <div className="col-md-4 d-inline-block">
-                                            <h2 className={"layer-title"}>Vector Layers</h2>
-                                            <Select
-                                                isMulti
-                                                name="vector"
-                                                options={vectorOptions}
-                                                onChange={(v) => handleVectorChange(v)}
-                                                className="basic-multi-select"
-                                                classNamePrefix="select"
-                                            />
+                                        <div className="row">
+                                            <div className="col-lg-6 required">
+                                                <FormLabel name="Suitability Name" />
+                                                <FormInput
+                                                    name={"sname"}
+                                                    onChange={onNameChange}
+                                                    placeholder="Enter name for suitability..."
+                                                    required="required"
+                                                    value={sname}
+                                                />
+                                            </div>
+
+                                            <div className="col-lg-6 ">
+                                                <FormLabel name="Description" />
+                                                <TextArea
+                                                    name="description"
+                                                    value={description}
+                                                    rows="1"
+                                                    required="required"
+                                                    onChange={onDescriptionChange}
+                                                    placeholder="Add description for suitability..."
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="col-md-4 d-inline-block">
-                                            <h2 className={"layer-title"}>Raster Layers</h2>
-                                            <Select
-                                                isMulti
-                                                name="raster"
-                                                options={rasterOptions}
-                                                onChange={(v) => handleRasterChange(v)}
-                                                className="basic-multi-select"
-                                                classNamePrefix="select"
-                                            />
-                                        </div>
-                                        <div className="col-md-4 d-inline-block">
-                                            <h2 className={"layer-title"}>Boundary Layers</h2>
-                                            <Select
-                                                name="boundary"
-                                                options={boundaryOptions}
-                                                className="basic-multi-select"
-                                                classNamePrefix="select"
-                                            />
+                                        <div className="row">
+                                            <div className="col-md-4 d-inline-block">
+                                                <FormLabel name="Vector Layers" />
+                                                <Select
+                                                    isMulti
+                                                    name="vector"
+                                                    options={vectorOptions}
+                                                    onChange={(v) => handleVectorChange(v)}
+                                                    className="basic-multi-select"
+                                                    classNamePrefix="select"
+                                                />
+                                            </div>
+                                            <div className="col-md-4 d-inline-block">
+                                                <FormLabel name="Raster Layers" />
+                                                <Select
+                                                    isMulti
+                                                    name="raster"
+                                                    options={rasterOptions}
+                                                    onChange={(v) => handleRasterChange(v)}
+                                                    className="basic-multi-select"
+                                                    classNamePrefix="select"
+                                                />
+                                            </div>
+                                            <div className="col-md-4 d-inline-block">
+                                                <FormLabel name="Boundary Layers" />
+                                                <Select
+                                                    name="boundary"
+                                                    options={boundaryOptions}
+                                                    className="basic-multi-select"
+                                                    classNamePrefix="select"
+                                                />
+                                            </div>
                                         </div>
                                         {/* <div className="row mx-5 d-flex justify-content-center mt-5">
                                         <a href="https://bpmsg.com/ahp/ahp-calc.php" rel="noreferrer" target="_blank"><button>Calculate Weightages using Ahp   <i className="fa fa-external-link-alt"></i></button></a>
                                             </div> */}
                                         <div className="row mx-5 d-flex justify-content-center mt-5">
-                                            <button onClick={() => setActiveLayer(!activeLayer)}>{activeLayer ? "Hide AHP Table":"Show AHP Table"}</button>
+                                            {activeLayers ?
+                                                <button className="btn btn-primary" onClick={() => setActiveLayer(!activeLayer)}>{activeLayer ? "Hide AHP Table" : "Show AHP Table"}</button>
+                                                : <button className="btn btn-info">Select Layers First</button>}
                                         </div>
-                                        <div className="row mx-5">
-                                            {activeLayer && <Ahp array={activeLayers} />}
-                                        </div>
-                                        <div className="row mx-5 d-flex justify-content-center mt-2">
-                                            {activeLayer && <div className="row mx-5 d-flex justify-content-center mt-2 mb-5">
-                                                <button onClick={() => dispatch(addSuitability())}>Calculate Suitability</button>
-                                            </div>}
+                                        <div className="row mx-auto d-flex justify-content-start overflow-auto">
+                                            {activeLayer && <Ahp sname={sname} description={description} array={activeLayers} />}
                                         </div>
                                     </div>
                                     <div
@@ -181,7 +219,7 @@ export default function SuitabilityCalculation() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {suitabilities.map((suitability) => {
+                                                        {suitabilities?.map((suitability) => {
                                                             return (
                                                                 <tr key={suitability.id}>
                                                                     <td>{suitability.name}</td>
@@ -205,6 +243,9 @@ export default function SuitabilityCalculation() {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="col-xl-3">
+                                <Info info={"Suitability Calculation Help"} />
                             </div>
                         </div>
                     </div>
