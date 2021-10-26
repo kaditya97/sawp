@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { toast } from 'react-toastify';
+import ReactLoading from 'react-loading';
 import { register } from "../../actions/auth";
 // import { createMessage } from "../../actions/messages";
 
@@ -16,13 +18,14 @@ class Signup extends Component {
   static propTypes = {
     register: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
+    isLoading: PropTypes.bool,
   };
 
   onSubmit = (e) => {
     e.preventDefault();
     const { username, email, password, password2 } = this.state;
     if (password !== password2) {
-      console.log("password not matched");
+      toast("Password not matched");
     } else {
       const newUser = {
         username,
@@ -35,6 +38,15 @@ class Signup extends Component {
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      toast(error?.non_field_errors?.[0]);
+      toast(error?.username?.[0]);
+      toast(error?.email?.[0]);
+    }
+  }
+
   render() {
     if (this.props.isAuthenticated) {
       return <Redirect to="/" />;
@@ -43,6 +55,11 @@ class Signup extends Component {
     return (
       <>
       <div className="container login">
+      {this.props.isLoading ?
+            <div className="d-flex justify-content-center align-items-center" style={{height: "60vh"}}>
+              <ReactLoading type={"spokes"} color={"#116f85"} height={100} width={100} />
+            </div>
+            :
         <div className="row text-center">
           <div className="card">
             <div className="card-header">
@@ -110,7 +127,7 @@ class Signup extends Component {
               </form>
             </div>
           </div>
-        </div>
+        </div>}
       </div>
       </>
     );
@@ -119,6 +136,8 @@ class Signup extends Component {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  isLoading: state.auth.isLoading,
+  error: state.auth.error,
 });
 
 export default connect(mapStateToProps, { register })(Signup);

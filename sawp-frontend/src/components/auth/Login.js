@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ReactLoading from "react-loading";
+import { toast } from "react-toastify";
 import { login } from "../../actions/auth";
 
 class Login extends Component {
@@ -24,6 +25,13 @@ class Login extends Component {
   };
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      toast(error?.non_field_errors[0]);
+    }
+  }
 
   render() {
     if (this.props.isAuthenticated) {
@@ -88,6 +96,7 @@ class Login extends Component {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   isLoading: state.auth.isLoading,
+  error: state.auth.error,
 });
 
 export default connect(mapStateToProps, { login })(Login);

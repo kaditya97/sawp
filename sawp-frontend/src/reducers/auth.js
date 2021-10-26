@@ -11,9 +11,10 @@ import {
 
 const initialState = {
   token: localStorage.getItem("token"),
-  isAuthenticated: null,
+  isAuthenticated: false,
   isLoading: false,
   user: null,
+  error: null,
 };
 
 export default function auth(state = initialState, action) {
@@ -54,6 +55,7 @@ export default function auth(state = initialState, action) {
         token: null,
         user: null,
         isAuthenticated: false,
+        error: action.payload,
       };
     default:
       return state;

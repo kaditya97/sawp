@@ -55,12 +55,15 @@ export const login = (username, password) => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: LOGIN_ERROR,
+        payload: err.response.data,
       });
     });
 };
 
 // REGISTER USER
 export const register = ({ username, email, password }) => (dispatch) => {
+  //user loading
+  dispatch({ type: USER_LOADING });
   //Headers
   const config = {
     headers: {
@@ -82,6 +85,7 @@ export const register = ({ username, email, password }) => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: REGISTER_FAIL,
+        payload: err.response.data,
       });
     });
 };
