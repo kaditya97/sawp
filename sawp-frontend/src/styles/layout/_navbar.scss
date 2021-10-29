@@ -1,8 +1,15 @@
 .navbar {
-  @include set-background($primary-color);
+  @include set-background($neu-1);
+  height: $nav-height;
+  min-height: 4rem;
+  padding-bottom: 0.4rem!important;
+  padding-top: 0.4rem!important;
+  // box-shadow:
+  //   5px 5px 5px $neu-1,
+  //   -5px -5px 5px $white;
   a {
     font-weight: bold;
-    color: $white-color;
+    color: #212529;
   }
 
   a:hover {

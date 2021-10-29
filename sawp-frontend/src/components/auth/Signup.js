@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { toast } from 'react-toastify';
 import ReactLoading from 'react-loading';
+import FormLabel from '../common/FormLabel';
 import { register } from "../../actions/auth";
 // import { createMessage } from "../../actions/messages";
 
@@ -54,44 +55,51 @@ class Signup extends Component {
     const { username, email, password, password2 } = this.state;
     return (
       <>
-      <div className="container login">
-      {this.props.isLoading ?
-            <div className="d-flex justify-content-center align-items-center" style={{height: "60vh"}}>
+        <div className="login">
+          {this.props.isLoading ?
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
               <ReactLoading type={"spokes"} color={"#116f85"} height={100} width={100} />
             </div>
             :
-        <div className="row text-center">
-          <div className="card">
-            <div className="card-header">
-              <h5 className="card-title">Sign up for SAWP</h5>
-            </div>
-            <div className="card-body">
-              <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="username"
-                    className="form-control input-sm"
-                    onChange={this.onChange}
-                    value={username}
-                    placeholder="Enter Username..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <input
-                    type="email"
-                    name="email"
-                    onChange={this.onChange}
-                    value={email}
-                    className="form-control input-sm"
-                    placeholder="Email Address"
-                  />
-                </div>
-
-                <div className="row">
-                  <div className="col-xs-6 col-sm-6 col-md-6">
+            <div className="row text-center">
+              <div className="card">
+                <div className="card-body">
+                <div className="row d-flex">
+                    <h1>Sign Up</h1>
+                  </div>
+                  <form onSubmit={this.onSubmit}>
                     <div className="form-group">
+                    <div className="row">
+                        <FormLabel name="Username" />
+                      </div>
+                      <input
+                        type="text"
+                        name="username"
+                        className="form-control input-sm"
+                        onChange={this.onChange}
+                        value={username}
+                        placeholder="Enter Username..."
+                      />
+                    </div>
+
+                    <div className="form-group">
+                    <div className="row">
+                        <FormLabel name="Email Address" />
+                      </div>
+                      <input
+                        type="email"
+                        name="email"
+                        onChange={this.onChange}
+                        value={email}
+                        className="form-control input-sm"
+                        placeholder="Email Address"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                    <div className="row">
+                        <FormLabel name="Password" />
+                      </div>
                       <input
                         type="password"
                         name="password"
@@ -101,9 +109,10 @@ class Signup extends Component {
                         placeholder="Password"
                       />
                     </div>
-                  </div>
-                  <div className="col-xs-6 col-sm-6 col-md-6">
                     <div className="form-group">
+                    <div className="row">
+                        <FormLabel name="Confirm Password" />
+                      </div>
                       <input
                         type="password"
                         onChange={this.onChange}
@@ -113,22 +122,20 @@ class Signup extends Component {
                         placeholder="Confirm Password"
                       />
                     </div>
-                  </div>
-                </div>
 
-                <input
-                  type="submit"
-                  value="Sign up"
-                  className="btn btn-info btn-block"
-                />
-                <div>
-                  Already have a account? <Link to="/login">Log In</Link>
+                    <input
+                      type="submit"
+                      value="Sign up"
+                      className="btn btn-info btn-block"
+                    />
+                    <div>
+                      Already have a account? <Link to="/login">Log In</Link>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
-          </div>
-        </div>}
-      </div>
+              </div>
+            </div>}
+        </div>
       </>
     );
   }

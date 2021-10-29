@@ -29,10 +29,10 @@ export default function Visualization() {
     return (
         <div className="visualization">
             {isLoading ?
-                <div className="d-flex justify-content-center align-items-center" style={{ height: "89vh", width: "100%" }}>
+                <div className="d-flex justify-content-center align-items-center" style={{ height: "91vh", width: "100%" }}>
                     <ReactLoading type={"spokes"} color={"#116f85"} height={100} width={100} />
                 </div> :
-                <div style={{ height: "89vh", width: "100%" }}>
+                <div style={{ height: "91vh", width: "100%" }}>
                     <Map center={[28.20, 84.0]} zoom={12} zoomControl={false}>
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -95,7 +95,7 @@ br {
 }
 
 %vis {
-  background-color: $light-color;
+  background-color: #fff;
   color: $dark-color;
   padding: 10px;
   overflow-y: auto;
@@ -278,7 +278,7 @@ br {
   @extend %layer;
   right: 0;
   top: 0;
-  height: 89vh;
+  height: 91vh;
   z-index: 1000;
 }
 
@@ -290,7 +290,7 @@ br {
 
 .styleContainer-sidebar-overflow {
   @extend %vis;
-  height: 89vh;
+  height: 91vh;
   padding: 25px;
   box-shadow: -5px 0 5px 0px rgba(69, 67, 69, 63);
 }
@@ -436,24 +436,6 @@ br {
   right: 25px;
   color: red;
   cursor: pointer;
-}
-
-// map function
-.split-map {
-  position: absolute;
-  top: 0;
-  right: 360px;
-  margin: 5px;
-  background-color: #ffffff;
-  cursor: pointer;
-  color: #00adff;
-  padding: 5px;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.73);
-
-  .bi {
-    font-size: 1.2rem;
-  }
 }
 
 .rnd {

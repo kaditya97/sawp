@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ReactLoading from "react-loading";
 import { toast } from "react-toastify";
+import FormLabel from "../common/FormLabel";
 import { login } from "../../actions/auth";
 
 class Login extends Component {
@@ -40,20 +41,23 @@ class Login extends Component {
     const { username, password } = this.state;
     return (
       <>
-        <div className="container login">
+        <div className="login">
           {this.props.isLoading ?
-            <div className="d-flex justify-content-center align-items-center" style={{height: "60vh"}}>
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
               <ReactLoading type={"spokes"} color={"#116f85"} height={100} width={100} />
             </div>
             :
             <div className="row text-center">
               <div className="card">
-                <div className="card-header">
-                  <h5 className="card-title">Login for SAWP</h5>
-                </div>
                 <div className="card-body">
+                  <div className="row d-flex">
+                    <h1>Log In</h1>
+                  </div>
                   <form onSubmit={this.onSubmit}>
                     <div className="form-group">
+                      <div className="row">
+                        <FormLabel name="Username" />
+                      </div>
                       <input
                         type="text"
                         name="username"
@@ -65,6 +69,9 @@ class Login extends Component {
                     </div>
 
                     <div className="form-group">
+                      <div className="row">
+                        <FormLabel name="Password" />
+                      </div>
                       <input
                         type="password"
                         name="password"
@@ -78,7 +85,7 @@ class Login extends Component {
                     <input
                       type="submit"
                       value="Login"
-                      className="btn btn-info btn-block"
+                      className="btn btn-info btn-block rounded"
                     />
                     <div>
                       Doesn't have a account?{" "}
