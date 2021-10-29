@@ -167,7 +167,7 @@ class SuitabilityViewSet(viewsets.ModelViewSet):
         return Suitability.objects.all()
     
     def create(self, request):
-        overlay = Suitability_calculation(request.data.get('weights'))
+        overlay = Suitability_calculation(request.data.get('weights'), request.data.get('boundary'))
         file_name = request.data.get('sname') + '.tif'
         file_path = f"{base}/media/suitability/{file_name}"
         overlay.rio.to_raster(file_path)

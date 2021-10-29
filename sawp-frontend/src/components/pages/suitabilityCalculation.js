@@ -14,6 +14,7 @@ import FormInput from "../common/FormInput";
 import TextArea from "../common/TextArea";
 import Info from '../layout/info';
 import Ahp from '../layout/ahp_table'
+import { toast } from 'react-toastify';
 
 export default function SuitabilityCalculation() {
     const [dataId, setDataId] = useState(null)
@@ -23,6 +24,7 @@ export default function SuitabilityCalculation() {
     const [deleteModal, setDeleteModal] = useState(false)
     const [sname, setSname] = React.useState('')
     const [description, setDescription] = React.useState('')
+    const [boundary, setBoundary] = React.useState('')
     const dispatch = useDispatch();
 
     const vectors = useSelector((state) => state.vector.vector);
@@ -59,6 +61,10 @@ export default function SuitabilityCalculation() {
         setRasterLayers(array);
         setActiveLayers(vectorLayers.concat(array));
     };
+
+    const handleBoundaryChange = (selectedOption) => {
+        setBoundary(selectedOption.label)
+    }
 
     const onDelete = (id) => {
         dispatch(deleteSuitability(id))
@@ -181,6 +187,7 @@ export default function SuitabilityCalculation() {
                                                 <Select
                                                     name="boundary"
                                                     options={boundaryOptions}
+                                                    onChange={(v) => handleBoundaryChange(v)}
                                                     className="basic-multi-select"
                                                     classNamePrefix="select"
                                                 />
@@ -192,10 +199,10 @@ export default function SuitabilityCalculation() {
                                         <div className="row mx-5 d-flex justify-content-center mt-5">
                                             {activeLayers ?
                                                 <button className="btn btn-primary" onClick={() => setActiveLayer(!activeLayer)}>{activeLayer ? "Hide AHP Table" : "Show AHP Table"}</button>
-                                                : <button className="btn btn-info">Select Layers First</button>}
+                                                : <button className="btn btn-info" onClick={()=>toast("Select Vector of Raster layers first")}>Select Layers First</button>}
                                         </div>
                                         <div className="row mx-auto d-flex justify-content-start overflow-auto">
-                                            {activeLayer && <Ahp sname={sname} description={description} array={activeLayers} />}
+                                            {activeLayer && <Ahp sname={sname} description={description} array={activeLayers} boundary={boundary}/>}
                                         </div>
                                     </div>
                                     <div

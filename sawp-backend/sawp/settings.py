@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_filters',
     'authentication',
     'suitability.apps.SuitabilityConfig',
+    'styles',
     'django_cleanup.apps.CleanupConfig',
 ]
 

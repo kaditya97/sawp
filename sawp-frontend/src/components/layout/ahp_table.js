@@ -222,7 +222,7 @@ function Ahp(props) {
 
   const calculateAHP = () => dispatch(calcAhp(data))
 
-  const submitSuitability = () => dispatch(addSuitability(props.sname, props.description, ahp?.weights))
+  const submitSuitability = () => dispatch(addSuitability(props.sname, props.description, ahp?.weights, props.boundary))
 
   return (
     <Styles>

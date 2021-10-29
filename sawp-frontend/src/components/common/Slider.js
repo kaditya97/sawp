@@ -4,14 +4,14 @@ import "nouislider/distribute/nouislider.css";
 
 class Slider extends Component {
   render() {
-    const { onChange, range, start, step, format } = this.props;
+    const { onUpdate, range, start, format } = this.props;
     return (
       <Nouislider
+        animate={false}
         range={range}
         start={start}
-        step={step}
         connect={true}
-        onChange={onChange}
+        onUpdate={onUpdate}
         tooltips={true}
         pips={{
           mode: "range",

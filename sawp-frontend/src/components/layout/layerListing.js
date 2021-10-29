@@ -8,7 +8,7 @@ export default function LayerListing(props) {
   };
 
   const handleClick = (e) => {
-    e.target.checked ? props.setLayer('suitable') : props.setLayer(null);
+    props.setLayer(e.target.value);
     e.target.checked ? props.setLegendWindow(true) : props.setLegendWindow(false);
   };
   return (
@@ -26,6 +26,10 @@ export default function LayerListing(props) {
         <div className="ml-2">
           <h4>
             <span>Layers</span>
+            <i
+              className="fas fa-edit float-right position-relative mr-4 optionToggler"
+              onClick={() => { props.setStyleWindow(!props.styleWindow) }}
+            ></i>
           </h4>
           <Scrollbars
             autoHeight
@@ -33,21 +37,12 @@ export default function LayerListing(props) {
             className="custom-scrollbars">
 
             {props.layers?.map((layer) => (
-              <div key={layer.id} className="layers" style={{ verticalAlign: "middle" }}>
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  name="layer"
-                  id={layer.id}
-                  defaultChecked={false}
-                  onChange={handleClick}
-                />
-                <label htmlFor={layer.id}>{layer.name}</label>
-                <i
-                  className="fas fa-edit float-right position-relative mr-4 optionToggler"
-                  onClick={() => {props.setStyleWindow(!props.styleWindow)}}
-                ></i>
-              </div>
+              <>
+                <div className="form-check mt-2 mb-1" key={layer.id} onChange={handleClick} style={{ verticalAlign: "middle" }}>
+                  <input className="form-check-input mr-2" type="radio" name="layer" defaultValue={layer.name} />
+                  <label className="form-check-label" htmlFor="layer"><h3>{layer.name}</h3></label>
+                </div>
+              </>
             ))}
           </Scrollbars>
         </div>

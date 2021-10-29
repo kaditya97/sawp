@@ -1,5 +1,3 @@
-"use strict";
-
 import React from "react";
 import reactCSS from "reactcss";
 import { SketchPicker } from "react-color";

@@ -4,7 +4,8 @@ import Routes from './routes';
 import reportWebVitals from './reportWebVitals';
 import { ToastContainer } from 'react-toastify';
 import './styles/style.scss';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
+import "nouislider/distribute/nouislider.css";
 import axios from 'axios';
     
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;

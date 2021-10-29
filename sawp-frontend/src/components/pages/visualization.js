@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { Map, TileLayer, WMSTileLayer } from 'react-leaflet'
 import ReactLoading from 'react-loading';
-import { toast } from 'react-toastify';
 import { getSuitability } from "../../actions/suitability"
 import LayerListing from '../layout/layerListing'
 import Legend from '../layout/legend';
 import Style from '../layout/style';
+import { getRasterStyles } from '../../actions/geoserver';
 
 export default function Visualization() {
     const [isLoading, setIsLoading] = useState(false);
@@ -19,12 +19,12 @@ export default function Visualization() {
 
     const suitabilities = useSelector((state) => state.suitability.suitability);
     const loading = useSelector((state) => state.suitability.loading);
+    const styles = useSelector((state) => state.geoserver.styles);
 
     useEffect(() => {
-        toast.dismiss()
-        toast("Loading Suitability Map...")
         setIsLoading(loading);
         dispatch(getSuitability())
+        dispatch(getRasterStyles())
     }, [dispatch, loading])
     return (
         <div className="visualization">
@@ -57,7 +57,13 @@ export default function Visualization() {
                             styleWindow={styleWindow}
                             setStyleWindow={setStyleWindow} />
                     </div>
-                    {styleWindow && <Style styleWindow={styleWindow} setStyleWindow={setStyleWindow} />}
+                    {styleWindow && <Style
+                        styleWindow={styleWindow}
+                        setStyleWindow={setStyleWindow}
+                        styles={styles}
+                        setStyle={setStyle}
+                        opacity={opacity}
+                        setOpacity={setOpacity} />}
                     {opacity !== 0.0 ? <Legend legendWindow={legendWindow} setLegendWindow={setLegendWindow} /> : null}
                 </div>
             }

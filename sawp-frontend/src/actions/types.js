@@ -55,3 +55,12 @@ export const DELETE_SUITABILITY = "DELETE_SUITABILITY";
 //GEOSERVER
 export const GET_LAYERS = "GET_LAYERS";
 export const GET_STYLES = "GET_STYLES";
+
+//STYLE
+export const GET_STYLE_NAME = "GET_STYLE_NAME";
+export const GET_SLD = "GET_SLD";
+export const GET_STYLE = "GET_STYLE";
+export const PATCH_STYLE = "PATCH_STYLE";
+export const ADD_STYLE = "ADD_STYLE";
+export const DELETE_STYLE = "DELETE_STYLE";
+export const UPDATE_STYLE = "UPDATE_STYLE";
