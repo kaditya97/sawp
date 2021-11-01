@@ -8,9 +8,14 @@ export default function LayerListing(props) {
   };
 
   const handleClick = (e) => {
-    props.setLayer(e.target.value);
+    const layer = props.layers.find(layer => layer.name === e.target.value);
+    props.setLayer(layer);
     e.target.checked ? props.setLegendWindow(true) : props.setLegendWindow(false);
   };
+
+  // useEffect(() => {
+  //   props.setLayer(props.layers?.[0]);
+  // }, [props.layers])
   return (
     <div
       className={`leaflet-control ${layerListingToggle ? "layerListing" : "layerListing-hide"

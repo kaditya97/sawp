@@ -12,7 +12,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework import viewsets
-from .models import Style, SldStyle
+from .models import Styles, SldStyle
 from .serializer import StyleSerializer, SldStyleSerializer
 from geo.Geoserver import Geoserver
 from pg.pg import Pg
@@ -36,7 +36,7 @@ pg = Pg(dbname=DB_NAME, user=DB_USER,
 
 
 class StyleViewSet(viewsets.ModelViewSet):
-    queryset = Style.objects.all()
+    queryset = Styles.objects.all()
     serializer_class = StyleSerializer
 
 

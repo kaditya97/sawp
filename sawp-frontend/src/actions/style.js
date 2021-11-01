@@ -11,19 +11,19 @@ import axios from "axios";
 import { tokenConfig } from "./auth";
 
 export const getSld = (id) => (dispatch) => {
-  axios
-    .get(`/style/sld_generator/?style_id=${id}`)
-    .then((res) => {
-      dispatch({ type: GET_SLD, payload: res.data });
-    })
-    .catch((err) =>
-      dispatch(err.response.data)
-    );
+  // axios
+  //   .get(`/api/styles/sld_generator/?style_id=${id}`)
+  //   .then((res) => {
+  //     dispatch({ type: GET_SLD, payload: res.data });
+  //   })
+  //   .catch((err) =>
+  //     dispatch(err.response.data)
+  //   );
 };
 
 export const getStyles = () => (dispatch) => {
   axios
-    .get("/style/sldstyle/")
+    .get("/api/styles/sldstyle/")
     .then((res) => {
       dispatch({ type: GET_STYLES, payload: res.data });
     })
@@ -34,7 +34,7 @@ export const getStyles = () => (dispatch) => {
 
 export const getStyle = (id) => (dispatch) => {
   axios
-    .get(`/style/sldstyle/${id}/`)
+    .get(`/api/styles/sldstyle/${id}/`)
     .then((res) => {
       dispatch({ type: GET_STYLE, payload: res.data });
     })
@@ -44,19 +44,19 @@ export const getStyle = (id) => (dispatch) => {
 };
 
 export const patchStyle = (style, id) => (dispatch) => {
-  axios
-    .patch(`/style/sldstyle/${id}/`, style)
-    .then((res) => {
-      dispatch({ type: PATCH_STYLE, payload: res.data });
-    })
-    .catch((err) =>
-      dispatch(err.response.data)
-    );
+  // axios
+  //   .patch(`/api/styles/sldstyle/${id}/`, style)
+  //   .then((res) => {
+  //     dispatch({ type: PATCH_STYLE, payload: res.data });
+  //   })
+  //   .catch((err) =>
+  //     dispatch(err.response.data)
+  //   );
 };
 
 export const addStyle = (style) => (dispatch, getState) => {
   axios
-    .post("/style/sldstyle/", style, tokenConfig(getState))
+    .post("/api/styles/sldstyle/", style, tokenConfig(getState))
     .then((res) => {
       dispatch({ type: ADD_STYLE, payload: res.data });
       dispatch(getStyle(res.data.id));
@@ -68,7 +68,7 @@ export const addStyle = (style) => (dispatch, getState) => {
 
 export const deleteStyle = (id) => (dispatch) => {
   axios
-    .delete(`/style/sldstyle/${id}/`)
+    .delete(`/api/styles/sldstyle/${id}/`)
     .then((res) => {
       dispatch({ type: DELETE_STYLE, payload: id });
     })
@@ -79,7 +79,7 @@ export const deleteStyle = (id) => (dispatch) => {
 
 export const updateStyle = (style, id) => (dispatch) => {
   axios
-    .get(`/style/sldstyle/${id}/`, style)
+    .get(`/api/styles/sldstyle/${id}/`, style)
     .then((res) => {
       dispatch({ type: UPDATE_STYLE, payload: res.data });
     })

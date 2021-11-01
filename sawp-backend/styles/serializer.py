@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import Style, SldStyle
+from .models import Styles, SldStyle
 
 
 class StyleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Style
+        model = Styles
         fields = '__all__'
 
 

@@ -10,16 +10,14 @@ import { getRasterStyles } from '../../actions/geoserver';
 
 export default function Visualization() {
     const [isLoading, setIsLoading] = useState(false);
-    const [layer, setLayer] = useState('final_suitability');
-    const [style, setStyle] = useState('raster_web');
+    const [layer, setLayer] = useState(null);
     const [opacity, setOpacity] = useState(1.0)
-    const [legendWindow, setLegendWindow] = useState(true)
+    const [legendWindow, setLegendWindow] = useState(false);
     const [styleWindow, setStyleWindow] = useState(false)
     const dispatch = useDispatch()
 
     const suitabilities = useSelector((state) => state.suitability.suitability);
     const loading = useSelector((state) => state.suitability.loading);
-    const styles = useSelector((state) => state.geoserver.styles);
 
     useEffect(() => {
         setIsLoading(loading);
@@ -38,9 +36,8 @@ export default function Visualization() {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <WMSTileLayer
-                            layers={`sawp:${layer}`}
+                            layers={`sawp:${layer?.name}`}
                             url={`http://127.0.0.1:8080/geoserver/wms`}
-                            styles={[`sawp:${style}`]}
                             transparent={true}
                             opacity={opacity}
                             format={'image/png'}
@@ -60,11 +57,15 @@ export default function Visualization() {
                     {styleWindow && <Style
                         styleWindow={styleWindow}
                         setStyleWindow={setStyleWindow}
-                        styles={styles}
-                        setStyle={setStyle}
+                        layer={layer}
                         opacity={opacity}
                         setOpacity={setOpacity} />}
-                    {opacity !== 0.0 ? <Legend legendWindow={legendWindow} setLegendWindow={setLegendWindow} /> : null}
+                    {opacity !== 0.0 ? <Legend
+                        legendWindow={legendWindow}
+                        setLegendWindow={setLegendWindow}
+                        layer={layer}
+                        workspace={'sawp'}
+                    /> : null}
                 </div>
             }
         </div>

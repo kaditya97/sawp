@@ -10,8 +10,8 @@ export default function Home() {
                 autoHeight
                 autoHeightMax={"91vh"}
                 className="custom-scrollbars">
-                {/* <section className="container-fluid col-12" style={{background: "#000022",minHeight: '581.006px'}}>
-                    <div className="row">
+                {/* <section>
+                    <div className="container-fluid col-12" style={{background: "#000022",minHeight: '581.006px'}}>
                         <div className="col-8 m-auto">
                             <div className="intro">
                                 Hi how are you

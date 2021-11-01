@@ -8,6 +8,7 @@ import vector from "./vector";
 import boundary from "./boundary";
 import suitability from "./suitability";
 import geoserver from "./geoserver";
+import style from "./style";
 
 const rootReducer = combineReducers({
     auth,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     boundary,
     suitability,
     geoserver,
+    style,
 }); 
 
 export default rootReducer;

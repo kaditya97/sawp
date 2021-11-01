@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ColorPicker from "../common/ColorPicker";
 import Select from "react-select";
 import {
@@ -18,11 +19,10 @@ import { patchStyle, getSld } from "../../actions/style";
 import CloseWindowBtn from "../common/CloseWindowBtn";
 
 function Style(props) {
-  const { opacity } = props;
-  const [styleType, setStyleType] = useState("");
+  const { opacity, layer } = props;
+  const [style_type, setStyleType] = useState("");
   const [geom_type, setGeomType] = useState("");
   const [color_palette, setColorPalette] = useState("");
-  const [style_type, setStylesType] = useState("");
   const [stroke_color, setStrokeColor] = useState("");
   const [stroke_width, setStrokeWidth] = useState("");
   const [trueReverseOrderStyle, setTrueReverseOrderStyle] = useState(false);
@@ -34,29 +34,31 @@ function Style(props) {
   const [classification_method, setClassificationMethod] = useState("");
   const [layer_name, setLayerName] = useState("");
 
+  const dispatch = useDispatch();
+
   // useEffect(() => {
   //   props.styleWindow ? props.setStyleContainerToogle(true) : null;
   // }, [props.styleContainerToggle]);
 
   const onChange = (e) => {
-    const { id } = props.style;
-    this.setState({ [e.target.name]: e.target.value });
-    props.patchStyle({ [e.target.name]: e.target.value }, id);
-    props.getSld(id);
+    const id = layer?.id;
+    setStyleType(e.target.value);
+    patchStyle({ "style_type": e.target.value }, id);
+    getSld(id);
   };
 
   const onStyleTypeChange = (stype) => {
-    const { id } = props.style;
+    const id = layer?.id;
     setStyleType(stype.value);
     props.patchStyle({ style_type: stype.value }, id);
     props.getSld(id);
   };
 
   const onFillColorChange = (color) => {
-    const { id } = props.style;
-    this.setState({ fill_color: color.hex });
-    props.patchStyle({ fill_color: color.hex }, id);
-    props.getSld(id);
+    const id = layer?.id;
+    setFillColor(color.hex);
+    patchStyle({ fill_color: color.hex }, id);
+    getSld(id);
   };
 
   const onSaveStyle = () => {
@@ -64,30 +66,30 @@ function Style(props) {
   };
 
   const onStrokeColorChange = (color) => {
-    const { id } = props.style;
-    this.setState({ stroke_color: color.hex });
-    props.patchStyle({ stroke_color: color.hex }, id);
-    props.getSld(id);
+    const id = layer?.id;
+    setStrokeColor(color.hex);
+    patchStyle({ stroke_color: color.hex }, id);
+    getSld(id);
   };
 
   const onOutlineWidthChange = (width) => {
-    const { id } = props.style;
+    const id = layer?.id;
     const stroke_width = parseInt(width[0]);
-    this.setState({ stroke_width: stroke_width });
-    props.patchStyle({ stroke_width: stroke_width }, id);
-    props.getSld(id);
+    setStrokeWidth(stroke_width);
+    patchStyle({ stroke_width: stroke_width }, id);
+    getSld(id);
   };
 
   const onColorPaletteChange = (val) => {
-    const { id } = props.style;
-    this.setState({ color_palette: val });
+    const id = layer?.id;
+    setColorPalette(val);
     const color_palette = val.value.toString();
-    props.patchStyle({ color_palette: color_palette }, id);
-    props.getSld(id);
+    patchStyle({ color_palette: color_palette }, id);
+    getSld(id);
   };
 
   const onTrueReverseOrder = () => {
-    const { id } = props.style;
+    const id = layer?.id;
 
     let { color_palette, trueReverseOrderStyle } = this.state;
     const cpv = color_palette?.value;
@@ -95,7 +97,7 @@ function Style(props) {
       label: color_palette?.label,
       value: cpv?.reverse(),
     };
-    console.log(reversePalette, "reversePalette");
+    console.log(reversePalette);
     cpv &&
       trueReverseOrderStyle === "" &&
       this.setState({
@@ -109,7 +111,7 @@ function Style(props) {
   };
 
   const onFalseReverseOrder = () => {
-    const { id } = props.style;
+    const id = layer?.id;
 
     let { color_palette, falseReverseOrderStyle } = this.state;
     const cpv = color_palette?.value;
@@ -131,34 +133,33 @@ function Style(props) {
   };
 
   const onAttributeChange = (val) => {
-    const { id } = props.style;
+    const id = layer?.id;
     this.setState({ attribute_name: val });
     props.patchStyle({ attribute_name: val.value }, id);
     props.getSld(id);
   };
 
   const onClassificationMethodChange = (val) => {
-    const { id } = props.style;
+    const id = layer?.id;
     const classification_method = val.value;
-    this.setState({ classification_method: val });
-    props.patchStyle({ classification_method: classification_method }, id);
-    props.getSld(id);
+    setClassificationMethod(val);
+    patchStyle({ classification_method: classification_method }, id);
+    getSld(id);
   };
 
   const onOpacityChange = (val) => {
-    const { id } = props.style;
-    const opacity = parseInt(val[0]) / 100;
-    props.setOpacity(opacity);
-    // props.patchStyle({ opacity: opacity }, id);
-    // props.getSld(id);
+    const id = layer?.id;
+    props.setOpacity(parseInt(val[0]) / 100);
+    dispatch(patchStyle({ opacity: parseInt(val[0]) / 100 }, id));
+    dispatch(getSld(id));
   };
 
   const onNumberOfClassChange = (val) => {
-    const { id } = props.style;
+    const id = layer?.id;
     const number_of_class = parseInt(val[0]);
-    this.setState({ number_of_class: number_of_class });
-    props.patchStyle({ number_of_class: number_of_class }, id);
-    props.getSld(id);
+    setNumberOfClass(number_of_class);
+    patchStyle({ number_of_class: number_of_class }, id);
+    getSld(id);
   };
 
   const onFilterData = (val) => {
@@ -179,11 +180,6 @@ function Style(props) {
   };
   const handleChange = (e) => {
     props.setStyle(e.target.value)
-  }
-
-  const handleSlider = (e) => {
-    const opacity = parseInt(e[0]) / 100;
-    props.setOpacity(opacity);
   }
 
   return (
@@ -256,7 +252,7 @@ function Style(props) {
               range={{ min: 0, max: 100 }}
               start={opacity * 100}
               format="%"
-              onChange={onOpacityChange}
+              onUpdate={onOpacityChange}
             />
             <hr className="hr" />
 
@@ -346,10 +342,9 @@ function Style(props) {
                 <FormLabel className="mb-1 mt-3" name="Opacity:" />
                 <Slider
                   range={{ min: 0, max: 100 }}
-                  start="60"
-                  step={1}
+                  start="100"
                   format="%"
-                  onChange={onOpacityChange}
+                  onUpdate={onOpacityChange}
                 />
                 <hr className="hr" />
 
@@ -424,10 +419,9 @@ function Style(props) {
                 <FormLabel className="mb-1 mt-3" name="Opacity:" />
                 <Slider
                   range={{ min: 0, max: 100 }}
-                  start="60"
-                  step={1}
+                  start="100"
                   format="%"
-                  onChange={onOpacityChange}
+                  onUpdate={onOpacityChange}
                 />
                 <hr className="hr" />
 
@@ -474,10 +468,9 @@ function Style(props) {
                 <FormLabel className="mb-1 mt-3" name="Opacity:" />
                 <Slider
                   range={{ min: 0, max: 100 }}
-                  start="60"
-                  step={1}
+                  start="100"
                   format="%"
-                  onChange={onOpacityChange}
+                  onUpdate={onOpacityChange}
                 />
                 <hr className="hr" />
               </>

@@ -6,15 +6,6 @@ import { Scrollbars } from 'react-custom-scrollbars-2';
 function Legend(props) {
     const [legendHeight, setLegendHeight] = useState("40vh");
 
-    const activeLayers = [
-        {
-            id: "1",
-            name: "Final Overlay",
-            workspace: "sawp",
-            layer_name: "final_suitability",
-        }
-    ];
-
     const closeLegendWindow = () => {
         props.setLegendWindow(false);
     };
@@ -24,12 +15,11 @@ function Legend(props) {
         props.setLegendWindow(true);
     };
 
-    const getLegendUrl = (layer) => {
-        const { layer_name, workspace } = layer;
+    const getLegendUrl = () => {
         const baseURL = process.env.REACT_APP_GEOSERVER_URL;
         const url =
             baseURL +
-            `/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=${workspace}:${layer_name}`;
+            `/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=${props.workspace}:${props.layer?.name}`;
         return url;
     }
     return (
@@ -63,19 +53,17 @@ function Legend(props) {
                             <Alert onClose={closeLegendWindow} dismissible>
                                 <Alert.Heading>Map legend</Alert.Heading>
                                 <hr />
-                                {activeLayers.map((layer) => (
-                                    <>
-                                        <div key={layer.id}>{layer.name}</div>
-                                        <p>
-                                            <img
-                                                src={getLegendUrl(layer)}
-                                                alt="legend"
-                                                className={"vis-legend img-fluid " + layer.layer_name}
-                                            />
-                                        </p>
-                                        <br className={layer.layer_name}></br>
-                                    </>
-                                ))}
+                                <>
+                                    <div key={props.layer?.id}>{props.layer?.name}</div>
+                                    <p>
+                                        <img
+                                            src={getLegendUrl()}
+                                            alt="legend"
+                                            className={"vis-legend img-fluid " + props.layer?.name}
+                                        />
+                                    </p>
+                                    <br className={props.layer?.name}></br>
+                                </>
                             </Alert>
                         </Scrollbars>
                     </Rnd>
