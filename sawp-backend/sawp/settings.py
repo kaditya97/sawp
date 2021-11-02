@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'authentication',
     'suitability.apps.SuitabilityConfig',
     'styles',
+    'dataprep',
     'django_cleanup.apps.CleanupConfig',
 ]
 

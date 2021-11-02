@@ -98,6 +98,11 @@ class Navbar extends React.Component {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link to="/dataPrep" className="nav-link">
+                  Data Prepration
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/suitabilityCalculation" className="nav-link">
                   Suitability Calculation
                 </Link>

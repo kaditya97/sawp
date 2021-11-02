@@ -62,9 +62,10 @@ def Suitability_calculation(weights=[],clipbound=None):
     overlay = 0
     for i in range(len(rasterized)):
         craster = rasterized[i].rio.clip(bound.geometry.apply(mapping), bound.crs)
+        print(craster.rio.shape)
         overlay = overlay + craster * weights[weight[i]]
     # overlay = 0 +(0.4 * rasterized[0]) + (0.5 * rasterized[1]) + (0.1 * rasterized[2])
     # overlay = (0.16 * raster1) + (0.28 * raster2) + (0.32 * rasterized_vectors[0]) + (0.24 * rasterized_vectors[1])
-    # overlay = overlay.rio.clip(bound.geometry.apply(mapping), bound.crs)
+    overlay = overlay.rio.clip(bound.geometry.apply(mapping), bound.crs)
     # overlay = overlay.transpose('variable', 'y', 'x')
     return overlay
