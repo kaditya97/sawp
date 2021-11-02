@@ -15,7 +15,7 @@ export default function DataPrep() {
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
                                 <Link to="/clipVector">
-                                    <a href="#" className="btn btn-primary">Start Tool</a>
+                                    <span className="btn btn-primary">Start Tool</span>
                                 </Link>
                             </div>
                         </div>
@@ -28,7 +28,7 @@ export default function DataPrep() {
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
                                 <Link to="/clipRaster">
-                                    <a href="#" className="btn btn-primary">Start Tool</a>
+                                    <span className="btn btn-primary">Start Tool</span>
                                 </Link>
                             </div>
                         </div>
@@ -41,7 +41,7 @@ export default function DataPrep() {
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
                                 <Link to="/mergeVector">
-                                    <a href="#" className="btn btn-primary">Start Tool</a>
+                                    <span className="btn btn-primary">Start Tool</span>
                                 </Link>
                             </div>
                         </div>
@@ -49,22 +49,22 @@ export default function DataPrep() {
                     <div className="col-md-3 mt-3 mb-3">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Data Preparation</h5>
+                                <h5 className="card-title">Buffer Vector</h5>
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
-                                <a href="#" className="btn btn-primary">Start Tool</a>
+                                <span className="btn btn-primary">Start Tool</span>
                             </div>
                         </div>
                     </div>
                     <div className="col-md-3 mt-3 mb-3">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Data Preparation</h5>
+                                <h5 className="card-title">Vector To Raster</h5>
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
-                                <a href="#" className="btn btn-primary">Start Tool</a>
+                                <span className="btn btn-primary">Start Tool</span>
                             </div>
                         </div>
                     </div>

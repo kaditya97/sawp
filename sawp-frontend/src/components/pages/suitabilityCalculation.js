@@ -4,7 +4,7 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import { getVector } from "../../actions/vector"
 import { getRaster } from "../../actions/raster"
 import { getBoundary } from "../../actions/boundary"
-import { deleteSuitability, getSuitability } from "../../actions/suitability"
+import { deleteSuitability, getSuitability, downloadSuitability } from "../../actions/suitability"
 import MapView from '../layout/mapView';
 import DeleteModal from '../layout/deleteModal';
 import SuitabilityEdit from '../layout/suitability/suitabilityEdit';
@@ -77,6 +77,10 @@ export default function SuitabilityCalculation() {
     const onDescriptionChange = (e) => {
         setDescription(e.target.value);
     };
+
+    const download = id => {
+        dispatch(downloadSuitability(id))
+    }
 
     useEffect(() => {
         dispatch(getVector())
@@ -221,6 +225,7 @@ export default function SuitabilityCalculation() {
                                                             <th>Description</th>
                                                             <th>File</th>
                                                             <th>View</th>
+                                                            <th>Download</th>
                                                             <th>Edit</th>
                                                             <th>Delete</th>
                                                         </tr>
@@ -234,6 +239,9 @@ export default function SuitabilityCalculation() {
                                                                     <td>{suitability.file_name}</td>
                                                                     <td>
                                                                         <i className="fas fa-eye" onClick={() => { setsuitability(suitability.name); setViewModal(true) }}></i>
+                                                                    </td>
+                                                                    <td>
+                                                                        <i className="fas fa-download" onClick={() => download(suitability.id)}></i>
                                                                     </td>
                                                                     <td>
                                                                         <i className="fas fa-edit" onClick={() => setEditModal(true)}></i>

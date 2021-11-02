@@ -6,7 +6,7 @@ import FormFile from "../../common/FormFile";
 import TextArea from "../../common/TextArea";
 import Cancel from "../../common/btn/Cancel";
 import Submit from "../../common/btn/Submit";
-import { getBoundary, addBoundary, deleteBoundary } from "../../../actions/boundary";
+import { getBoundary, addBoundary, deleteBoundary, downloadBoundary } from "../../../actions/boundary";
 import BoundaryDelete from './boundaryDelete';
 import BoundaryView from './boundaryView';
 import BoundaryEdit from './boundaryEdit';
@@ -24,57 +24,61 @@ export default function Boundary() {
     const dispatch = useDispatch();
 
     const boundarys = useSelector((state) => state.boundary.boundary);
-    
-      const onNameChange = (e) => {
-        setName(e.target.value);
-      };
 
-      const onDescriptionChange = (e) => {
+    const onNameChange = (e) => {
+        setName(e.target.value);
+    };
+
+    const onDescriptionChange = (e) => {
         setDescription(e.target.value);
-      };
-    
-      const handleFileChange = (e) => {
+    };
+
+    const handleFileChange = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0]?.name);
-      };
-    
-      const onSubmit = (e) => {
+    };
+
+    const onSubmit = (e) => {
         e.preventDefault();
         let form_data = new FormData();
-    
+
         form_data.append("file", file, file.name);
         form_data.append("name", name);
         form_data.append("description", description);
         form_data.append("file_name", file_name);
         // form_data.append("project", localStorage.getItem("projectId"));
         dispatch(addBoundary(form_data));
-    
+
         setName("");
         setDescription("");
         setFile(null);
         setFileName("");
-      };
-    
-      const onCancel = (e) => {
+    };
+
+    const onCancel = (e) => {
         e.preventDefault();
         setName("");
         setDescription("");
         setFile(null);
         setFileName("");
-      };
+    };
 
-      const onDelete = (id) => {
+    const onDelete = (id) => {
         dispatch(deleteBoundary(id))
-      }
+    }
 
-      useEffect(() => {
+    const download = id => {
+        dispatch(downloadBoundary(id))
+    }
+
+    useEffect(() => {
         dispatch(getBoundary())
     }, [dispatch])
     return (
         <div>
-            <BoundaryView cond={viewModal} setCond={setViewModal} name={boundary}/>
-            <BoundaryEdit cond={editModal} setCond={setEditModal}/>
-            <BoundaryDelete cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete}/>
+            <BoundaryView cond={viewModal} setCond={setViewModal} name={boundary} />
+            <BoundaryEdit cond={editModal} setCond={setEditModal} />
+            <BoundaryDelete cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete} />
             <div className="row">
                 <div className="col-lg-6 required">
                     <FormLabel name="Name" />
@@ -107,7 +111,7 @@ export default function Boundary() {
                 />
             </div>
             <div className="row float-right mx-auto">
-                <Submit name="Submit" onClick={onSubmit}/>
+                <Submit name="Submit" onClick={onSubmit} />
                 <Cancel onClick={onCancel} />
             </div>
             <div className="row mt-5">
@@ -120,6 +124,7 @@ export default function Boundary() {
                                 <th>Description</th>
                                 <th>File</th>
                                 <th>View</th>
+                                <th>Download</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
@@ -132,13 +137,16 @@ export default function Boundary() {
                                         <td>{boundary.description}</td>
                                         <td>{boundary.file_name}</td>
                                         <td>
-                                            <i className="fas fa-eye" onClick={() => {setBoundary(boundary.file_name.split(".")[0]); setViewModal(true)}}></i>
+                                            <i className="fas fa-eye" onClick={() => { setBoundary(boundary.file_name.split(".")[0]); setViewModal(true) }}></i>
+                                        </td>
+                                        <td>
+                                            <i className="fas fa-download" onClick={() => download(boundary.id)}></i>
                                         </td>
                                         <td>
                                             <i className="fas fa-edit" onClick={() => setEditModal(true)}></i>
                                         </td>
                                         <td>
-                                            <i className="fas fa-trash-alt" onClick={() => {setDataId(boundary.id);setDeleteModal(true)}}></i>
+                                            <i className="fas fa-trash-alt" onClick={() => { setDataId(boundary.id); setDeleteModal(true) }}></i>
                                         </td>
                                     </tr>
                                 );

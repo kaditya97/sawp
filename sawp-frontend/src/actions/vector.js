@@ -21,6 +21,11 @@ export const getVector = () => (dispatch, getState) => {
         });
 };
 
+// Download Vector
+export const downloadVector = id => (dispatch, getState) => {
+    axios.get(`/api/suitability/download/vector/${id}`, tokenConfig(getState))
+};
+
 // Add Vector
 export const addVector = (form_data) => (dispatch, getState) => {
     dispatch({type: VECTOR_LOADING})

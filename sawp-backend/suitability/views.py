@@ -8,10 +8,9 @@ from rest_framework import status
 from .models import *
 from .serializer import *
 from .suitability_calculation import *
-import tempfile
-import shutil
+from django.http import Http404, HttpResponse, FileResponse
 from pathlib import Path
-import json
+import json, os
 import ahpy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,7 +50,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return Response(serializers.data)
     
     def patch(self, pk, taskid):
-        print(taskid)
         instance = self.get_object(pk)
         serializer = ProjectSerializer(instance, data=taskid, partial=True)
 
@@ -163,7 +161,6 @@ class SuitabilityViewSet(viewsets.ModelViewSet):
     serializer_class = SuitabilitySerializer
     parsers = (MultiPartParser, FormParser)
     def get_queryset(self):
-        css = geo.get_coveragestores()
         return Suitability.objects.all()
     
     def create(self, request):
@@ -186,3 +183,21 @@ class SuitabilityViewSet(viewsets.ModelViewSet):
         suitability = Suitability.objects.all()
         serializers = SuitabilitySerializer(suitability, many=True)
         return Response(serializers.data)
+
+@api_view(['GET'])
+def download(self, type, pk):
+    if type == 'suitability':
+        instance = Suitability.objects.get(id=pk)
+    elif type == 'raster':
+        instance = Raster.objects.get(id=pk)
+    elif type == 'vector':
+        instance = Vector.objects.get(id=pk)
+    else: 
+        instance = Boundary.objects.get(id=pk)
+    file_name = instance.file_name
+    file_path = f"{base}/media/{type}/{file_name}"
+    if os.path.exists(file_path):
+        file = open(file_path, 'rb')
+        return FileResponse(file)
+    else:
+        raise Http404

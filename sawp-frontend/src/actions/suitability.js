@@ -17,6 +17,11 @@ export const getSuitability = () => (dispatch, getState) => {
         });
 };
 
+// Download Suitability
+export const downloadSuitability = id => (dispatch, getState) => {
+    axios.get(`/api/suitability/download/suitability/${id}`, tokenConfig(getState))
+};
+
 // Add Suitability
 export const addSuitability = (sname, description, weights, boundary) => (dispatch, getState) => {
     const form_data = JSON.stringify({sname, description, weights, boundary});

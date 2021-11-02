@@ -11,3 +11,4 @@ router.register('suitability', views.SuitabilityViewSet, 'suitability')
 
 urlpatterns = router.urls
 urlpatterns += [path('ahp/', views.calculate_ahp, name='ahp')]
+urlpatterns += [path('download/<str:type>/<int:pk>/', views.download, name='download')]

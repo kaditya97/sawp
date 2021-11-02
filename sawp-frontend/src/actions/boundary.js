@@ -17,6 +17,11 @@ export const getBoundary = () => (dispatch, getState) => {
         });
 };
 
+// Download Boundary
+export const downloadBoundary = id => (dispatch, getState) => {
+    axios.get(`/api/suitability/download/boundary/${id}`, tokenConfig(getState))
+};
+
 // Add Boundary
 export const addBoundary = (form_data) => (dispatch, getState) => {
     axios

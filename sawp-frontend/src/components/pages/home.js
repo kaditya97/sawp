@@ -20,21 +20,19 @@ export default function Home() {
                     </div>
                 </section> */}
                 <section class="view intro-2 rgba-gradient">
-                    <div class="mask">
-                        <div class="container h-100 d-flex justify-content-center align-items-center">
-                            <div class="row flex-center pt-5 mt-3">
-                                <div class="col-md-12 col-lg-6 text-center text-md-left margins">
-                                    <div class="white-text">
-                                        <h1 class="h1-responsive font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Suitability Analysis</h1>
-                                        <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s" />
-                                        <p className="text-justify">
-                                            Suitability Analysis allows you to qualify, compare, and rank candidate sites based on how closely they adhere to criteria that you select and define. Suitability Analysis is performed on polygonal inputs that are formatted as your Suitability Analysis layer. These can represent sales regions, standard geographies such as counties, or candidate site trade areas.The analyses of suitability layer candidates are ranked and scored based on criteria that you select and control. Suitability scores are calculated by comparing criteria across all candidate sites. Each criterion receives a score and weighted score, which are returned as new attributes. A final score is also returned. It summarizes individual weighted scores into an overall ranking.
-                                        </p>
-                                    </div>
+                    <div class="container h-100 d-flex justify-content-center align-items-center">
+                        <div class="row flex-center pt-5 mt-3">
+                            <div class="col-md-12 col-lg-6 text-center text-md-left margins">
+                                <div class="white-text">
+                                    <h1 class="h1-responsive font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Suitability Analysis</h1>
+                                    <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s" />
+                                    <p className="text-justify">
+                                        Suitability Analysis allows you to qualify, compare, and rank candidate sites based on how closely they adhere to criteria that you select and define. Suitability Analysis is performed on polygonal inputs that are formatted as your Suitability Analysis layer. These can represent sales regions, standard geographies such as counties, or candidate site trade areas.The analyses of suitability layer candidates are ranked and scored based on criteria that you select and control. Suitability scores are calculated by comparing criteria across all candidate sites. Each criterion receives a score and weighted score, which are returned as new attributes. A final score is also returned. It summarizes individual weighted scores into an overall ranking.
+                                    </p>
                                 </div>
-                                <div class="col-md-12 col-lg-6">
+                            </div>
+                            <div class="col-md-12 col-lg-6">
                                 <img src={intro} className="img-fluid" alt="intro" style={{ height: "60vh", width: "30vw" }} />
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -17,6 +17,11 @@ export const getRaster = () => (dispatch, getState) => {
         });
 };
 
+// Download Raster
+export const downloadRaster = id => (dispatch, getState) => {
+    axios.get(`/api/suitability/download/raster/${id}`, tokenConfig(getState))
+};
+
 // Add Raster
 export const addRaster = (form_data) => (dispatch, getState) => {
     axios
