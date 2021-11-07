@@ -4,7 +4,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import viewsets
-from rest_framework import status
 from .models import *
 from .serializer import *
 from .suitability_calculation import *
@@ -197,7 +196,6 @@ def download(self, type, pk):
     file_name = instance.file_name
     file_path = f"{base}/media/{type}/{file_name}"
     if os.path.exists(file_path):
-        file = open(file_path, 'rb')
-        return FileResponse(file)
+        return FileResponse(open(file_path, 'rb'), as_attachment=True)
     else:
         raise Http404

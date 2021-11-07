@@ -44,14 +44,14 @@ export const getStyle = (id) => (dispatch) => {
 };
 
 export const patchStyle = (style, id) => (dispatch) => {
-  // axios
-  //   .patch(`/api/styles/sldstyle/${id}/`, style)
-  //   .then((res) => {
-  //     dispatch({ type: PATCH_STYLE, payload: res.data });
-  //   })
-  //   .catch((err) =>
-  //     dispatch(err.response.data)
-  //   );
+  axios
+    .patch(`/api/styles/sldstyle/${id}/`, style)
+    .then((res) => {
+      dispatch({ type: PATCH_STYLE, payload: res.data });
+    })
+    .catch((err) =>
+      dispatch(err.response.data)
+    );
 };
 
 export const addStyle = (style) => (dispatch, getState) => {

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { Map, TileLayer, WMSTileLayer } from 'react-leaflet'
+import { Map, TileLayer, WMSTileLayer, withLeaflet } from 'react-leaflet'
 import ReactLoading from 'react-loading';
 import { getSuitability } from "../../actions/suitability"
 import LayerListing from '../layout/layerListing'
 import Legend from '../layout/legend';
 import Style from '../layout/style';
 import { getRasterStyles } from '../../actions/geoserver';
+import PrintControlDefault from 'react-leaflet-easyprint';
+
+const PrintControl = withLeaflet(PrintControlDefault);
+
 
 export default function Visualization() {
     const [isLoading, setIsLoading] = useState(false);
@@ -42,6 +46,7 @@ export default function Visualization() {
                             opacity={opacity}
                             format={'image/png'}
                         />
+                        <PrintControl position="topright" sizeModes={['Current', 'A4Portrait', 'A4Landscape']} hideControlContainer={true} title="Export as PNG" exportOnly />
                     </Map>
                     <div className="left-sidebar">
                         <LayerListing

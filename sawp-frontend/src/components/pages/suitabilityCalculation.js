@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import useSound from 'use-sound';
+import warningSound from '../../static/music/warning.mp3';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { getVector } from "../../actions/vector"
 import { getRaster } from "../../actions/raster"
@@ -26,6 +28,8 @@ export default function SuitabilityCalculation() {
     const [description, setDescription] = React.useState('')
     const [boundary, setBoundary] = React.useState('')
     const dispatch = useDispatch();
+
+    const [play] = useSound(warningSound);
 
     const vectors = useSelector((state) => state.vector.vector);
     const rasters = useSelector((state) => state.raster.raster);
@@ -77,6 +81,11 @@ export default function SuitabilityCalculation() {
     const onDescriptionChange = (e) => {
         setDescription(e.target.value);
     };
+
+    const handleLayer = () => {
+        toast("Select Vector or Raster layers first");
+        play();
+    }
 
     const download = id => {
         dispatch(downloadSuitability(id))
@@ -203,7 +212,7 @@ export default function SuitabilityCalculation() {
                                         <div className="row mx-5 d-flex justify-content-center mt-5">
                                             {activeLayers ?
                                                 <button className="btn btn-primary" onClick={() => setActiveLayer(!activeLayer)}>{activeLayer ? "Hide AHP Table" : "Show AHP Table"}</button>
-                                                : <button className="btn btn-info" onClick={()=>toast("Select Vector of Raster layers first")}>Select Layers First</button>}
+                                                : <button className="btn btn-info" onClick={handleLayer}>Select Layers First</button>}
                                         </div>
                                         <div className="row mx-auto d-flex justify-content-start overflow-auto">
                                             {activeLayer && <Ahp sname={sname} description={description} array={activeLayers} boundary={boundary}/>}

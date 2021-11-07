@@ -64,3 +64,12 @@ export const PATCH_STYLE = "PATCH_STYLE";
 export const ADD_STYLE = "ADD_STYLE";
 export const DELETE_STYLE = "DELETE_STYLE";
 export const UPDATE_STYLE = "UPDATE_STYLE";
+
+//Data Preparation
+export const CLIP_VECTOR = "CLIP_VECTOR";
+export const CLIP_RASTER = "CLIP_RASTER";
+export const MERGE_VECTORS = "MERGE_VECTORS";
+export const BUFFER_VECTOR = "BUFFER_VECTOR";
+export const RASTER_TO_VECTOR = "RASTER_TO_VECTOR";
+export const VECTOR_TO_RASTER = "VECTOR_TO_RASTER";
+export const VECTOR_TO_SHAPEFILE = "VECTOR_TO_SHAPEFILE";

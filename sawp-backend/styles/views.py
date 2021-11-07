@@ -178,6 +178,7 @@ def style(request):
     layer_name = request.GET.get('layer_name')
     workspace_name = request.GET.get('workspace')
     palette_input = request.GET.get('palette')
+    print(style_type, file, layer_name, workspace_name, palette_input)
 
     # Gdal get raster band
     gtif = gdal.Open(file)

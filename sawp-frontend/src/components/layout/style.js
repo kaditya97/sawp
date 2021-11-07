@@ -43,15 +43,15 @@ function Style(props) {
   const onChange = (e) => {
     const id = layer?.id;
     setStyleType(e.target.value);
-    patchStyle({ "style_type": e.target.value }, id);
-    getSld(id);
+    dispatch(patchStyle({ "style_type": e.target.value }, id));
+    dispatch(getSld(id));
   };
 
   const onStyleTypeChange = (stype) => {
     const id = layer?.id;
     setStyleType(stype.value);
-    props.patchStyle({ style_type: stype.value }, id);
-    props.getSld(id);
+    dispatch(patchStyle({ style_type: stype.value }, id));
+    dispatch(getSld(id));
   };
 
   const onFillColorChange = (color) => {
@@ -128,23 +128,23 @@ function Style(props) {
       });
 
     color_palette = reversePalette.value.toString();
-    props.patchStyle({ color_palette: color_palette }, id);
-    props.getSld(id);
+    dispatch(patchStyle({ color_palette: color_palette }, id));
+    dispatch(getSld(id));
   };
 
   const onAttributeChange = (val) => {
     const id = layer?.id;
     this.setState({ attribute_name: val });
-    props.patchStyle({ attribute_name: val.value }, id);
-    props.getSld(id);
+    patchStyle({ attribute_name: val.value }, id);
+    getSld(id);
   };
 
   const onClassificationMethodChange = (val) => {
     const id = layer?.id;
     const classification_method = val.value;
     setClassificationMethod(val);
-    patchStyle({ classification_method: classification_method }, id);
-    getSld(id);
+    dispatch(patchStyle({ classification_method: classification_method }, id));
+    dispatch(getSld(id));
   };
 
   const onOpacityChange = (val) => {
@@ -158,8 +158,8 @@ function Style(props) {
     const id = layer?.id;
     const number_of_class = parseInt(val[0]);
     setNumberOfClass(number_of_class);
-    patchStyle({ number_of_class: number_of_class }, id);
-    getSld(id);
+    dispatch(patchStyle({ number_of_class: number_of_class }, id));
+    dispatch(getSld(id));
   };
 
   const onFilterData = (val) => {
