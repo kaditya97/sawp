@@ -14,7 +14,6 @@ import Select from 'react-select'
 import FormLabel from "../common/FormLabel";
 import FormInput from "../common/FormInput";
 import TextArea from "../common/TextArea";
-import Info from '../layout/info';
 import Ahp from '../layout/ahp_table'
 import { toast } from 'react-toastify';
 
@@ -110,7 +109,7 @@ export default function SuitabilityCalculation() {
                     <div className="container-fluid mt-5">
                         <h3 className="text-center heading">Suitability Calculation</h3>
                         <div className="row mx-5">
-                            <div className="col-xl-9">
+                            <div className="col-xl-12">
                                 <ul className="nav nav-tabs mt-3" id="myTab" role="tablist">
                                     <li className="nav-item">
                                         <a
@@ -225,7 +224,7 @@ export default function SuitabilityCalculation() {
                                         aria-labelledby="suitability-tab"
                                     >
                                         <div className="row">
-                                            <div className="col-md-9">
+                                            <div className="col-md-12">
                                                 <h3>Suitability List</h3>
                                                 <table className="table table-striped table-hover">
                                                     <thead>
@@ -267,9 +266,6 @@ export default function SuitabilityCalculation() {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col-xl-3">
-                                <Info info={"Suitability Calculation Help"} />
                             </div>
                         </div>
                     </div>

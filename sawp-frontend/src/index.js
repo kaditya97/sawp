@@ -13,7 +13,7 @@ axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 ReactDOM.render(
   <React.StrictMode>
     <Routes />
-    <ToastContainer />
+    <ToastContainer position="top-center" />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,21 +1,10 @@
-import React,{useState} from 'react'
+import React from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import Vector from '../layout/vector/vector';
 import Raster from '../layout/raster/raster';
 import Boundary from '../layout/boundary/boundary';
-import Info from '../layout/info';
 
 function DataInput() {
-  const [helpInfo, setHelpInfo] = useState("Zip shapefile before upload.")
-  const vectorInfo = () => {
-    setHelpInfo("Zip shapefile before upload.")
-  }
-  const rasterInfo = () => {
-    setHelpInfo("Raster")
-  }
-  const boundaryInfo = () => {
-    setHelpInfo("Zip shapefile before upload. Upload only Polygon file, Multipolygon not supported.")
-  }
     return (
       <div className="home">
         <Scrollbars
@@ -25,7 +14,7 @@ function DataInput() {
           <div className="container-fluid mt-5">
             <h3 className="text-center heading">Data Management</h3>
             <div className="row mx-5">
-              <div className="col-xl-9">
+              <div className="col-xl-12">
                 <form
                   className="form-group"
                   encType="multipart/form-data"
@@ -40,7 +29,6 @@ function DataInput() {
                         role="tab"
                         aria-controls="vector"
                         aria-selected="true"
-                        onClick={vectorInfo}
                       >
                         Vector file upload
                       </a>
@@ -54,7 +42,6 @@ function DataInput() {
                         role="tab"
                         aria-controls="raster"
                         aria-selected="false"
-                        onClick={rasterInfo}
                       >
                         Raster file upload
                       </a>
@@ -68,7 +55,6 @@ function DataInput() {
                         role="tab"
                         aria-controls="boundary"
                         aria-selected="false"
-                        onClick={boundaryInfo}
                       >
                         Boundary file upload
                       </a>
@@ -101,9 +87,6 @@ function DataInput() {
                     </div>
                   </div>
                 </form>
-              </div>
-              <div className="col-xl-3">
-                <Info info={helpInfo}/>
               </div>
             </div>
           </div>
