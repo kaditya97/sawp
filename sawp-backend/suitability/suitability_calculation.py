@@ -13,7 +13,6 @@ def Suitability_calculation(weights=None,clipbound=None):
     myweights = {}
     wrasters = {}
     wvectors = {}
-    rematched = []
     for key, value in weights.items():
         w = {}
         w['wname'] = key
@@ -25,6 +24,7 @@ def Suitability_calculation(weights=None,clipbound=None):
     for b in boundary:
         if b.name == clipbound:
             bfile = base + '/media/' + str(b.file)
+            print(bfile)
             with ZipMemoryFile(open(bfile, 'rb').read()) as zip:
                 with zip.open() as src:
                     bound = gpd.GeoDataFrame.from_features(src)
@@ -59,10 +59,15 @@ def Suitability_calculation(weights=None,clipbound=None):
                                         outputType=gdal.GDT_Float32)
                     ds = None
                     myweights[k]['file'] = rxr.open_rasterio(tif_file, masked=True).squeeze()
+    size = (1000000,1000000)
+    for k, v in myweights.items():
+        v['file'] = v['file'].rio.clip(bound.geometry.apply(mapping), bound.crs)
+        if myweights[k]['file'].rio.shape < size:
+            size = myweights[k]['file'].rio.shape  
+            matcher = myweights[k]['file'] 
     overlay = 0
     for k, v in myweights.items():
-        craster = v['file'].rio.clip(bound.geometry.apply(mapping), bound.crs)
-        craster = craster.rio.reproject_match(myweights['economic']['file'].rio.clip(bound.geometry.apply(mapping), bound.crs))
+        craster = v['file'].rio.reproject_match(matcher)
         print(craster.rio.shape)
         overlay = overlay + craster * v['wvalue']
     overlay = overlay.rio.clip(bound.geometry.apply(mapping), bound.crs)

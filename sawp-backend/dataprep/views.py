@@ -67,18 +67,16 @@ def buffer_vector(request):
     """
     Buffers a vector using a distance
     """
-    # # Get the input data
-    # input_vector = request.GET.get('input_vector')
-    # distance = request.GET.get('distance')
-    # # Load the input data
-    # input_vector = gpd.read_file(input_vector)
-    # # Buffer the vector
-    # output_vector = input_vector.buffer(distance)
-    # # Save the output data
-    # output_vector.to_file(input_vector.name + '_buffered.shp')
+    # Get the input data
+    input_vector = request.FILES.get('file')
+    input_vector = gpd.read_file(input_vector)
+    distance = request.POST.get('buffer')
+    # Buffer the vector
+    output_vector = input_vector.buffer(float(distance))
+    # Save the output data
+    output_vector.to_file(input_vector.name + '_buffered.shp')
     # # Return the output
-    # return HttpResponse(output_vector.name + '_buffered.shp')
-    return HttpResponse('Buffer Vector')
+    return HttpResponse(output_vector.name + '_buffered.shp')
 
 # Vector to Raster
 @api_view(['GET','POST'])

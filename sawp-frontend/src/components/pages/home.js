@@ -1,7 +1,7 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import intro from '../../static/img/video.jpg';
-// import banner from '../../static/img/banner.png';
+import { Link } from 'react-router-dom'
 
 export default function Home() {
     return (
@@ -38,6 +38,82 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
+                <section className="features-section">
+                    <div className="container-fluid py-5">
+                        <div className="row feature-top">
+                            <h1>Features</h1>
+                        </div>
+                        <div className="row mx-5 my-5">
+                            <div className="col-md-3 mt-3 mb-3">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <i className="fas fa-address-card"></i>
+                                        <h5 className="card-title">Data Management</h5>
+                                        <p className="card-text">
+                                            Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                        </p>
+                                        <Link to="/mergeVector" className="d-flex justify-content-center">
+                                            <span className="btn btn-primary">Start Tool</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3 mt-3 mb-3">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <i className="fas fa-address-card"></i>
+                                        <h5 className="card-title">Data Processing</h5>
+                                        <p className="card-text">
+                                            Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                        </p>
+                                        <Link to="/mergeVector" className="d-flex justify-content-center">
+                                            <span className="btn btn-primary">Start Tool</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3 mt-3 mb-3">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <i className="fas fa-address-card"></i>
+                                        <h5 className="card-title">Suitability Calculation</h5>
+                                        <p className="card-text">
+                                            Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                        </p>
+                                        <Link to="/mergeVector" className="d-flex justify-content-center">
+                                            <span className="btn btn-primary">Start Tool</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3 mt-3 mb-3">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <i className="fas fa-address-card"></i>
+                                        <h5 className="card-title">Full Control Visualization</h5>
+                                        <p className="card-text">
+                                            Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                        </p>
+                                        <Link to="/mergeVector" className="d-flex justify-content-center">
+                                            <span className="btn btn-primary">Start Tool</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="footer-content m-2">
+                                    <p>Copyright © {new Date().getFullYear()} Suitability Analysis. All rights reserved.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </Scrollbars>
         </div>
     )

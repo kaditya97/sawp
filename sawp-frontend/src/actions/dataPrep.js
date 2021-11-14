@@ -13,7 +13,7 @@ import {
 export const clipVector = (data) => (dispatch, getState) => {
     axios
         .post(
-            'http://localhost:8000/api/data/clipvector',
+            '/api/dataprep/clipvector',
             data,
             tokenConfigFileUpload(getState)
         )
@@ -34,7 +34,7 @@ export const clipVector = (data) => (dispatch, getState) => {
 export const clipRaster = (data) => (dispatch, getState) => {
     axios
         .post(
-            'http://localhost:8000/api/data/clipperaster',
+            '/api/dataprep/clipperaster',
             data,
             tokenConfigFileUpload(getState)
         )
@@ -55,7 +55,7 @@ export const clipRaster = (data) => (dispatch, getState) => {
 export const mergeVectors = (data) => (dispatch, getState) => {
     axios
         .post(
-            'http://localhost:8000/api/data/mergevector',
+            '/api/dataprep/mergevector',
             data,
             tokenConfigFileUpload(getState)
         )
@@ -76,7 +76,7 @@ export const mergeVectors = (data) => (dispatch, getState) => {
 export const bufferVector = (data) => (dispatch, getState) => {
     axios
         .post(
-            'http://localhost:8000/api/data/buffervector',
+            '/api/dataprep/buffervector/',
             data,
             tokenConfigFileUpload(getState)
         )
@@ -97,7 +97,7 @@ export const bufferVector = (data) => (dispatch, getState) => {
 export const vectorToRaster = (data) => (dispatch, getState) => {
     axios
         .post(
-            'http://localhost:8000/api/data/vectortoraster',
+            '/api/dataprep/vectortoraster',
             data,
             tokenConfigFileUpload(getState)
         )
@@ -118,7 +118,7 @@ export const vectorToRaster = (data) => (dispatch, getState) => {
 export const rasterToVector = (data) => (dispatch, getState) => {
     axios
         .post(
-            'http://localhost:8000/api/data/rastertovector',
+            '/api/dataprep/rastertovector',
             data,
             tokenConfigFileUpload(getState)
         )
@@ -139,7 +139,7 @@ export const rasterToVector = (data) => (dispatch, getState) => {
 export const vectorToShapefile = (data) => (dispatch, getState) => {
     axios
         .post(
-            'http://localhost:8000/api/data/vectortoshapefile',
+            '/api/dataprep/vectortoshapefile',
             data,
             tokenConfigFileUpload(getState)
         )

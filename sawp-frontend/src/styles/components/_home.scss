@@ -15,13 +15,13 @@
     .banner-content {
         position: relative;
         text-align: start;
-        color: #fff;
+        color: #000;
         padding: 0 15px;
         width: 100%;
 
         .intro {
             padding-left: 13vw;
-            padding-top: 20vh;
+            padding-top: 25vh;
         }
 
         h4 {
@@ -54,11 +54,6 @@
 }
 
 .about-section {
-    .intro {
-        padding-left: 13vw;
-        padding-top: 20vh;
-    }
-
     h1 {
         font-size: 2.6rem;
         font-weight: 700;
@@ -98,4 +93,29 @@
             cursor: pointer;
         }
     }
+}
+
+.features-section {
+    .feature-top {
+        display: flex;
+        justify-content: center;
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fd8700;
+        }
+    }
+    i {
+        font-size: 4rem;
+    }
+    a {
+        text-decoration: none;
+    }
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
 }

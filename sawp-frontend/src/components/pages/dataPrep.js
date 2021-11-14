@@ -53,7 +53,9 @@ export default function DataPrep() {
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
-                                <span className="btn btn-primary">Start Tool</span>
+                                <Link to="/bufferVector">
+                                    <span className="btn btn-primary">Start Tool</span>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -64,7 +66,35 @@ export default function DataPrep() {
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
-                                <span className="btn btn-primary">Start Tool</span>
+                                <Link to="/mergeVector">
+                                    <span className="btn btn-primary">Start Tool</span>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-3 mt-3 mb-3">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Raster To Vector</h5>
+                                <p className="card-text">
+                                    Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                </p>
+                                <Link to="/mergeVector">
+                                    <span className="btn btn-primary">Start Tool</span>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-3 mt-3 mb-3">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Vector To Shapefile</h5>
+                                <p className="card-text">
+                                    Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                </p>
+                                <Link to="/mergeVector">
+                                    <span className="btn btn-primary">Start Tool</span>
+                                </Link>
                             </div>
                         </div>
                     </div>
