@@ -93,13 +93,13 @@ class Navbar extends React.Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link to="/dataInput" className="nav-link">
-                  Data Management
+                <Link to="/dataPrep" className="nav-link">
+                  Data Processing
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/dataPrep" className="nav-link">
-                  Data Prepration
+                <Link to="/dataInput" className="nav-link">
+                  Data Management
                 </Link>
               </li>
               <li className="nav-item">

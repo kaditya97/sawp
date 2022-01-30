@@ -9,7 +9,7 @@ router.register('sldstyle', SldStyleViewSet, 'sldStyleViewSet')
 
 urlpatterns = [
     path('', csrf_exempt(style), name='styles'),
-    path('sld_generator/', csrf_exempt(sldGenerator), name='styles'),
+    path('sld_generator/', csrf_exempt(sldGenerator), name='sldGenerator'),
     path('column_values/', getColumnValues, name='getColumnValues'),
 ]
 

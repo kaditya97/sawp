@@ -104,7 +104,7 @@ export default function SuitabilityCalculation() {
             <div className="home">
                 <Scrollbars
                     autoHeight
-                    autoHeightMax={"89vh"}
+                    autoHeightMax={"95vh"}
                     className="custom-scrollbars">
                     <div className="container-fluid mt-5">
                         <h3 className="text-center heading">Suitability Calculation</h3>
@@ -122,7 +122,7 @@ export default function SuitabilityCalculation() {
                                             aria-selected="true"
                                         // onClick={vectorInfo}
                                         >
-                                            Calculation
+                                            Suitability Calculation
                                         </a>
                                     </li>
                                     <li className="nav-item">
@@ -136,7 +136,7 @@ export default function SuitabilityCalculation() {
                                             aria-selected="false"
                                         // onClick={rasterInfo}
                                         >
-                                            Suitability
+                                            Suitability List
                                         </a>
                                     </li>
                                 </ul>

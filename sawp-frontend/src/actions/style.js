@@ -11,14 +11,14 @@ import axios from "axios";
 import { tokenConfig } from "./auth";
 
 export const getSld = (id) => (dispatch) => {
-  // axios
-  //   .get(`/api/styles/sld_generator/?style_id=${id}`)
-  //   .then((res) => {
-  //     dispatch({ type: GET_SLD, payload: res.data });
-  //   })
-  //   .catch((err) =>
-  //     dispatch(err.response.data)
-  //   );
+  axios
+    .get(`/api/styles/sld_generator/?style_id=${id}`)
+    .then((res) => {
+      dispatch({ type: GET_SLD, payload: res.data });
+    })
+    .catch((err) =>
+      dispatch(err.response.data)
+    );
 };
 
 export const getStyles = () => (dispatch) => {

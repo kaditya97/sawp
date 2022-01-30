@@ -19,6 +19,7 @@ import ClipVector from './components/layout/dataprep/clipVector';
 import ClipRaster from './components/layout/dataprep/clipRaster';
 import MergeVector from './components/layout/dataprep/mergeVector';
 import BufferVector from './components/layout/dataprep/bufferVector';
+import About from './components/pages/about';
 
 function Routes() {
     useEffect(() => {store.dispatch(loadUser());}, [])
@@ -30,6 +31,7 @@ function Routes() {
                 <Route path='/' exact component={Home} />
                 <Route path='/signup' exact component={Signup} />
                 <Route path='/login' exact component={Login} />
+                <Route path='/about' exact component={About} />
                 <PrivateRoute path='/dataInput' exact component={DataInput} />
                 <PrivateRoute path='/dataPrep' exact component={DataPrep} />
                 <PrivateRoute path='/clipVector' exact component={ClipVector} />

@@ -1,4 +1,8 @@
-from django.http.response import HttpResponse
+from django.http import HttpResponse, FileResponse, Http404
+from zipfile import ZipFile
+import os
+import tempfile
+import shutil
 from rest_framework.decorators import api_view
 from osgeo import gdal, ogr
 import geopandas as gpd
@@ -49,11 +53,11 @@ def merge_vectors(request):
     """
     Merges multiple vectors into a single vector
     """
-    # # Get the input data
-    # input_vectors = request.GET.get('input_vectors')
-    # # Load the input data
-    # input_vectors = gpd.read_file(input_vectors)
-    # # Merge the vectors
+    # Get the input data
+    input_vectors = request.FILES.get('file')
+    # Load the input data
+    input_vectors = gpd.read_file(input_vectors)
+    # Merge the vectors
     # output_vector = gpd.GeoDataFrame(pd.concat([input_vectors]))
     # # Save the output data
     # output_vector.to_file(input_vectors.name + '_merged.shp')
@@ -67,16 +71,34 @@ def buffer_vector(request):
     """
     Buffers a vector using a distance
     """
-    # Get the input data
     input_vector = request.FILES.get('file')
     input_vector = gpd.read_file(input_vector)
     distance = request.POST.get('buffer')
-    # Buffer the vector
-    output_vector = input_vector.buffer(float(distance))
-    # Save the output data
-    output_vector.to_file(input_vector.name + '_buffered.shp')
-    # # Return the output
-    return HttpResponse(output_vector.name + '_buffered.shp')
+    buffer_distance = float(distance)*(0.001/111)
+    gs = input_vector.geometry.buffer(buffer_distance)
+    gdf = gpd.GeoDataFrame(geometry=gs)
+    gdf = gdf.set_crs('epsg:4326')
+    dirpath = tempfile.mkdtemp()
+    # shutil.rmtree(dirpath)
+    shp_file = f'{dirpath}/fuel.shp'
+    gdf.to_file(driver='ESRI Shapefile', filename=shp_file)
+    def get_all_file_paths(directory):
+        file_paths = []
+        for root, directories, files in os.walk(directory):
+            for filename in files:
+                filepath = os.path.join(root, filename)
+                file_paths.append(filepath)
+        return file_paths
+    file_paths = get_all_file_paths(dirpath)
+    zip_path = f'{dirpath}/fuel.zip'
+    with ZipFile(zip_path,'w') as zip:
+        for file in file_paths:
+            zip.write(file)
+    if os.path.exists(zip_path):
+        print('Working')
+        return FileResponse(open(zip_path, 'rb'), as_attachment=True)
+    else:
+        raise Http404
 
 # Vector to Raster
 @api_view(['GET','POST'])
@@ -97,6 +119,17 @@ def vector_to_raster(request):
     # # Return the output
     # return HttpResponse(output_raster.name + '_raster.tif')
     return HttpResponse('Vector to Raster')
+
+def download_file(request):
+    gcode = "/home/bradman/Documents/Programming/DjangoWebProjects/3dprinceprod/fullprince/media/uploads/tmp/skull.gcode"
+    resp = HttpResponse('')
+
+    with  open(gcode, 'r') as tmp:
+        filename = tmp.name.split('/')[-1]
+        resp = HttpResponse(tmp, content_type='application/text;charset=UTF-8')
+        resp['Content-Disposition'] = "attachment; filename=%s" % filename
+
+    return resp
 
 # Raster to Vector
 @api_view(['GET','POST'])

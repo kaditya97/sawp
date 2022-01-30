@@ -11,10 +11,11 @@ class FormFile extends Component {
     placeholder: "Choose file...",
     required: "required",
     xtraClass: "mt-4",
+    multiple: false,
   };
 
   render() {
-    const { fileName, placeholder, onChange, required, xtraClass, accept } = this.props;
+    const { fileName, placeholder, onChange, required, xtraClass, accept, multiple } = this.props;
 
     return (
       <div className={`custom-file ${xtraClass}`}>
@@ -25,6 +26,7 @@ class FormFile extends Component {
           className="custom-file-input"
           required={required}
           accept={accept}
+          multiple={multiple}
         />
         <label className="custom-file-label" htmlFor={fileName}>
           {placeholder}

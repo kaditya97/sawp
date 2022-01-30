@@ -45,10 +45,7 @@ class SldStyleViewSet(viewsets.ModelViewSet):
     serializer_class = SldStyleSerializer
 
     def perform_create(self, serializer):
-        if hasattr(self.request.user, 'staff'):
-            organization = self.request.user.staff.organization.name
-            workspace = organization.replace(' ', '_').lower()
-            serializer.save(workspace=workspace)
+        serializer.save(workspace="sawp")
 
 
 def getColumnValues(request):

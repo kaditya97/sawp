@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ColorPicker from "../common/ColorPicker";
 import Select from "react-select";
@@ -19,6 +19,7 @@ import { patchStyle, getSld } from "../../actions/style";
 import CloseWindowBtn from "../common/CloseWindowBtn";
 
 function Style(props) {
+  console.log("working")
   const { opacity, layer } = props;
   const [style_type, setStyleType] = useState("");
   const [geom_type, setGeomType] = useState("");
@@ -29,16 +30,31 @@ function Style(props) {
   const [falseReverseOrderStyle, setFalseReverseOrderStyle] = useState(false);
   const [number_of_class, setNumberOfClass] = useState("");
   const [class_name, setClassName] = useState("");
-  const [attribute_name, setAttributeName] = useState("");
+  // const [attribute_name, setAttributeName] = useState("");
   const [fill_color, setFillColor] = useState("");
   const [classification_method, setClassificationMethod] = useState("");
-  const [layer_name, setLayerName] = useState("");
+  const [layer_name, setLayerName] = useState(layer?.name);
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   props.styleWindow ? props.setStyleContainerToogle(true) : null;
-  // }, [props.styleContainerToggle]);
+  useEffect(() => {
+    dispatch(getSld(layer.id));
+    dispatch(patchStyle({},layer.id));
+  }, [dispatch, layer.id]);
+
+  // const { name,
+    // style_type,
+    // geom_type,
+    // fill_color,
+    // stroke_color,
+    // stroke_width,
+    // opacity,
+    // color_palette,
+    // number_of_class,
+    // classification_method,
+    // attribute_name, } = useSelector((state) => state.style.style);
+    const style = useSelector((state) => state.style?.style);
+    console.log(style);
 
   const onChange = (e) => {
     const id = layer?.id;
