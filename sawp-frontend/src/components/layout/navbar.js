@@ -29,10 +29,6 @@ class Navbar extends React.Component {
                 <i className="fa fa-user"></i>  User profile
               </Link>
               <hr />
-              <Link to="/project" className="dropdown-item">
-                <i className="fa fa-database"></i>  Project
-              </Link>
-              <hr />
               <Link to="/setting" className="dropdown-item">
                 <i className="fa fa-cogs"></i>  Settings
               </Link>

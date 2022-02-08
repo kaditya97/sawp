@@ -58,9 +58,9 @@ export default function style(state = initialState, action) {
       console.log(action.payload);
       return {
         ...state,
-        styles: state.styles.map((s) =>
-          s.id === action.payload.id ? (s = action.payload) : s
-        ),
+        // styles: state.styles.map((s) =>
+        //   s.id === action.payload.id ? (s = action.payload) : s
+        // ),
       };
     default:
       return state;

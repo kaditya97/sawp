@@ -44,8 +44,8 @@ export default function LayerListing(props) {
             {props.layers?.map((layer) => (
               <>
                 <div className="form-check mt-2 mb-1" key={layer.id} onChange={handleClick} style={{ verticalAlign: "middle" }}>
-                  <input className="form-check-input mr-2" type="radio" name="layer" defaultValue={layer.name} />
-                  <label className="form-check-label" htmlFor="layer"><h3>{layer.name}</h3></label>
+                  <input className="form-check-input mr-2" type="radio" id={layer.name} name="layer" defaultValue={layer.name} />
+                  <label className="form-check-label" htmlFor={layer.name}><h3>{layer.name}</h3></label>
                 </div>
               </>
             ))}

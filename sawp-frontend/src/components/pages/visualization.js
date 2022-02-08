@@ -46,7 +46,7 @@ export default function Visualization() {
                             opacity={opacity}
                             format={'image/png'}
                         />
-                        <PrintControl position="topright" sizeModes={['Current', 'A4Portrait', 'A4Landscape']} hideControlContainer={true} title="Export as PNG" exportOnly />
+                        <PrintControl position="topright" sizeModes={['A4Landscape']} hideControlContainer={true} title="Export as PNG" exportOnly />
                     </Map>
                     <div className="left-sidebar">
                         <LayerListing

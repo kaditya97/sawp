@@ -7,6 +7,7 @@ from rest_framework import viewsets
 from .models import *
 from .serializer import *
 from .suitability_calculation import *
+from styles.models import SldStyle
 from django.http import Http404, HttpResponse, FileResponse
 from pathlib import Path
 import json, os
@@ -32,39 +33,6 @@ def calculate_ahp(request):
     suitability = ahpy.Compare(name='Suitability', comparisons=ahp, precision=3, random_index='saaty')
     data = {'weights': suitability.target_weights, 'consistency_ratio': suitability.consistency_ratio}
     return HttpResponse( json.dumps( data ) )
-
-# Project ViewSet
-class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    def get_queryset(self):
-        return Project.objects.all()
-    
-    def create(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        project = Project.objects.all()
-        serializers = ProjectSerializer(project, many=True)
-        return Response(serializers.data)
-    
-    def patch(self, pk, taskid):
-        instance = self.get_object(pk)
-        serializer = ProjectSerializer(instance, data=taskid, partial=True)
-
-        if serializer.is_valid():
-            serializer.save()
-        project = Project.objects.all()
-        serializers = ProjectSerializer(project, many=True)
-        return Response(serializers.data)
-    
-    def destroy(self, request, *args, **kwargs):
-        pk = self.kwargs.get('pk')
-        instance = Project.objects.get(pk=pk)
-        self.perform_destroy(instance)
-        project = Project.objects.all()
-        serializers = ProjectSerializer(project, many=True)
-        return Response(serializers.data)
 
 # Raster Viewset
 class RasterViewSet(viewsets.ModelViewSet):
@@ -168,6 +136,7 @@ class SuitabilityViewSet(viewsets.ModelViewSet):
         file_path = f"{base}/media/suitability/{file_name}"
         overlay.rio.to_raster(file_path)
         Suitability.objects.create(name=request.data.get('sname'), description=request.data.get('description'), file_name=file_name, file="suitability/" + file_name)
+        SldStyle.objects.create(name=request.data.get('sname'), workspace='sawp')
         geo.create_coveragestore(layer_name=request.data.get('sname'), path=file_path, workspace='sawp')
         suitability = Suitability.objects.all()
         serializers = SuitabilitySerializer(suitability, many=True)
@@ -178,7 +147,9 @@ class SuitabilityViewSet(viewsets.ModelViewSet):
         instance = Suitability.objects.get(pk=pk)
         name = instance.name
         self.perform_destroy(instance)
+        SldStyle.objects.filter(name=name).delete()
         geo.delete_coveragestore(coveragestore_name=name, workspace='sawp')
+        geo.delete_style(style_name=name, workspace='sawp')
         suitability = Suitability.objects.all()
         serializers = SuitabilitySerializer(suitability, many=True)
         return Response(serializers.data)

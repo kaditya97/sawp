@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 import tempfile
 import os
 import time
@@ -12,14 +13,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework import viewsets
-from .models import Styles, SldStyle
-from .serializer import StyleSerializer, SldStyleSerializer
+from .models import SldStyle
+from .serializer import SldStyleSerializer
 from geo.Geoserver import Geoserver
 from pg.pg import Pg
 from suitability.models import Suitability
 import seaborn as sns
 from ast import literal_eval
 from .support import stringPrepend
+from suitability.models import Suitability
 
 from sawp.settings import (
     GEOSERVER_USER, GEOSERVER_URL, GEOSERVER_PASSWORD,
@@ -27,7 +29,6 @@ from sawp.settings import (
 )
 
 
-# cat = Catalog("http://localhost:8080/geoserver/rest/", "admin", "geoserver")
 cat = Catalog("{0}/rest/".format(GEOSERVER_URL),
               GEOSERVER_USER, GEOSERVER_PASSWORD)
 geo = Geoserver(GEOSERVER_URL, GEOSERVER_USER, GEOSERVER_PASSWORD)
@@ -35,46 +36,48 @@ pg = Pg(dbname=DB_NAME, user=DB_USER,
         password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
 
 
-class StyleViewSet(viewsets.ModelViewSet):
-    queryset = Styles.objects.all()
-    serializer_class = StyleSerializer
-
-
 class SldStyleViewSet(viewsets.ModelViewSet):
     queryset = SldStyle.objects.all()
     serializer_class = SldStyleSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(workspace="sawp")
+    def list(self, request):
+        print("list")
+        return Response({"message": "Hello World"})
 
+    def create(self, request):
+        print("create")
+        return Response({"message": "Hello World"})
 
-def getColumnValues(request):
-    table = request.GET.get('table')
-    column = request.GET.get('column')
-    schema = request.GET.get('schema')
+    def retrieve(self, request, pk=None):
+        print("retrieve")
 
-    col_values = pg.get_all_values(column, table, schema, distinct=True)
+    def update(self, request, *args, **kwargs):
+        print(request.data)
+        kwargs['partial'] = True
+        return super().update(request, *args, **kwargs)
 
-    return JsonResponse({"column_values": col_values})
+    def partial_update(self, request, pk=None):
+        pass
+
+    def destroy(self, request, pk=None):
+        print("destroy")
+        return Response({"message": "Hello World"})
 
 
 def sldGenerator(request):
     style_id = request.GET.get('style_id')
+    instance = Suitability.objects.get(pk=style_id)
+    name = instance.name
 
     # First need to run patch function after that only we query the layer
     time.sleep(0.3)
-    queryset = SldStyle.objects.get(id=style_id)
+    queryset = SldStyle.objects.get(name=name)
 
     name = queryset.name
-    style_type = queryset.style_type
     workspace = queryset.workspace
-    attribute_name = queryset.attribute_name
     number_of_class = queryset.number_of_class
     geom_type = queryset.geom_type
     classification_method = queryset.classification_method
-    fill_color = queryset.fill_color
-    stroke_color = queryset.stroke_color
-    stroke_width = queryset.stroke_width
     opacity = queryset.opacity
 
     _color_palette = queryset.color_palette
@@ -91,18 +94,16 @@ def sldGenerator(request):
     _style = StyleSld(
         style_name=name,
         dbname=DB_NAME, host=DB_HOST, port=DB_PORT, user=DB_USER, password=DB_PASSWORD,
-        schema=workspace, pg_table_name=name,
-        fill_color=fill_color, stroke_color=stroke_color,
-        opacity=opacity, stroke_width=stroke_width,
+        schema=workspace, opacity=opacity,
         classification_method=classification_method,
-        number_of_class=number_of_class, attribute_name=attribute_name, color_palette=color_palette)
+        number_of_class=number_of_class, color_palette=color_palette)
 
     if geom_type == 'raster':
 
         '''
         The min_value and max_value need to be calculated
         '''
-        layer = Suitability.objects.get(layer_name=name)
+        layer = Suitability.objects.get(name=name)
         file = layer.file.path
         gtif = gdal.Open(file)
         srcband = gtif.GetRasterBand(1)
@@ -110,17 +111,8 @@ def sldGenerator(request):
         N = srcband.GetMaximum() - srcband.GetMinimum() + 1
         min_value = int(srcband.GetMinimum())
         max_value = int(srcband.GetMaximum())
+        print(min_value, max_value)
         style = _style.generate_raster_style(max_value, min_value)
-
-    else:
-        if style_type == 'categorized':
-            style = _style.generate_categorized_style()
-
-        elif style_type == 'classified':
-            style = _style.generate_classified_style()
-
-        else:
-            style = _style.generate_simple_style()
 
     fd, path = tempfile.mkstemp(suffix='.sld')
 
@@ -137,34 +129,6 @@ def sldGenerator(request):
     geo.publish_style(layer_name=name, style_name=name, workspace=workspace)
 
     return HttpResponse(style)
-
-    # style = """
-    # <StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" version="1.0.0" xmlns:ogc="http://www.opengis.net/ogc" xmlns:sld="http://www.opengis.net/sld">
-    # <UserLayer>
-    #     <sld:LayerFeatureConstraints>
-    #     <sld:FeatureTypeConstraint/>
-    #     </sld:LayerFeatureConstraints>
-    #     <sld:UserStyle>
-    #     <sld:Name>agri_final_proj</sld:Name>
-    #     <sld:FeatureTypeStyle>
-    #         <sld:Rule>
-    #         <sld:RasterSymbolizer>
-    #             <sld:ChannelSelection>
-    #             <sld:GrayChannel>
-    #                 <sld:SourceChannelName>1</sld:SourceChannelName>
-    #             </sld:GrayChannel>
-    #             </sld:ChannelSelection>
-    #             <sld:ColorMap type="ramp">
-    #                 {}
-    #             </sld:ColorMap>
-    #         </sld:RasterSymbolizer>
-    #         </sld:Rule>
-    #     </sld:FeatureTypeStyle>
-    #     </sld:UserStyle>
-    # </UserLayer>
-    # </StyledLayerDescriptor>
-    # """.format(fill_color)
-    # return HttpResponse(style)
 
 
 def style(request):

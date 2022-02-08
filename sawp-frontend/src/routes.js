@@ -12,7 +12,6 @@ import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import User from './components/pages/user';
 import Navbar from './components/layout/navbar';
-import Project from './components/pages/project';
 import Setting from './components/pages/setting';
 import DataPrep from './components/pages/dataPrep';
 import ClipVector from './components/layout/dataprep/clipVector';
@@ -41,7 +40,6 @@ function Routes() {
                 <PrivateRoute path='/suitabilityCalculation' exact component={SuitabilityCalculation} />
                 <PrivateRoute path='/visualization' exact component={Visualization} />
                 <PrivateRoute path='/user' exact component={User} />
-                <PrivateRoute path='/project' exact component={Project} />
                 <PrivateRoute path='/setting' exact component={Setting} />
             </Switch>
         </HashRouter>
