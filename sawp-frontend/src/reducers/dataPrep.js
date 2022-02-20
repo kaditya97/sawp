@@ -6,10 +6,11 @@ import {
     VECTOR_TO_RASTER,
     RASTER_TO_VECTOR,
     VECTOR_TO_SHAPEFILE,
+    SHAPEFILE_TO_GEOJSON,
 } from '../actions/types';
 
 const initialState = {
-    message: '',
+    clipvectors: '',
 };
 
 export default function dataPrep(state = initialState, action) {
@@ -17,7 +18,7 @@ export default function dataPrep(state = initialState, action) {
         case CLIP_VECTOR:
             return {
                 ...state,
-                message: 'Clipping vector layer',
+                clipvectors: action.payload,
             };
         case CLIP_RASTER:
             return {
@@ -48,6 +49,11 @@ export default function dataPrep(state = initialState, action) {
             return {
                 ...state,
                 message: 'Vector to shapefile',
+            };
+        case SHAPEFILE_TO_GEOJSON:
+            return {
+                ...state,
+                message: 'Shapefile to geojson',
             };
         default:
             return state;

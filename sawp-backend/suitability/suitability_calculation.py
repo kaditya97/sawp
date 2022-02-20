@@ -68,7 +68,6 @@ def Suitability_calculation(weights=None,clipbound=None):
     overlay = 0
     for k, v in myweights.items():
         craster = v['file'].rio.reproject_match(matcher)
-        print(craster.rio.shape)
         overlay = overlay + craster * v['wvalue']
     overlay = overlay.rio.clip(bound.geometry.apply(mapping), bound.crs)
     return overlay

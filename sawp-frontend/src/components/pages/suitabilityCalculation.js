@@ -234,7 +234,6 @@ export default function SuitabilityCalculation() {
                                                             <th>File</th>
                                                             <th>View</th>
                                                             <th>Download</th>
-                                                            <th>Edit</th>
                                                             <th>Delete</th>
                                                         </tr>
                                                     </thead>
@@ -250,9 +249,6 @@ export default function SuitabilityCalculation() {
                                                                     </td>
                                                                     <td>
                                                                         <i className="fas fa-download" onClick={() => download(suitability.id)}></i>
-                                                                    </td>
-                                                                    <td>
-                                                                        <i className="fas fa-edit" onClick={() => setEditModal(true)}></i>
                                                                     </td>
                                                                     <td>
                                                                         <i className="fas fa-trash-alt" onClick={() => { setDataId(suitability.id); setDeleteModal(true) }}></i>

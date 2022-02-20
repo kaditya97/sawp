@@ -49,7 +49,11 @@ class SldStyleViewSet(viewsets.ModelViewSet):
         return Response({"message": "Hello World"})
 
     def retrieve(self, request, pk=None):
-        print("retrieve")
+        instance = Suitability.objects.get(pk=pk)
+        name = instance.name
+        style = SldStyle.objects.get(name=name)
+        serializers = SldStyleSerializer(style)
+        return Response(serializers.data)
 
     def update(self, request, *args, **kwargs):
         print(request.data)

@@ -8,12 +8,13 @@ import {
     VECTOR_TO_RASTER,
     RASTER_TO_VECTOR,
     VECTOR_TO_SHAPEFILE,
+    SHAPEFILE_TO_GEOJSON,
 } from './types';
 
 export const clipVector = (data) => (dispatch, getState) => {
     axios
         .post(
-            '/api/dataprep/clipvector',
+            '/api/dataprep/clipvector/',
             data,
             tokenConfigFileUpload(getState)
         )
@@ -29,6 +30,39 @@ export const clipVector = (data) => (dispatch, getState) => {
                 payload: null,
             });
         });
+};
+
+export const getClipVector = () => (dispatch) => {
+    axios
+        .get('/api/dataprep/clipvector/')
+        .then((res) => {
+            dispatch({
+                type: CLIP_VECTOR,
+                payload: res.data,
+            });
+        })
+};
+
+export const downloadClipVector = (id) => (dispatch) => {
+    axios
+        .get(`/api/dataprep/clipvector/${id}/download/`)
+        .then((res) => {
+            dispatch({
+                type: CLIP_VECTOR,
+                payload: res.data,
+            });
+        })
+};
+
+export const deleteClipVector = (id) => (dispatch) => {
+    axios
+        .delete(`/api/dataprep/clipvector/${id}/`)
+        .then((res) => {
+            dispatch({
+                type: CLIP_VECTOR,
+                payload: res.data,
+            });
+        })
 };
 
 export const clipRaster = (data) => (dispatch, getState) => {
@@ -155,4 +189,25 @@ export const vectorToShapefile = (data) => (dispatch, getState) => {
                 payload: null,
             });
         });
+}
+
+export const shapefileToGeoJSON = (data) => (dispatch, getState) => {
+    axios
+        .post(
+            '/api/dataprep/shapefiletogeojson/',
+            data,
+            tokenConfigFileUpload(getState)
+        )
+        // .then((res) => {
+        //     dispatch({
+        //         type: SHAPEFILE_TO_GEOJSON,
+        //         payload: res.data,
+        //     });
+        // })
+        // .catch((err) => {
+        //     dispatch({
+        //         type: SHAPEFILE_TO_GEOJSON,
+        //         payload: null,
+        //     });
+        // });
 }

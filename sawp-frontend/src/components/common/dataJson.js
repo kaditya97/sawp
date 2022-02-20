@@ -8,48 +8,6 @@ const selectFunction = (inputArray) => {
   });
 };
 
-//Loss type
-const loss_type = ["Population", "Value", "Number of objects"];
-export const LOSS_TYPE = selectFunction(loss_type);
-
-//Loss computation type
-const loss_computation_type = ["With certainty", "Without certainty"];
-export const LOSS_COMPUTATION_TYPE = selectFunction(loss_computation_type);
-
-//Risk computation type
-const risk_computation_type = ["Single hazard", "Multi hazard"];
-export const RISK_COMPUTATION_TYPE = selectFunction(risk_computation_type);
-
-//risk group
-const risk_group = [
-  "Group 1",
-  "Group 2",
-  "Group 3",
-  "Group 4",
-  "Group 5",
-  "Group 6",
-  "Group 7",
-];
-export const RISK_GROUP = selectFunction(risk_group);
-
-// Risk Interaction
-const interaction = [
-  "No interaction",
-  "Independent",
-  "Compounding",
-  "Coupled",
-  "Cascading",
-  "Conditional",
-];
-
-export const INTERACTION = selectFunction(interaction);
-
-export const STYLE_TYPE = ["simple", "categorized", "classified"];
-
-//style name
-const style_name = ["OrRd", "PuBu", "BuPu"];
-export const STYLE_NAME = selectFunction(style_name);
-
 //style
 const palette_name = [
   "tol",
@@ -125,12 +83,3 @@ const classificationFunction = (inputArray) => {
 export const CLASSIFICATION_METHODS = classificationFunction(
   classsification_methods
 );
-
-const vul_valid_region = [
-  "Americas (North America, South America, Central America, Caribbean)",
-  "Asia Pacific (Central & South Asia, Northeastern Asia, Southeastern Asia, Australia and Oceania)",
-  "Europe (Northern Europe, Southern Europe, Eastern Europe, Western Europe)",
-  "Middle East/Africa (Middle East, Northern Africa, Southern Africa)",
-];
-
-export const VUL_VALID_REGION = selectFunction(vul_valid_region);

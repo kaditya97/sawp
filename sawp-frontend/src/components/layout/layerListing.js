@@ -13,9 +13,6 @@ export default function LayerListing(props) {
     e.target.checked ? props.setLegendWindow(true) : props.setLegendWindow(false);
   };
 
-  // useEffect(() => {
-  //   props.setLayer(props.layers?.[0]);
-  // }, [props.layers])
   return (
     <div
       className={`leaflet-control ${layerListingToggle ? "layerListing" : "layerListing-hide"
@@ -42,12 +39,12 @@ export default function LayerListing(props) {
             className="custom-scrollbars">
 
             {props.layers?.map((layer) => (
-              <>
+              <div key={layer.id}>
                 <div className="form-check mt-2 mb-1" key={layer.id} onChange={handleClick} style={{ verticalAlign: "middle" }}>
                   <input className="form-check-input mr-2" type="radio" id={layer.name} name="layer" defaultValue={layer.name} />
                   <label className="form-check-label" htmlFor={layer.name}><h3>{layer.name}</h3></label>
                 </div>
-              </>
+              </div>
             ))}
           </Scrollbars>
         </div>

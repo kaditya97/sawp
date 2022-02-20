@@ -28,9 +28,8 @@ export const patchStyle = (style, id) => (dispatch) => {
   console.log(style);
   console.log(id);
   axios
-    .put(`/api/styles/sldstyle/6/`, style)
+    .put(`/api/styles/sldstyle/${id}/`, style)
     .then((res) => {
-      console.log(res);
       dispatch({ type: PATCH_STYLE, payload: res.data });
     })
 };

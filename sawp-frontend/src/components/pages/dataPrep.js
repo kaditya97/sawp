@@ -73,7 +73,7 @@ export default function DataPrep() {
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
-                                <Link to="/mergeVector">
+                                <Link to="/vectorToRaster">
                                     <span className="btn btn-primary">Start Tool</span>
                                 </Link>
                             </div>
@@ -87,7 +87,7 @@ export default function DataPrep() {
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
-                                <Link to="/mergeVector">
+                                <Link to="/rasterToVector">
                                     <span className="btn btn-primary">Start Tool</span>
                                 </Link>
                             </div>
@@ -101,7 +101,7 @@ export default function DataPrep() {
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
-                                <Link to="/mergeVector">
+                                <Link to="/vectorToShapefile">
                                     <span className="btn btn-primary">Start Tool</span>
                                 </Link>
                             </div>
@@ -115,7 +115,7 @@ export default function DataPrep() {
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
                                 </p>
-                                <Link to="/mergeVector">
+                                <Link to="/shapefileToGeojson">
                                     <span className="btn btn-primary">Start Tool</span>
                                 </Link>
                             </div>

@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ColorPicker from "../common/ColorPicker";
+// import ColorPicker from "../common/ColorPicker";
 import Select from "react-select";
 import {
   CLASSIFICATION_METHODS,
   COLOR_PALETTE,
-  STYLE_TYPE,
 } from "../common/dataJson";
 import FormLabel from "../common/FormLabel";
-import { Button, Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Slider from "../common/Slider";
-import { patchStyle, getSld } from "../../actions/style";
-// import {
-//   addStyleWindow,
-//   styleWindowControl,
-// } from "../../../actions/visualization";
-// import ColumnNameDropDown from "../common/ColumnNameDropDown";
+import { patchStyle, getSld, getStyle } from "../../actions/style";
 import CloseWindowBtn from "../common/CloseWindowBtn";
 
 function Style(props) {
   const { opacity, layer } = props;
+  const [style_id, setStyleId] = useState(layer.id);
+  const [layer_opacity, setLayerOpacity] = useState("");
   const [color_palette, setColorPalette] = useState("");
   const [trueReverseOrderStyle, setTrueReverseOrderStyle] = useState(false);
   const [falseReverseOrderStyle, setFalseReverseOrderStyle] = useState(false);
@@ -27,26 +23,27 @@ function Style(props) {
   const [classification_method, setClassificationMethod] = useState("");
 
   const dispatch = useDispatch();
+  const style = useSelector((state) => state.style?.style);
 
   useEffect(() => {
     dispatch(getSld(layer.id));
-  }, [dispatch, layer.id]);
-
-  const style = useSelector((state) => state.style?.style);
-  console.log('style: ' + style);
-
+    dispatch(getStyle(layer.id));
+    setStyleId(style?.id)
+    setColorPalette(style?.color_palette)
+    setClassificationMethod(style?.classification_method)
+    setNumberOfClass(style?.number_of_class)
+    setLayerOpacity(style?.opacity)
+  }, [dispatch, layer.id, style.id, style.opacity, style.color_palette, style.classification_method, style.number_of_class]);
+  
   const onColorPaletteChange = (val) => {
-    const id = layer?.id;
     setColorPalette(val);
     const color_palette = val.value.toString();
-    dispatch(patchStyle({ color_palette: color_palette }, id));
-    dispatch(getSld(id));
+    dispatch(patchStyle({ color_palette: color_palette }, style_id));
+    dispatch(getSld(layer.id));
   };
 
   const onTrueReverseOrder = () => {
     const id = layer?.id;
-
-    let { color_palette, trueReverseOrderStyle } = this.state;
     const cpv = color_palette?.value;
     const reversePalette = {
       label: color_palette?.label,
@@ -55,20 +52,15 @@ function Style(props) {
     console.log(reversePalette);
     cpv &&
       trueReverseOrderStyle === "" &&
-      this.setState({
-        color_palette: reversePalette,
-        trueReverseOrderStyle: "text-primary",
-        falseReverseOrderStyle: "",
-      });
+      setColorPalette(reversePalette);
+      setTrueReverseOrderStyle("text-primary");
+      setFalseReverseOrderStyle("");
     color_palette = reversePalette.value.toString();
     dispatch(patchStyle({ color_palette: color_palette }, id));
-    dispatch(getSld(id));
   };
 
   const onFalseReverseOrder = () => {
     const id = layer?.id;
-
-    let { color_palette, falseReverseOrderStyle } = this.state;
     const cpv = color_palette?.value;
     const reversePalette = {
       label: color_palette?.label,
@@ -76,38 +68,31 @@ function Style(props) {
     };
     cpv &&
       falseReverseOrderStyle === "" &&
-      this.setState({
-        color_palette: reversePalette,
-        falseReverseOrderStyle: "text-primary",
-        trueReverseOrderStyle: "",
-      });
-
-    color_palette = reversePalette.value.toString();
-    dispatch(patchStyle({ color_palette: color_palette }, id));
-    dispatch(getSld(id));
+      setColorPalette(reversePalette);
+      setFalseReverseOrderStyle("text-primary");
+      setTrueReverseOrderStyle("");
+    let colorpalette = reversePalette.value.toString();
+    dispatch(patchStyle({ color_palette: colorpalette }, id));
   };
 
   const onClassificationMethodChange = (val) => {
-    const id = layer?.id;
     const classification_method = val.value;
     setClassificationMethod(val);
-    dispatch(patchStyle({ classification_method: classification_method }, id));
-    dispatch(getSld(id));
+    dispatch(patchStyle({ classification_method: classification_method }, style_id));
+    dispatch(getSld(layer.id));
   };
 
   const onOpacityChange = (val) => {
-    const id = layer?.id;
     props.setOpacity(parseInt(val[0]) / 100);
-    dispatch(patchStyle({ opacity: parseInt(val[0]) / 100 }, id));
-    dispatch(getSld(id));
+    dispatch(patchStyle({ opacity: parseInt(val[0]) / 100 }, style_id));
+    dispatch(getSld(layer.id));
   };
 
   const onNumberOfClassChange = (val) => {
-    const id = layer?.id;
     const number_of_class = parseInt(val[0]);
     setNumberOfClass(number_of_class);
-    dispatch(patchStyle({ number_of_class: number_of_class }, id));
-    dispatch(getSld(id));
+    dispatch(patchStyle({ number_of_class: number_of_class }, style_id));
+    dispatch(getSld(layer.id));
   };
 
   const onCancel = () => {
@@ -164,19 +149,19 @@ function Style(props) {
           </a>
         </div>
 
-        <FormLabel className="mb-1 mt-3" name="Method:" />
+        {/* <FormLabel className="mb-1 mt-3" name="Method:" />
         <Select
           className="classification_method"
           options={CLASSIFICATION_METHODS}
           name="classification_method"
           value={classification_method}
           onChange={onClassificationMethodChange}
-        />
+        /> */}
 
         <FormLabel className="mb-1 mt-3" name="Number of Class:" />
         <Slider
-          range={{ min: 2, max: 30 }}
-          start={number_of_class || 5}
+          range={{ min: 2, max: 10 }}
+          start={5}
           step={1}
           format=" classes"
           onUpdate={onNumberOfClassChange}

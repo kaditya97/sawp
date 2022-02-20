@@ -19,6 +19,10 @@ import ClipRaster from './components/layout/dataprep/clipRaster';
 import MergeVector from './components/layout/dataprep/mergeVector';
 import BufferVector from './components/layout/dataprep/bufferVector';
 import About from './components/pages/about';
+import RasterToVector from './components/layout/dataprep/rasterToVector';
+import VectorToShapefile from './components/layout/dataprep/vectorToShapefile';
+import ShapefileToGeojson from './components/layout/dataprep/shapefileToGeojson';
+import VectorToRaster from './components/layout/dataprep/vectorToRaster';
 
 function Routes() {
     useEffect(() => {store.dispatch(loadUser());}, [])
@@ -37,6 +41,10 @@ function Routes() {
                 <PrivateRoute path='/clipRaster' exact component={ClipRaster} />
                 <PrivateRoute path='/mergeVector' exact component={MergeVector} />
                 <PrivateRoute path='/bufferVector' exact component={BufferVector} />
+                <PrivateRoute path='/rasterToVector' exact component={RasterToVector} />
+                <PrivateRoute path='/vectorToRaster' exact component={VectorToRaster} />
+                <PrivateRoute path='/vectorToShapefile' exact component={VectorToShapefile} />
+                <PrivateRoute path='/shapefileToGeojson' exact component={ShapefileToGeojson} />
                 <PrivateRoute path='/suitabilityCalculation' exact component={SuitabilityCalculation} />
                 <PrivateRoute path='/visualization' exact component={Visualization} />
                 <PrivateRoute path='/user' exact component={User} />

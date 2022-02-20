@@ -125,7 +125,6 @@ export default function Boundary() {
                                 <th>File</th>
                                 <th>View</th>
                                 <th>Download</th>
-                                <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
@@ -141,9 +140,6 @@ export default function Boundary() {
                                         </td>
                                         <td>
                                             <i className="fas fa-download" onClick={() => download(boundary.id)}></i>
-                                        </td>
-                                        <td>
-                                            <i className="fas fa-edit" onClick={() => setEditModal(true)}></i>
                                         </td>
                                         <td>
                                             <i className="fas fa-trash-alt" onClick={() => { setDataId(boundary.id); setDeleteModal(true) }}></i>

@@ -1,9 +1,5 @@
 import {
-  ADD_STYLE,
-  DELETE_STYLE,
   GET_STYLE,
-  GET_STYLES,
-  UPDATE_STYLE,
   PATCH_STYLE,
   GET_SLD,
 } from "../actions/types";
@@ -22,45 +18,16 @@ export default function style(state = initialState, action) {
         sld: action.payload,
       };
 
-    case GET_STYLES:
-      return {
-        ...state,
-        styles: action.payload,
-      };
-
     case GET_STYLE:
       return {
         ...state,
         style: action.payload,
       };
 
-    case ADD_STYLE:
-      return {
-        ...state,
-        styles: [...state.styles, action.payload],
-      };
-
-    case DELETE_STYLE:
-      return {
-        ...state,
-        styles: state.styles.filter((s) => s.id !== action.payload),
-      };
-
-    case UPDATE_STYLE:
-      return {
-        ...state,
-        styles: state.styles.map((s) =>
-          s.id === action.payload.id ? (s = action.payload) : s
-        ),
-      };
-
     case PATCH_STYLE:
-      console.log(action.payload);
       return {
         ...state,
-        // styles: state.styles.map((s) =>
-        //   s.id === action.payload.id ? (s = action.payload) : s
-        // ),
+        style: action.payload,
       };
     default:
       return state;
