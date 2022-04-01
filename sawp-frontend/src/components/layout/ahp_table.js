@@ -236,7 +236,7 @@ function Ahp(props) {
         <button className="btn btn-warning ml-3" onClick={resetData}>Reset Data</button>
         <button className="btn btn-primary ml-2" onClick={calculateAHP}>Calculate AHP</button>
       </div>
-      <h5>{ahp ? JSON.stringify(ahp) : null}</h5>
+      <h5>Output table{ahp ? JSON.stringify(ahp) : null}</h5>
       {ahp ? <div className="row mx-5 d-flex justify-content-center mt-2">
         <div className="row mx-5 d-flex justify-content-center mt-2 mb-5">
           <button className="btn btn-success" onClick={() => submitSuitability()}>Calculate Suitability</button>

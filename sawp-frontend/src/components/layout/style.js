@@ -17,8 +17,6 @@ function Style(props) {
   const [style_id, setStyleId] = useState(layer.id);
   const [layer_opacity, setLayerOpacity] = useState("");
   const [color_palette, setColorPalette] = useState("");
-  const [trueReverseOrderStyle, setTrueReverseOrderStyle] = useState(false);
-  const [falseReverseOrderStyle, setFalseReverseOrderStyle] = useState(false);
   const [number_of_class, setNumberOfClass] = useState("");
   const [classification_method, setClassificationMethod] = useState("");
 
@@ -26,6 +24,8 @@ function Style(props) {
   const style = useSelector((state) => state.style?.style);
 
   useEffect(() => {
+    console.log("change")
+    console.log(style)
     dispatch(getSld(layer.id));
     dispatch(getStyle(layer.id));
     setStyleId(style?.id)
@@ -34,58 +34,37 @@ function Style(props) {
     setNumberOfClass(style?.number_of_class)
     setLayerOpacity(style?.opacity)
   }, [dispatch, layer.id, style.id, style.opacity, style.color_palette, style.classification_method, style.number_of_class]);
-  
-  const onColorPaletteChange = (val) => {
-    setColorPalette(val);
+
+  const onColorPaletteChange = val => {
+    setColorPalette(val.value.toString());
     const color_palette = val.value.toString();
     dispatch(patchStyle({ color_palette: color_palette }, style_id));
     dispatch(getSld(layer.id));
+    props.setMytime(new Date().getTime());
   };
 
-  const onTrueReverseOrder = () => {
+  const onReverseOrder = () => {
     const id = layer?.id;
-    const cpv = color_palette?.value;
-    const reversePalette = {
-      label: color_palette?.label,
-      value: cpv?.reverse(),
-    };
-    console.log(reversePalette);
-    cpv &&
-      trueReverseOrderStyle === "" &&
-      setColorPalette(reversePalette);
-      setTrueReverseOrderStyle("text-primary");
-      setFalseReverseOrderStyle("");
-    color_palette = reversePalette.value.toString();
-    dispatch(patchStyle({ color_palette: color_palette }, id));
-  };
-
-  const onFalseReverseOrder = () => {
-    const id = layer?.id;
-    const cpv = color_palette?.value;
-    const reversePalette = {
-      label: color_palette?.label,
-      value: cpv?.reverse(),
-    };
-    cpv &&
-      falseReverseOrderStyle === "" &&
-      setColorPalette(reversePalette);
-      setFalseReverseOrderStyle("text-primary");
-      setTrueReverseOrderStyle("");
-    let colorpalette = reversePalette.value.toString();
-    dispatch(patchStyle({ color_palette: colorpalette }, id));
-  };
-
-  const onClassificationMethodChange = (val) => {
-    const classification_method = val.value;
-    setClassificationMethod(val);
-    dispatch(patchStyle({ classification_method: classification_method }, style_id));
+    const cpv = color_palette.split(",");
+    const reversePalette = {value: cpv?.reverse()};
+    setColorPalette(reversePalette.value.toString());
+    dispatch(patchStyle({ color_palette: reversePalette.value.toString() }, style_id));
     dispatch(getSld(layer.id));
+    props.setMytime(new Date().getTime());
   };
+
+  // const onClassificationMethodChange = (val) => {
+  //   const classification_method = val.value;
+  //   setClassificationMethod(val);
+  //   dispatch(patchStyle({ classification_method: classification_method }, style_id));
+  //   dispatch(getSld(layer.id));
+  // };
 
   const onOpacityChange = (val) => {
     props.setOpacity(parseInt(val[0]) / 100);
     dispatch(patchStyle({ opacity: parseInt(val[0]) / 100 }, style_id));
     dispatch(getSld(layer.id));
+    // props.setMytime(new Date().getTime());
   };
 
   const onNumberOfClassChange = (val) => {
@@ -93,6 +72,7 @@ function Style(props) {
     setNumberOfClass(number_of_class);
     dispatch(patchStyle({ number_of_class: number_of_class }, style_id));
     dispatch(getSld(layer.id));
+    props.setMytime(new Date().getTime());
   };
 
   const onCancel = () => {
@@ -133,20 +113,10 @@ function Style(props) {
         />
         <div className="row mb-1 mt-3 reverse-order">
           <div className="col-6">Reverse order:</div>
-          <a
-            className={`col-3 ${trueReverseOrderStyle}`}
-            onClick={onTrueReverseOrder}
-            href="/"
-          >
-            True
-          </a>
-          <a
-            className={`col-3 ${falseReverseOrderStyle}`}
-            onClick={onFalseReverseOrder}
-            href="/"
-          >
-            False
-          </a>
+          <div className="custom-control custom-switch">
+            <input type="checkbox" className="custom-control-input" id="customSwitch" onClick={e => onReverseOrder()} />
+            <label className="custom-control-label" htmlFor={"customSwitch"}></label>
+          </div>
         </div>
 
         {/* <FormLabel className="mb-1 mt-3" name="Method:" />

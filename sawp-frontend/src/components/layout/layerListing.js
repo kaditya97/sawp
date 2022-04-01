@@ -13,6 +13,14 @@ export default function LayerListing(props) {
     e.target.checked ? props.setLegendWindow(true) : props.setLegendWindow(false);
   };
 
+  const printMap = async () => {
+    props.setIshidden("block");
+    await props.printMap.current.printMap('A4Landscape', 'Map');
+    setTimeout(() => {
+      props.setIshidden("none");
+    }, 3000);
+  };
+
   return (
     <div
       className={`leaflet-control ${layerListingToggle ? "layerListing" : "layerListing-hide"
@@ -29,7 +37,13 @@ export default function LayerListing(props) {
           <h4>
             <span>Layers</span>
             <i
+              className="fas fa-download float-right position-relative mr-4 optionToggler"
+              title='Save as PNG Image'
+              onClick={() => printMap()}
+            ></i>
+            <i
               className="fas fa-edit float-right position-relative mr-4 optionToggler"
+              title='Style Editor'
               onClick={() => { props.setStyleWindow(!props.styleWindow) }}
             ></i>
           </h4>
