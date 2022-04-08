@@ -41,7 +41,7 @@ export default function RasterView(props) {
                                 transparent={true}
                                 format={'image/png'} 
                             />
-                            <StyleChanger styles={styles} setStyle={setStyle} opacity={opacity} setOpacity={setOpacity}/>
+                            {/* <StyleChanger styles={styles} setStyle={setStyle} opacity={opacity} setOpacity={setOpacity}/> */}
                         </Map>
                     </div>
                 </Modal.Body>

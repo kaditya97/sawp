@@ -68,46 +68,57 @@ class ClipVectorViewSet(viewsets.ModelViewSet):
         instance.delete()
         return Response(status=204)
 
-# Clip Vector
-@api_view(['GET','POST'])
-def clip_vector(request):
-    """
-    Clips a vector using a polygon
-    """
-    # # Get the input data
-    input_vector = request.FILES.get('input_vector')
-    input_polygon = request.FILES.get('input_polygon')
-    # # Load the input data
-    input_vector = gpd.read_file(input_vector)
-    input_polygon = gpd.read_file(input_polygon)
-    # Clip the data using GeoPandas clip
-    output_vector = gpd.clip(input_vector, input_polygon)
-    # Save the output data
-    dirpath = tempfile.mkdtemp()
-    path = f'{dirpath}/{input_vector.name}_clipped.shp'
-    output_vector.to_file(path)
-    # Return the output
-    return download(path)
+# # Clip Vector
+# @api_view(['GET','POST'])
+# def clip_vector(request):
+#     """
+#     Clips a vector using a polygon
+#     """
+#     # # Get the input data
+#     input_vector = request.FILES.get('input_vector')
+#     input_polygon = request.FILES.get('input_polygon')
+#     # # Load the input data
+#     input_vector = gpd.read_file(input_vector)
+#     input_polygon = gpd.read_file(input_polygon)
+#     # Clip the data using GeoPandas clip
+#     output_vector = gpd.clip(input_vector, input_polygon)
+#     # Save the output data
+#     dirpath = tempfile.mkdtemp()
+#     path = f'{dirpath}/{input_vector.name}_clipped.shp'
+#     output_vector.to_file(path)
+#     # Return the output
+#     return download(path)
 
-# Clip Raster
-@api_view(['GET','POST'])
-def clip_raster(request):
-    """
-    Clips a raster using a polygon
-    """
-    # # Get the input data
-    # input_raster = request.GET.get('input_raster')
-    # input_polygon = request.GET.get('input_polygon')
-    # # Load the input data
-    # input_raster = gpd.read_file(input_raster)
-    # input_polygon = gpd.read_file(input_polygon)
-    # # Clip the raster
-    # output_raster = input_raster.clip(input_polygon)
-    # # Save the output data
-    # output_raster.to_file(input_raster.name + '_clipped.tif')
-    # # Return the output
-    # return HttpResponse(output_raster.name + '_clipped.tif')
-    return HttpResponse('Clip Raster')
+class ClipRasterViewSet(viewsets.ModelViewSet):
+    queryset = ClipRaster.objects.all()
+    serializer_class = ClipRasterSerializer
+    parsers = (MultiPartParser, FormParser)
+
+    def get_queryset(self):
+        return ClipRaster.objects.all()
+    
+    def create(self, request):
+        input_raster = request.FILES.get('input_raster')
+        input_polygon = request.FILES.get('input_polygon')
+        file_name = request.data.get('file_name').split('.')[0]
+        input_raster = rasterio.open(input_raster)
+        input_polygon = gpd.read_file(input_polygon)
+        output_raster = rasterio.mask.mask(input_raster, input_polygon, crop=True)
+        file_path = shapefile(output_raster, file_name+'_clipped')
+        ClipRaster.objects.create(name=file_name, file_name=file_name+'_clipped.zip', file='dataprep/clipraster/'+file_name+'_clipped.zip')
+        geo.create_shp_datastore(store_name=file_name+'_clipped', path=file_path, workspace='sawp')
+        raster = ClipRaster.objects.all()
+        serializers = ClipRasterSerializer(raster, many=True)
+        return Response(serializers.data)
+    
+    def destroy(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        instance = ClipRaster.objects.get(pk=pk)
+        name = instance.name
+        geo.delete_layer(name, workspace='sawp')
+        instance.delete()
+        return Response(status=204)
+
 
 # Merge Vector
 @api_view(['GET','POST'])

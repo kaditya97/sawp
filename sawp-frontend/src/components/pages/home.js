@@ -18,7 +18,7 @@ export default function Home() {
                     <div className="container-fluid col-12">
                         <div className="col-xl-6 clo-sm-12 banner-content">
                             <div className="intro py-auto">
-                                <h4>Online Suitability Analysis</h4>
+                                <h4>Suitability Analysis Platform</h4>
                                 <p>Suitability Analysis allows you to qualify, compare, and rank candidate sites based on how closely they adhere to criteria that you select and define.</p>
                                 <Link to="/dataInput">Get Started</Link>
                             </div>
