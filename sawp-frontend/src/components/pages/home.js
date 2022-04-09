@@ -30,13 +30,15 @@ export default function Home() {
                         <div className="row mx-5 my-5">
                             <div class="col-md-12 col-lg-6 text-center text-md-left m-auto px-5">
                                 <h1>About The Platform</h1>
-                                <p>The Analytic Hierarchy Process (AHP) is a method for organizing and analyzing complex decisions, using math and psychology. It was developed by Thomas L. Saaty in the 1970s and has been refined since then. It contains three parts: the ultimate goal or problem you're trying to solve, all of the possible solutions, called alternatives, and the criteria you will judge the alternatives on. AHP provides a rational framework for a needed decision by quantifying its criteria and alternative options, and for relating those elements to the overall goal.Stakeholders compare the importance of criteria, two at a time, through pair-wise comparisons. Example, do you care about job benefits or having a short commute more, and by how much more? AHP converts these evaluations into numbers, which can be compared to all of the possible criteria.</p>
+                                <p style={{textAlign: "justify", textAlignLast: "justify"}}>The Analytic Hierarchy Process (AHP) is a method for organizing and analyzing complex decisions, using math and psychology. It was developed by Thomas L. Saaty in the 1970s and has been refined since then. It contains three parts: the ultimate goal or problem you're trying to solve, all of the possible solutions, called alternatives, and the criteria you will judge the alternatives on. AHP provides a rational framework for a needed decision by quantifying its criteria and alternative options, and for relating those elements to the overall goal.Stakeholders compare the importance of criteria, two at a time, through pair-wise comparisons. Example, do you care about job benefits or having a short commute more, and by how much more? AHP converts these evaluations into numbers, which can be compared to all of the possible criteria.</p>
                                 <Link to="/about">Know More</Link>
                             </div>
                             <div class="col-md-12 col-lg-6 text-center text-md-left m-auto">
                                 <div className="about-image">
+                                    <a rel="noreferrer" target="_blank" href='https://kaditya97.com.np'>
                                     <img src={intro} alt="intro" className="img-fluid pr-5" />
                                     <i className="fa fa-play-circle" title="Play Video"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -53,8 +55,8 @@ export default function Home() {
                                     <div className="card-body">
                                     <img src={DataProcessingImage} alt="clip vector" className="card-img-top" height="200" />
                                         <h5 className="card-title">Data Processing</h5>
-                                        <p className="card-text">
-                                            Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                        <p className="card-text" style={{textAlign: "justify", textAlignLast: "justify"}}>
+                                            Data processing helps in cleaning, transforming, and transforming data into a form that is useful for analysis.
                                         </p>
                                     </div>
                                 </div>
@@ -64,8 +66,8 @@ export default function Home() {
                                     <div className="card-body">
                                     <img src={DataManagementImage} alt="clip vector" className="card-img-top" height="200" />
                                         <h5 className="card-title">Data Management</h5>
-                                        <p className="card-text">
-                                            Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                        <p className="card-text" style={{textAlign: "justify", textAlignLast: "justify"}}>
+                                            Data management helps to store data, visualize it and also download it when needed.
                                         </p>
                                     </div>
                                 </div>
@@ -75,8 +77,8 @@ export default function Home() {
                                     <div className="card-body">
                                     <img src={SuitabilityImage} alt="clip vector" className="card-img-top" height="200" />
                                         <h5 className="card-title">Suitability Calculation</h5>
-                                        <p className="card-text">
-                                            Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                        <p className="card-text" style={{textAlign: "justify", textAlignLast: "justify"}}>
+                                            Suitability Calculation helps to select requierd data for suitability analysis, fill ahp table data and generate final suitability layer.
                                         </p>
                                     </div>
                                 </div>
@@ -85,9 +87,9 @@ export default function Home() {
                                 <div className="card">
                                     <div className="card-body">
                                     <img src={VisualizationImage} alt="clip vector" className="card-img-top" height="200" />
-                                        <h5 className="card-title">Full Control Visualization</h5>
-                                        <p className="card-text">
-                                            Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                        <h5 className="card-title">Visualization</h5>
+                                        <p className="card-text" style={{textAlign: "justify", textAlignLast: "justify"}}>
+                                            Visualization helps in visualization of suitability layers, modify their look and download map as image.
                                         </p>
                                     </div>
                                 </div>

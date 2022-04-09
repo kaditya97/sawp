@@ -2,6 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import vector from '../../static/img/vector.png'
 import mapImage from '../../static/img/map.png'
+import bufferImage from '../../static/img/buffer.jpg'
+import mergeImage from '../../static/img/merge.jpg'
+import clipVectorImage from '../../static/img/clip_vector.jpg'
+import clipRasterImage from '../../static/img/clip_raster.png'
+import shapefileImage from '../../static/img/shapefile.png'
+import vectorToRasterImage from '../../static/img/vector_raster.jpg'
 
 export default function DataPrep() {
     return (
@@ -12,7 +18,7 @@ export default function DataPrep() {
                     <div className="col-md-3 mt-3 mb-3">
                         <div className="card">
                             <div className="card-body">
-                                <img src={mapImage} alt="clip vector" className="card-img-top" height="200" />
+                                <img src={clipVectorImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Clip Vector</h5>
                                 <p className="card-text">
                                     Data processing is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
@@ -26,7 +32,7 @@ export default function DataPrep() {
                     <div className="col-md-3 mt-3 mb-3">
                         <div className="card">
                             <div className="card-body">
-                                <img src={vector} alt="clip vector" className="card-img-top" height="200" />
+                                <img src={clipRasterImage} alt="clip raster" className="card-img-top" height="200" />
                                 <h5 className="card-title">Clip Raster</h5>
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
@@ -40,7 +46,7 @@ export default function DataPrep() {
                     <div className="col-md-3 mt-3 mb-3">
                         <div className="card">
                             <div className="card-body">
-                                <img src={mapImage} alt="clip vector" className="card-img-top" height="200" />
+                                <img src={mergeImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Merge Vectors</h5>
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
@@ -54,7 +60,7 @@ export default function DataPrep() {
                     <div className="col-md-3 mt-3 mb-3">
                         <div className="card">
                             <div className="card-body">
-                                <img src={vector} alt="clip vector" className="card-img-top" height="200" />
+                                <img src={bufferImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Buffer Vector</h5>
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
@@ -68,7 +74,7 @@ export default function DataPrep() {
                     <div className="col-md-3 mt-3 mb-3">
                         <div className="card">
                             <div className="card-body">
-                                <img src={mapImage} alt="clip vector" className="card-img-top" height="200" />
+                                <img src={vectorToRasterImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Vector To Raster</h5>
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
@@ -96,7 +102,7 @@ export default function DataPrep() {
                     <div className="col-md-3 mt-3 mb-3">
                         <div className="card">
                             <div className="card-body">
-                                <img src={vector} alt="clip vector" className="card-img-top" height="200" />
+                                <img src={shapefileImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Vector To Shapefile</h5>
                                 <p className="card-text">
                                     Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.

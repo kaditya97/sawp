@@ -79,6 +79,9 @@
         &:hover {
             background-color: #fd8700;
         }
+        &:first-child {
+            background-color: white;
+        }
     }
 
     .about-image {
