@@ -121,6 +121,33 @@ class ClipRasterViewSet(viewsets.ModelViewSet):
 
 
 # Merge Vector
+class MergeVectorsViewSet(viewsets.ModelViewSet):
+    queryset = MergeVectors.objects.all()
+    serializer_class = MergeVectorsSerializer
+    parsers = (MultiPartParser, FormParser)
+
+    def get_queryset(self):
+        return MergeVectors.objects.all()
+    
+    def create(self, request):
+        input_vector = request.FILES.get('input_vector')
+        file_name = request.data.get('file_name').split('.')[0]
+        input_vector = gpd.read_file(input_vector)
+        output_vector = input_vector.to_crs(epsg=4326)
+        file_path = shapefile(output_vector, file_name)
+        MergeVectors.objects.create(name=file_name, file_name=file_name+'.zip', file='dataprep/mergevector/'+file_name+'.zip')
+        geo.create_shp_datastore(store_name=file_name, path=file_path, workspace='sawp')
+        vector = MergeVectors.objects.all()
+        serializers = MergeVectorsSerializer(vector, many=True)
+        return Response(serializers.data)
+    
+    def destroy(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        instance = MergeVectors.objects.get(pk=pk)
+        name = instance.name
+        geo.delete_layer(name, workspace='sawp')
+        instance.delete()
+        return Response(status=204)
 @api_view(['GET','POST'])
 def merge_vectors(request):
     """
@@ -139,6 +166,34 @@ def merge_vectors(request):
     return HttpResponse('Merge Vector')
 
 # Buffer Vector
+class BufferVectorViewSet(viewsets.ModelViewSet):
+    queryset = BufferVector.objects.all()
+    serializer_class = BufferVectorSerializer
+    parsers = (MultiPartParser, FormParser)
+
+    def get_queryset(self):
+        return BufferVector.objects.all()
+    
+    def create(self, request):
+        input_vector = request.FILES.get('input_vector')
+        distance = request.data.get('distance')
+        file_name = request.data.get('file_name').split('.')[0]
+        input_vector = gpd.read_file(input_vector)
+        output_vector = input_vector.buffer(distance)
+        file_path = shapefile(output_vector, file_name+'_buffered')
+        BufferVector.objects.create(name=file_name, file_name=file_name+'_buffered.zip', file='dataprep/buffervector/'+file_name+'_buffered.zip')
+        geo.create_shp_datastore(store_name=file_name+'_buffered', path=file_path, workspace='sawp')
+        vector = BufferVector.objects.all()
+        serializers = BufferVectorSerializer(vector, many=True)
+        return Response(serializers.data)
+    
+    def destroy(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        instance = BufferVector.objects.get(pk=pk)
+        name = instance.name
+        geo.delete_layer(name, workspace='sawp')
+        instance.delete()
+        return Response(status=204)
 @api_view(['GET','POST'])
 def buffer_vector(request):
     """
@@ -174,6 +229,17 @@ def buffer_vector(request):
         raise Http404
 
 # Vector to Raster
+class VectorToRasterViewSet(viewsets.ModelViewSet):
+    queryset = VectorToRaster.objects.all()
+    serializer_class = VectorToRasterSerializer
+    parsers = (MultiPartParser, FormParser)
+
+    def get_queryset(self):
+        return VectorToRaster.objects.all()
+    
+    def create(self, request):
+        input_vector = request.FILES.get('input_vector')
+        input_vector = gpd.read_file(input_vector)
 @api_view(['GET','POST'])
 def vector_to_raster(request):
     """
@@ -195,6 +261,18 @@ def vector_to_raster(request):
     return HttpResponse('Vector to Raster')
 
 # Raster to Vector
+class RasterToVectorViewSet(viewsets.ModelViewSet):
+    queryset = RasterToVector.objects.all()
+    serializer_class = RasterToVectorSerializer
+    parsers = (MultiPartParser, FormParser)
+
+    def get_queryset(self):
+        return RasterToVector.objects.all()
+    
+    def create(self, request):
+        input_raster = request.FILES.get('input_raster')
+        input_raster = rasterio.open(input_raster)
+        input_raster = input_raster.read(1)
 @api_view(['GET','POST'])
 def raster_to_vector(request):
     """
@@ -219,6 +297,39 @@ def raster_to_vector(request):
     return HttpResponse('Raster to Vector')
 
 # Vector to Shapefile
+class VectorToShapefileViewSet(viewsets.ModelViewSet):
+    queryset = VectorToShapefile.objects.all()
+    serializer_class = VectorToShapefileSerializer
+    parsers = (MultiPartParser, FormParser)
+
+    def get_queryset(self):
+        return VectorToShapefile.objects.all()
+    
+    def create(self, request):
+        input_vector = request.FILES.get('input_vector')
+        input_vector = gpd.read_file(input_vector)
+        input_vector = input_vector.to_crs(epsg=4326)
+        dirpath = tempfile.mkdtemp()
+        # shutil.rmtree(dirpath)
+        shp_file = f'{dirpath}/fuel.shp'
+        input_vector.to_file(driver='ESRI Shapefile', filename=shp_file)
+        def get_all_file_paths(directory):
+            file_paths = []
+            for root, directories, files in os.walk(directory):
+                for filename in files:
+                    filepath = os.path.join(root, filename)
+                    file_paths.append(filepath)
+            return file_paths
+        file_paths = get_all_file_paths(dirpath)
+        zip_path = f'{dirpath}/fuel.zip'
+        with ZipFile(zip_path,'w') as zip:
+            for file in file_paths:
+                zip.write(file)
+        if os.path.exists(zip_path):
+            print('Working')
+            return FileResponse(open(zip_path, 'rb'), as_attachment=True)
+        else:
+            raise Http404
 @api_view(['GET','POST'])
 def vector_to_shapefile(request):
     '''
@@ -253,6 +364,39 @@ def vector_to_shapefile(request):
     return HttpResponse('Vector to Shapefile')
 
 # Shapefile to Geojson
+class ShapefileToGeojsonViewSet(viewsets.ModelViewSet):
+    queryset = ShapefileToGeojson.objects.all()
+    serializer_class = ShapefileToGeojsonSerializer
+    parsers = (MultiPartParser, FormParser)
+
+    def get_queryset(self):
+        return ShapefileToGeojson.objects.all()
+    
+    def create(self, request):
+        input_shapefile = request.FILES.get('input_shapefile')
+        input_shapefile = gpd.read_file(input_shapefile)
+        input_shapefile = input_shapefile.to_crs(epsg=4326)
+        dirpath = tempfile.mkdtemp()
+        # shutil.rmtree(dirpath)
+        shp_file = f'{dirpath}/fuel.shp'
+        input_shapefile.to_file(driver='ESRI Shapefile', filename=shp_file)
+        def get_all_file_paths(directory):
+            file_paths = []
+            for root, directories, files in os.walk(directory):
+                for filename in files:
+                    filepath = os.path.join(root, filename)
+                    file_paths.append(filepath)
+            return file_paths
+        file_paths = get_all_file_paths(dirpath)
+        zip_path = f'{dirpath}/fuel.zip'
+        with ZipFile(zip_path,'w') as zip:
+            for file in file_paths:
+                zip.write(file)
+        if os.path.exists(zip_path):
+            print('Working')
+            return FileResponse(open(zip_path, 'rb'), as_attachment=True)
+        else:
+            raise Http404
 @api_view(['GET','POST'])
 def shapefile_to_geojson(request):
     '''
@@ -267,7 +411,40 @@ def shapefile_to_geojson(request):
     ShapefileToGeojson.objects.create(name=file_name, file=file_path)
     return HttpResponse('Shapefile to Geojson')
 
-# 
+# Polygon To Points
+class PolygonToPointsViewSet(viewsets.ModelViewSet):
+    queryset = PolygonToPoints.objects.all()
+    serializer_class = PolygonToPointsSerializer
+    parsers = (MultiPartParser, FormParser)
+
+    def get_queryset(self):
+        return PolygonToPoints.objects.all()
+    
+    def create(self, request):
+        input_vector = request.FILES.get('input_vector')
+        input_vector = gpd.read_file(input_vector)
+        input_vector = input_vector.to_crs(epsg=4326)
+        dirpath = tempfile.mkdtemp()
+        # shutil.rmtree(dirpath)
+        shp_file = f'{dirpath}/fuel.shp'
+        input_vector.to_file(driver='ESRI Shapefile', filename=shp_file)
+        def get_all_file_paths(directory):
+            file_paths = []
+            for root, directories, files in os.walk(directory):
+                for filename in files:
+                    filepath = os.path.join(root, filename)
+                    file_paths.append(filepath)
+            return file_paths
+        file_paths = get_all_file_paths(dirpath)
+        zip_path = f'{dirpath}/fuel.zip'
+        with ZipFile(zip_path,'w') as zip:
+            for file in file_paths:
+                zip.write(file)
+        if os.path.exists(zip_path):
+            print('Working')
+            return FileResponse(open(zip_path, 'rb'), as_attachment=True)
+        else:
+            raise Http404
 @api_view(['GET','POST'])
 def polygon_to_point(request):
     '''

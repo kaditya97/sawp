@@ -128,6 +128,7 @@ export const bufferVector = (data) => (dispatch, getState) => {
         });
 };
 
+// vector to raster
 export const vectorToRaster = (data) => (dispatch, getState) => {
     axios
         .post(
