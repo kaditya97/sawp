@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import FormLabel from "../../common/FormLabel";
 import FormFile from "../../common/FormFile";
 import Submit from "../../common/btn/Submit";
+import { vectorToRaster } from '../../../actions/dataPrep';
 
 export default function VectorToRaster() {
     const [file, setFile] = useState(null)
     const [fileName, setFileName] = useState("")
+    const dispatch = useDispatch();
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -13,7 +16,7 @@ export default function VectorToRaster() {
 
         form_data.append("file", file, file.name);
         form_data.append("file_name", fileName);
-        // dispatch(bufferVector(form_data));
+        dispatch(vectorToRaster(form_data));
         setFile(null);
         setFileName("");
     };
@@ -30,7 +33,7 @@ export default function VectorToRaster() {
                         <FormLabel name="Vector File" />
                         <FormFile
                             onChange={handleFileChange}
-                            accept="*"
+                            accept=".geojson,.zip,.kml,.csv,.gpx"
                             placeholder="Select Vector file"
                             value={file}
                         />

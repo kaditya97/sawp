@@ -18,7 +18,7 @@ export default function LayerListing(props) {
     await props.printMap.current.printMap('A4Landscape', 'Map');
     setTimeout(() => {
       props.setIshidden("none");
-    }, 3000);
+    }, 5000);
   };
 
   return (

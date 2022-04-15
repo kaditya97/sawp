@@ -132,7 +132,7 @@ export const bufferVector = (data) => (dispatch, getState) => {
 export const vectorToRaster = (data) => (dispatch, getState) => {
     axios
         .post(
-            '/api/dataprep/vectortoraster',
+            '/api/dataprep/vectortoraster/',
             data,
             tokenConfigFileUpload(getState)
         )

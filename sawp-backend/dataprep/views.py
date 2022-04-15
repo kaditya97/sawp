@@ -238,6 +238,7 @@ class VectorToRasterViewSet(viewsets.ModelViewSet):
         return VectorToRaster.objects.all()
     
     def create(self, request):
+        print('working')
         input_vector = request.FILES.get('input_vector')
         input_vector = gpd.read_file(input_vector)
 @api_view(['GET','POST'])

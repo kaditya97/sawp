@@ -7,6 +7,7 @@ import { getSuitability } from "../../actions/suitability"
 import LayerListing from '../layout/layerListing'
 import Legend from '../layout/legend';
 import Style from '../layout/style';
+import northArrow from '../../static/img/north_arrow.png';
 import { getRasterStyles } from '../../actions/geoserver';
 import PrintControlDefault from 'react-leaflet-easyprint';
 
@@ -68,6 +69,11 @@ export default function Visualization() {
                                 alt="legend"
                                 className={"vis-legend img-fluid"}
                             />
+                            </div>
+                        </Control>
+                        <Control position="topright">
+                            <div className='printlegend' style={{display: ishidden}}>
+                                <img src={northArrow} alt="north-arrow" className="north-arrow" width={30} height={50}/>
                             </div>
                         </Control>
                         <ScaleControl position="bottomleft" />
