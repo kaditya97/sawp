@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+    SUITABILITY_LOADING,
     GET_SUITABILITY,
     ADD_SUITABILITY,
     DELETE_SUITABILITY,
@@ -23,8 +24,9 @@ export const downloadSuitability = id => (dispatch, getState) => {
 };
 
 // Add Suitability
-export const addSuitability = (sname, description, weights, boundary) => (dispatch, getState) => {
-    const form_data = JSON.stringify({sname, description, weights, boundary});
+export const addSuitability = (sname, description, weights, boundary, buffer_distance) => (dispatch, getState) => {
+    const form_data = JSON.stringify({sname, description, weights, boundary, buffer_distance});
+    dispatch({type: SUITABILITY_LOADING});
     axios
         .post("/api/suitability/suitability/", form_data, tokenConfig(getState))
         .then((res) => {

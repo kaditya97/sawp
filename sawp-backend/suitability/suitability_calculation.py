@@ -9,7 +9,7 @@ from .models import *
 BASE_DIR = Path(__file__).resolve().parent.parent
 base = str(BASE_DIR).replace('\\', '/')
 
-def Suitability_calculation(weights=None,clipbound=None):
+def Suitability_calculation(weights=None,clipbound=None,buffer_distance=100):
     myweights = {}
     wrasters = {}
     wvectors = {}
@@ -24,7 +24,6 @@ def Suitability_calculation(weights=None,clipbound=None):
     for b in boundary:
         if b.name == clipbound:
             bfile = base + '/media/' + str(b.file)
-            print(bfile)
             with ZipMemoryFile(open(bfile, 'rb').read()) as zip:
                 with zip.open() as src:
                     bound = gpd.GeoDataFrame.from_features(src)
@@ -43,7 +42,8 @@ def Suitability_calculation(weights=None,clipbound=None):
                 with zip.open() as src:
                     gdf = gpd.GeoDataFrame.from_features(src)
                     gdf = gpd.clip(gdf, bound)
-                    gs = gdf.geometry.buffer(0.0009)
+                    calc_buffer_distance = (0.001/111.12)*float(buffer_distance)
+                    gs = gdf.geometry.buffer(calc_buffer_distance)
                     gdf = gpd.GeoDataFrame(geometry=gs)
                     gdf = gdf.set_crs('epsg:4326')
                     shp_file = f'/vsimem/{k}.shp'

@@ -21,7 +21,7 @@ export default function DataPrep() {
                                 <img src={clipVectorImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Clip Vector</h5>
                                 <p className="card-text">
-                                    Data processing is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                    Clip Vector Data tool helps to clip vector layer as provided boundary layer.
                                 </p>
                                 <Link to="/clipVector">
                                     <span className="btn btn-primary">Start Tool</span>
@@ -35,7 +35,7 @@ export default function DataPrep() {
                                 <img src={clipRasterImage} alt="clip raster" className="card-img-top" height="200" />
                                 <h5 className="card-title">Clip Raster</h5>
                                 <p className="card-text">
-                                    Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                Clip Raster Data tool helps to clip raster layer as provided boundary layer.
                                 </p>
                                 <Link to="/clipRaster">
                                     <span className="btn btn-primary">Start Tool</span>
@@ -49,7 +49,7 @@ export default function DataPrep() {
                                 <img src={mergeImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Merge Vectors</h5>
                                 <p className="card-text">
-                                    Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                    Merge Vector layers tool helps to merge multiple vector layers provided by user.
                                 </p>
                                 <Link to="/mergeVector">
                                     <span className="btn btn-primary">Start Tool</span>
@@ -63,7 +63,7 @@ export default function DataPrep() {
                                 <img src={bufferImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Buffer Vector</h5>
                                 <p className="card-text">
-                                    Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                    Buffer Vector tool helps to buffer vector layer as provided buffer distance.
                                 </p>
                                 <Link to="/bufferVector">
                                     <span className="btn btn-primary">Start Tool</span>
@@ -77,7 +77,7 @@ export default function DataPrep() {
                                 <img src={vectorToRasterImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Vector To Raster</h5>
                                 <p className="card-text">
-                                    Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                    Vector to Raster tool helps to convert vector layer to raster layer.
                                 </p>
                                 <Link to="/vectorToRaster">
                                     <span className="btn btn-primary">Start Tool</span>
@@ -91,7 +91,7 @@ export default function DataPrep() {
                                 <img src={vector} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Raster To Vector</h5>
                                 <p className="card-text">
-                                    Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                    Raster to Vector tool helps to convert raster layer to vector layer.
                                 </p>
                                 <Link to="/rasterToVector">
                                     <span className="btn btn-primary">Start Tool</span>
@@ -105,7 +105,7 @@ export default function DataPrep() {
                                 <img src={shapefileImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Vector To Shapefile</h5>
                                 <p className="card-text">
-                                    Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                    Vector to Shapefile tool helps to convert vector layer to shapefile.
                                 </p>
                                 <Link to="/vectorToShapefile">
                                     <span className="btn btn-primary">Start Tool</span>
@@ -119,7 +119,7 @@ export default function DataPrep() {
                                 <img src={mapImage} alt="clip vector" className="card-img-top" height="200" />
                                 <h5 className="card-title">Shapefile To Geojson</h5>
                                 <p className="card-text">
-                                    Data preparation is the process of cleaning, transforming, and transforming data into a form that is useful for analysis.
+                                    Shapefile to Geojson tool helps to convert shapefile to geojson.
                                 </p>
                                 <Link to="/shapefileToGeojson">
                                     <span className="btn btn-primary">Start Tool</span>

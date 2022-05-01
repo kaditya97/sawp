@@ -68,7 +68,7 @@ export const deleteClipVector = (id) => (dispatch) => {
 export const clipRaster = (data) => (dispatch, getState) => {
     axios
         .post(
-            '/api/dataprep/clipperaster',
+            '/api/dataprep/clipraster/',
             data,
             tokenConfigFileUpload(getState)
         )
@@ -84,6 +84,29 @@ export const clipRaster = (data) => (dispatch, getState) => {
                 payload: null,
             });
         });
+};
+
+export const getClipRaster = () => (dispatch) => {
+    axios
+        .get('/api/dataprep/clipperaster')
+        .then((res) => {
+            dispatch({
+                type: CLIP_RASTER,
+                payload: res.data,
+            });
+        })
+};
+
+
+export const downloadClipRaster = (id) => (dispatch) => {
+    axios
+        .get(`/api/dataprep/clipperaster/${id}/download/`)
+        .then((res) => {
+            dispatch({
+                type: CLIP_RASTER,
+                payload: res.data,
+            });
+        })
 };
 
 export const mergeVectors = (data) => (dispatch, getState) => {

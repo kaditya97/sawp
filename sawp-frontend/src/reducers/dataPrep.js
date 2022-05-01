@@ -11,6 +11,7 @@ import {
 
 const initialState = {
     clipvectors: '',
+    cliprasters: '',
 };
 
 export default function dataPrep(state = initialState, action) {
@@ -23,6 +24,7 @@ export default function dataPrep(state = initialState, action) {
         case CLIP_RASTER:
             return {
                 ...state,
+                cliprasters: action.payload,
                 message: 'Clipping raster layer',
             };
         case MERGE_VECTORS:

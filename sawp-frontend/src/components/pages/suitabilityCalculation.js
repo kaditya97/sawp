@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import useSound from 'use-sound';
 import warningSound from '../../static/music/warning.mp3';
 import Scrollbars from 'react-custom-scrollbars-2';
+import ReactLoading from 'react-loading';
 import { getVector } from "../../actions/vector"
 import { getRaster } from "../../actions/raster"
 import { getBoundary } from "../../actions/boundary"
@@ -18,6 +19,7 @@ import Ahp from '../layout/ahp_table'
 import { toast } from 'react-toastify';
 
 export default function SuitabilityCalculation() {
+    const [isLoading, setIsLoading] = useState(false);
     const [dataId, setDataId] = useState(null)
     const [suitability, setsuitability] = useState("")
     const [editModal, setEditModal] = useState(false)
@@ -26,6 +28,7 @@ export default function SuitabilityCalculation() {
     const [sname, setSname] = React.useState('')
     const [description, setDescription] = React.useState('')
     const [boundary, setBoundary] = React.useState('')
+    const [buffer_distance, setBufferDistance] = React.useState('')
     const dispatch = useDispatch();
 
     const [play] = useSound(warningSound);
@@ -42,6 +45,8 @@ export default function SuitabilityCalculation() {
     const vectorOptions = vectors?.map((d) => ({ value: d.id, label: d.name, }));
     const rasterOptions = rasters?.map((d) => ({ value: d.id, label: d.name, }));
     const boundaryOptions = boundaries?.map((d) => ({ value: d.id, label: d.name, }));
+
+    const loading = useSelector((state) => state.suitability.loading);
 
     const handleVectorChange = (selectedOption) => {
         setActiveLayer(false)
@@ -91,16 +96,20 @@ export default function SuitabilityCalculation() {
     }
 
     useEffect(() => {
+        setBufferDistance(localStorage.getItem('buffer_distance'), 100);
+        setIsLoading(loading)
         dispatch(getVector())
         dispatch(getRaster())
         dispatch(getBoundary())
         dispatch(getSuitability())
-    }, [dispatch])
+    }, [dispatch, loading]);
     return (
         <>
             <MapView cond={viewModal} setCond={setViewModal} name={suitability} type={"Suitability"} />
             <SuitabilityEdit cond={editModal} setCond={setEditModal} />
             <DeleteModal cond={deleteModal} setCond={setDeleteModal} id={dataId} handleDelete={onDelete} type={"Suitability"} />
+            {isLoading ?
+                <ReactLoading type={"spokes"} color={"#116f85"} height={100} width={100} /> :
             <div className="home">
                 <Scrollbars
                     autoHeight
@@ -213,8 +222,8 @@ export default function SuitabilityCalculation() {
                                                 <button className="btn btn-primary" onClick={() => setActiveLayer(!activeLayer)}>{activeLayer ? "Hide AHP Table" : "Show AHP Table"}</button>
                                                 : <button className="btn btn-info" onClick={handleLayer}>Select Layers First</button>}
                                         </div>
-                                        <div className="row mx-auto d-flex justify-content-start overflow-auto">
-                                            {activeLayer && <Ahp sname={sname} description={description} array={activeLayers} boundary={boundary}/>}
+                                        <div className="row mx-auto d-flex justify-content-center overflow-auto">
+                                            {activeLayer && <Ahp setActiveLayer={setActiveLayer} sname={sname} description={description} array={activeLayers} boundary={boundary} buffer_distance={buffer_distance}/>}
                                         </div>
                                     </div>
                                     <div
@@ -266,7 +275,7 @@ export default function SuitabilityCalculation() {
                         </div>
                     </div>
                 </Scrollbars>
-            </div>
+            </div>}
         </>
     )
 }

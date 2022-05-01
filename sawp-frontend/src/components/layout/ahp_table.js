@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useTable, usePagination } from 'react-table'
 import { calcAhp } from '../../actions/ahp'
 import { addSuitability } from "../../actions/suitability"
-
+import Weightage from './weightage_table'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -222,7 +222,10 @@ function Ahp(props) {
 
   const calculateAHP = () => dispatch(calcAhp(data))
 
-  const submitSuitability = () => dispatch(addSuitability(props.sname, props.description, ahp?.weights, props.boundary))
+  const submitSuitability = () => {
+    dispatch(addSuitability(props.sname, props.description, ahp?.weights, props.boundary, props.buffer_distance))
+    props.setActiveLayer(null)
+  }
 
   return (
     <Styles>
@@ -236,7 +239,9 @@ function Ahp(props) {
         <button className="btn btn-warning ml-3" onClick={resetData}>Reset Data</button>
         <button className="btn btn-primary ml-2" onClick={calculateAHP}>Calculate AHP</button>
       </div>
-      <h5>Output table{ahp ? JSON.stringify(ahp) : null}</h5>
+      <div className="row mx-auto d-flex justify-content-center overflow-auto mt-2">
+        {ahp && <Weightage array={JSON.stringify(ahp)}/>}
+      </div>
       {ahp ? <div className="row mx-5 d-flex justify-content-center mt-2">
         <div className="row mx-5 d-flex justify-content-center mt-2 mb-5">
           <button className="btn btn-success" onClick={() => submitSuitability()}>Calculate Suitability</button>
