@@ -12,10 +12,11 @@ from django.http import Http404, HttpResponse, FileResponse
 from pathlib import Path
 import json, os
 import ahpy
+from django.conf import settings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 base = str(BASE_DIR).replace('\\', '/')
-geo = Geoserver('http://localhost:8080/geoserver', username='admin', password='geoserver')
+geo = Geoserver(settings.GEOSERVER_URL, username=settings.GEOSERVER_USER, password=settings.GEOSERVER_PASSWORD)
 
 # class AHPViewSet(viewsets.ModelViewSet):
 @api_view(['GET', 'POST'])

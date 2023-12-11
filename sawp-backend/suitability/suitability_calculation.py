@@ -46,13 +46,13 @@ def Suitability_calculation(weights=None,clipbound=None,buffer_distance=100):
                     gs = gdf.geometry.buffer(calc_buffer_distance)
                     gdf = gpd.GeoDataFrame(geometry=gs)
                     gdf = gdf.set_crs('epsg:4326')
-                    shp_file = f'/vsimem/{k}.shp'
+                    shp_file = f'{base}/media/{k}.shp'
                     gdf.to_file(driver='ESRI Shapefile', filename=shp_file)
 
                     pixel_size = 0.0001
                     xmin, ymin, xmax, ymax = bound.total_bounds
 
-                    tif_file = f'/vsimem/{k}.tif'
+                    tif_file = f'{base}/media/{k}.tif'
 
                     ds = gdal.Rasterize(tif_file, shp_file, xRes=pixel_size, yRes=pixel_size, 
                                         burnValues=255, outputBounds=[xmin, ymin, xmax, ymax], 

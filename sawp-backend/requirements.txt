@@ -31,12 +31,12 @@ django-rest-knox==4.1.0
 django-rest-swagger==2.2.0
 djangorestframework==3.12.4
 docopt==0.6.2
-Fiona @ file:///C:/Users/kadit/pipwin/Fiona-1.8.20-cp38-cp38-win_amd64.whl
+Fiona==1.8.20
 fsspec==2021.7.0
 future==0.18.2
-GDAL @ file:///C:/Users/kadit/pipwin/GDAL-3.3.1-cp38-cp38-win_amd64.whl
+GDAL==3.2.2
 geocube==0.0.17
-geopandas @ file:///C:/Users/kadit/pipwin/geopandas-0.9.0-py3-none-any.whl
+geopandas==0.9.0
 geoserver-rest==2.1.0
 geoserver-restconfig==2.0.4.6
 gisdata==0.5.4
@@ -52,7 +52,7 @@ kiwisolver==1.3.1
 lark-parser==0.11.3
 locket==0.2.1
 MarkupSafe==2.0.1
-matplotlib==3.2.0
+matplotlib==3.5.2
 msgpack==1.0.2
 munch==2.5.0
 netCDF4==1.5.7
@@ -75,15 +75,14 @@ pyparsing==2.4.7
 PyPrind==2.11.3
 pyproj==3.1.0
 pyrsistent==0.18.0
-pysld==0.0.6
 pySmartDL==1.3.4
 python-dateutil==2.8.1
 python-decouple==3.4
 pytz==2021.1
 PyYAML==5.4.1
-rasterio @ file:///C:/Users/kadit/pipwin/rasterio-1.2.6-cp38-cp38-win_amd64.whl
+rasterio==1.2.6
 requests==2.25.1
-rioxarray @ file:///C:/Users/kadit/pipwin/rioxarray-0.7.0-py3-none-any.whl
+rioxarray==0.7.0
 Rtree==0.9.7
 scipy==1.6.2
 seaborn==0.11.1

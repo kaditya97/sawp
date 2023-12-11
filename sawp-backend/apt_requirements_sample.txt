@@ -1,0 +1,15 @@
+curl
+libpangocairo-1.0-0
+libpq-dev
+python-dev
+libproj-dev
+libc-dev
+binutils
+gettext
+make
+cmake
+gcc
+gdal-bin
+libgdal-dev
+g++
+libkrb5-dev

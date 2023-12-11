@@ -16,16 +16,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
-import pyproj
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-if os.name == 'nt':
-    VENV_BASE = os.environ['VIRTUAL_ENV']
-    os.environ['PATH'] = os.path.join(
-        VENV_BASE, 'Lib\\site-packages\\osgeo') + ';' + os.environ['PATH']
-    os.environ['PROJ_LIB'] = r"E:\Softwares\anaconda3\envs\geo\Library\share\proj"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -36,7 +29,7 @@ SECRET_KEY = '836a1d5@clf3=kn53xfrgxbut6t)j)%i)2j^7h)lfudt94-zz7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = [config('ALLOWED_HOST1'), config('ALLOWED_HOST2'), config('ALLOWED_HOST3')]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
 # Application definition
 
@@ -104,12 +97,12 @@ WSGI_APPLICATION = 'sawp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 # Database connection constants
-DB_NAME = config('DB_NAME')
-DB_USER = config('DB_USER')
-DB_PASSWORD = config('DB_PASSWORD')
-DB_HOST = config('DB_HOST')
-DB_PORT = config('DB_PORT')
-CONN_STR = config('CONN_STR')
+DB_NAME = config('POSTGRES_DB')
+DB_USER = config('POSTGRES_USER')
+DB_PASSWORD = config('POSTGRES_PASSWORD')
+DB_HOST = config("POSTGRES_HOST", "localhost")
+DB_PORT = config("POSTGRES_PORT", "5432")
+# CONN_STR = config('CONN_STR')
 
 DATABASES = {
     'default': {
