@@ -4,6 +4,7 @@ import { getRasterStyles } from "../../../actions/geoserver"
 import {Modal} from 'react-bootstrap'
 import { Map, TileLayer, WMSTileLayer } from 'react-leaflet'
 import StyleChanger from '../styleChanger';
+const geoserverUrl = process.env.REACT_APP_GEOSERVER_URL;
 
 export default function SuitabilityView(props) {
     const [modal, setModal] = useState(false)
@@ -34,7 +35,7 @@ export default function SuitabilityView(props) {
                             />
                             <WMSTileLayer
                                 layers={`sawp:${props.name}`}
-                                url={`http://127.0.0.1:8080/geoserver/wms`}
+                                url={`${geoserverUrl}/wms`}
                                 opacity={opacity}
                                 transparent={true}
                                 format={'image/png'} 

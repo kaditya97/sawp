@@ -12,6 +12,7 @@ import { getRasterStyles } from '../../actions/geoserver';
 import PrintControlDefault from 'react-leaflet-easyprint';
 
 const PrintControl = withLeaflet(PrintControlDefault);
+const geoserverUrl = process.env.REACT_APP_GEOSERVER_URL;
 
 export default function Visualization() {
     const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +56,7 @@ export default function Visualization() {
                         <WMSTileLayer
                             ref={wmslayer}
                             layers={`sawp:${layer?.name}`}
-                            url={`http://127.0.0.1:8080/geoserver/wms`}
+                            url={`${geoserverUrl}/wms`}
                             transparent={true}
                             opacity={opacity}
                             format={'image/png'}

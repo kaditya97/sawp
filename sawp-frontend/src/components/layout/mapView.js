@@ -5,6 +5,8 @@ import { Map, TileLayer, WMSTileLayer } from 'react-leaflet'
 import { getRasterStyles } from "../../actions/geoserver"
 import StyleChanger from './styleChanger';
 
+const geoserverUrl = process.env.REACT_APP_GEOSERVER_URL;
+
 export default function MapView(props) {
     const [modal, setModal] = useState(false)
     const handleClose = () => setModal(false)
@@ -35,7 +37,7 @@ export default function MapView(props) {
                             />
                             <WMSTileLayer
                                 layers={`sawp:${props.name}`}
-                                url={`http://127.0.0.1:8080/geoserver/wms`}
+                                url={`${geoserverUrl}/wms`}
                                 styles={[`sawp:${style}`]}
                                 opacity={opacity}
                                 transparent={true}
