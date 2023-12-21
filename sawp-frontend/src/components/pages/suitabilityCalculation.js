@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import useSound from 'use-sound';
-import warningSound from '../../static/music/warning.mp3';
 import Scrollbars from 'react-custom-scrollbars-2';
 import ReactLoading from 'react-loading';
 import { getVector } from "../../actions/vector"
@@ -30,8 +28,6 @@ export default function SuitabilityCalculation() {
     const [boundary, setBoundary] = React.useState('')
     const [buffer_distance, setBufferDistance] = React.useState('')
     const dispatch = useDispatch();
-
-    const [play] = useSound(warningSound);
 
     const vectors = useSelector((state) => state.vector.vector);
     const rasters = useSelector((state) => state.raster.raster);
@@ -88,7 +84,6 @@ export default function SuitabilityCalculation() {
 
     const handleLayer = () => {
         toast("Select Vector or Raster layers first");
-        play();
     }
 
     const download = id => {
@@ -132,6 +127,20 @@ export default function SuitabilityCalculation() {
                                         // onClick={vectorInfo}
                                         >
                                             Suitability Calculation
+                                        </a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a
+                                            className="nav-link"
+                                            id="calculation-tab-single"
+                                            data-toggle="tab"
+                                            href="#calculation-single"
+                                            role="tab"
+                                            aria-controls="calculation-single"
+                                            aria-selected="false"
+                                        // onClick={vectorInfo}
+                                        >
+                                            Suitability Single Layer
                                         </a>
                                     </li>
                                     <li className="nav-item">
@@ -217,6 +226,58 @@ export default function SuitabilityCalculation() {
                                         {/* <div className="row mx-5 d-flex justify-content-center mt-5">
                                         <a href="https://bpmsg.com/ahp/ahp-calc.php" rel="noreferrer" target="_blank"><button>Calculate Weightages using Ahp   <i className="fa fa-external-link-alt"></i></button></a>
                                             </div> */}
+                                        <div className="row mx-5 d-flex justify-content-center mt-5">
+                                            {activeLayers ?
+                                                <button className="btn btn-primary" onClick={() => setActiveLayer(!activeLayer)}>{activeLayer ? "Hide AHP Table" : "Show AHP Table"}</button>
+                                                : <button className="btn btn-info" onClick={handleLayer}>Select Layers First</button>}
+                                        </div>
+                                        <div className="row mx-auto d-flex justify-content-center overflow-auto">
+                                            {activeLayer && <Ahp setActiveLayer={setActiveLayer} sname={sname} description={description} array={activeLayers} boundary={boundary} buffer_distance={buffer_distance}/>}
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="tab-pane fade"
+                                        id="calculation-single"
+                                        role="tabpanel"
+                                        aria-labelledby="calculation-tab-single"
+                                    >
+                                        <div className="row">
+                                            <div className="col-lg-6 required">
+                                                <FormLabel name="Suitability Name" />
+                                                <FormInput
+                                                    name={"sname"}
+                                                    onChange={onNameChange}
+                                                    placeholder="Enter name for suitability..."
+                                                    required="required"
+                                                    value={sname}
+                                                />
+                                            </div>
+
+                                            <div className="col-lg-6 ">
+                                                <FormLabel name="Description" />
+                                                <TextArea
+                                                    name="description"
+                                                    value={description}
+                                                    rows="1"
+                                                    required="required"
+                                                    onChange={onDescriptionChange}
+                                                    placeholder="Add description for suitability..."
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-4 d-inline-block">
+                                                <FormLabel name="Vector Layers" />
+                                                <Select
+                                                    isMulti
+                                                    name="vector"
+                                                    options={vectorOptions}
+                                                    onChange={(v) => handleVectorChange(v)}
+                                                    className="basic-multi-select"
+                                                    classNamePrefix="select"
+                                                />
+                                            </div>
+                                        </div>
                                         <div className="row mx-5 d-flex justify-content-center mt-5">
                                             {activeLayers ?
                                                 <button className="btn btn-primary" onClick={() => setActiveLayer(!activeLayer)}>{activeLayer ? "Hide AHP Table" : "Show AHP Table"}</button>
